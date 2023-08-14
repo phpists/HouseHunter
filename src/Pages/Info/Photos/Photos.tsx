@@ -4,8 +4,9 @@ import { ShowButton } from "./ShowButton";
 import "react-photo-view/dist/react-photo-view.css";
 import { PhotoSlider } from "react-photo-view";
 import { useState } from "react";
-import { BackButton } from "../../../../Components/BackButton";
-import noPhoto from "../../../../assets/images/no-photo.svg";
+import noPhoto from "../../../assets/images/no-photo.svg";
+import { BackButton } from "../../../Components/BackButton";
+import { PhotosView } from "./PhotosView/Photos";
 
 interface Props {
   onClose: () => void;
@@ -14,13 +15,25 @@ interface Props {
 
 export const Photos = ({ photos, onClose }: Props) => {
   const [viewPhoto, setViewPhoto] = useState<boolean>(false);
+  const [defaultPhoto, setDefaultPhoto] = useState<number | null>(null);
+
+  const handleCloseViewPhoto = () => {
+    setViewPhoto(false);
+    setDefaultPhoto(null);
+  };
+
+  const handleOpenViewPhoto = (index: number) => {
+    setViewPhoto(true);
+    setDefaultPhoto(index);
+  };
 
   return (
     <>
-      <PhotoSlider
-        images={photos.map((img) => ({ src: img, key: img }))}
-        visible={viewPhoto}
-        onClose={() => setViewPhoto(false)}
+      <PhotosView
+        open={viewPhoto}
+        onClose={handleCloseViewPhoto}
+        images={photos}
+        defaultPhoto={defaultPhoto}
       />
       <StyledPhotos photosCount={photos.length}>
         <BackButton onClick={onClose} classes="back-btn" />
@@ -36,6 +49,7 @@ export const Photos = ({ photos, onClose }: Props) => {
                   key={i}
                   photo={photo}
                   className={`photo-card-${1 + i}`}
+                  onOpen={() => handleOpenViewPhoto(i)}
                 />
               ))
           )}

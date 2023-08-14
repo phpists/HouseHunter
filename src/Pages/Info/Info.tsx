@@ -2,30 +2,30 @@ import { styled } from "styled-components";
 import { MainInfo } from "./MainInfo/MainInfo";
 import { SectionTitle } from "./SectionTitle";
 import { AmenitiesList } from "./AmenitiesList";
-import dogIcon from "../../../assets/images/dog.svg";
-import washingMachineIcon from "../../../assets/images/washing machine.svg";
-import wifiIcon from "../../../assets/images/wifi.svg";
-import tvIcon from "../../../assets/images/tv.svg";
-import refrigeratorIcon from "../../../assets/images/refrigerator.svg";
-import airVentIcon from "../../../assets/images/air-vent.svg";
-import sofaIcon from "../../../assets/images/sofa.svg";
-import dishwasherIcon from "../../../assets/images/dishwasher.svg";
+// import dogIcon from "../../../assets/images/dog.svg";
+// import washingMachineIcon from "../../../assets/images/washing machine.svg";
+// import wifiIcon from "../../../assets/images/wifi.svg";
+// import tvIcon from "../../../assets/images/tv.svg";
+// import refrigeratorIcon from "../../../assets/images/refrigerator.svg";
+// import airVentIcon from "../../../assets/images/air-vent.svg";
+// import sofaIcon from "../../assets/images/sofa.svg";
+// import dishwasherIcon from "../../assets/images/dishwasher.svg";
 import { Descrioption } from "./Description";
 import { Photos } from "./Photos/Photos";
 import { useEffect } from "react";
-import { SelectionSwiper } from "../../../Components/SelectionSwiper/SelectionSwiper";
-import { rate } from "../../../api/methods";
+import { rate } from "../../api/methods";
+import { SelectionSwiper } from "../../Components/SelectionSwiper/SelectionSwiper";
 
-const AMENITIES_DATA = [
-  { icon: dogIcon, title: "Можна з тваринами" },
-  { icon: washingMachineIcon, title: "Пральна машина є" },
-  { icon: wifiIcon, title: "Інтернет є" },
-  { icon: tvIcon, title: "Телевізор є" },
-  { icon: refrigeratorIcon, title: "Холодильник є" },
-  { icon: airVentIcon, title: "Кондиціонер є" },
-  { icon: sofaIcon, title: "Меблі є" },
-  { icon: dishwasherIcon, title: "Посудомийка є" },
-];
+// const AMENITIES_DATA = [
+//   { icon: dogIcon, title: "Можна з тваринами" },
+//   { icon: washingMachineIcon, title: "Пральна машина є" },
+//   { icon: wifiIcon, title: "Інтернет є" },
+//   { icon: tvIcon, title: "Телевізор є" },
+//   { icon: refrigeratorIcon, title: "Холодильник є" },
+//   { icon: airVentIcon, title: "Кондиціонер є" },
+//   { icon: sofaIcon, title: "Меблі є" },
+//   { icon: dishwasherIcon, title: "Посудомийка є" },
+// ];
 
 interface Props {
   infoOpen: any;

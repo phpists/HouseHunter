@@ -1,4 +1,4 @@
-import locationIcon from "../../../../assets/images/location-2.svg";
+import locationIcon from "../../../assets/images/location-2.svg";
 
 interface Props {
   location: string;

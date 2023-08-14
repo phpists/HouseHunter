@@ -3,11 +3,11 @@ import { Header } from "./Components/Header/Header";
 import { useState, useEffect } from "react";
 import { History } from "./Pages/History/History";
 import { Chat } from "./Components/Chat/Chat";
-import { Info } from "./Pages/History/Info/Info";
 import { NewSelections } from "./Pages/NewSelections/NewSelections";
 import { getRieltor, sendMessage } from "./api/methods";
 import { Route, Routes } from "react-router-dom";
 import { Spinner } from "./Components/Spinner";
+import { Info } from "./Pages/Info/Info";
 
 export const App = () => {
   const [activeTab, setActiveTab] = useState<number>(1);

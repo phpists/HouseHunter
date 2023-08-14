@@ -1,4 +1,4 @@
-import stairsIcon from "../../../../assets/images/stairs.svg";
+import stairsIcon from "../../../assets/images/stairs.svg";
 
 interface Props {
   stairs: string;

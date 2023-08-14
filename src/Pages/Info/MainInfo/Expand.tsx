@@ -1,4 +1,4 @@
-import expandIcon from "../../../../assets/images/expand.svg";
+import expandIcon from "../../../assets/images/expand.svg";
 
 interface Props {
   area: string | number;

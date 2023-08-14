@@ -270,6 +270,7 @@ const StyledCard = styled.div<StyledCardProps>`
   }
   &::before {
     content: "";
+    transition: all 0.3s;
     position: absolute;
     top: 0;
     left: 0;
@@ -282,5 +283,7 @@ const StyledCard = styled.div<StyledCardProps>`
     );
     opacity: 1;
     z-index: ${({ index }) => index};
+    opacity: ${({ index, totalCards }) =>
+      totalCards === index ? 1 : 0} !important;
   }
 `;

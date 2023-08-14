@@ -5,7 +5,7 @@ import { Divider } from "./Divider";
 import { Doors } from "./Doors";
 import { Stairs } from "./Stairs";
 import { Expand } from "./Expand";
-import { getLocation } from "../../../../helpers";
+import { getLocation } from "../../../helpers";
 
 interface Props {
   infoOpen: any;

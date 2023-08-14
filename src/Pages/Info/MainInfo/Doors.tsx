@@ -1,4 +1,4 @@
-import doorIcon from "../../../../assets/images/door-closed.svg";
+import doorIcon from "../../../assets/images/door-closed.svg";
 
 interface Props {
   doors: string | number;
