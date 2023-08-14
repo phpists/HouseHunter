@@ -1,13 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: Overpass, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #2c2c2c;
+  color: #fff;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+input,
+button,
+textarea {
+  background: none;
+  border: none;
+  outline: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.wrapper {
+  max-width: 1400px;
+  width: 90%;
+}
+
+.btn {
+  background: rgba(255, 255, 255, 0.18);
+  transition: all 0.3s;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.38);
+}
+
+.btn:active {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.btn.active {
+  background: rgba(47, 161, 18, 0.08);
+  color: #81fb21 !important;
+  border: 1px solid #2fa112;
+}
+
+.btn.active:hover {
+  background: rgba(47, 161, 18, 0.38);
+}
+
+.PhotoView-Slider__Backdrop {
+  background: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(3px) !important;
+}
+
+.PhotoView-Slider__ArrowLeft svg,
+.PhotoView-Slider__ArrowRight svg {
+  border-radius: 8px !important;
+}
+
+*::-webkit-scrollbar {
+  height: 3px;
+  width: 7px;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #5c5c5c;
+  border-radius: 10px;
+}
+
+.empty-title {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.app-spinner {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }

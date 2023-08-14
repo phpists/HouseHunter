@@ -1,0 +1,10 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="tv">
+<path id="Vector" d="M7 21H17" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M20 3H4C2.89543 3 2 3.89543 2 5V15C2 16.1046 2.89543 17 4 17H20C21.1046 17 22 16.1046 22 15V5C22 3.89543 21.1046 3 20 3Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="TV">
+<path d="M7 7.93732V7.18164H11.5028V7.93732H9.6875V12.9998H8.8125V7.93732H7Z" fill="white"/>
+<path d="M12.8464 7.18164L14.4657 11.9203H14.5311L16.1504 7.18164H17.0992L15.0055 12.9998H13.9913L11.8975 7.18164H12.8464Z" fill="white"/>
+</g>
+</g>
+</svg>
