@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const MainInfo = ({ title, location, doors, area }: Props) => (
-  <StyledMainInfo>
+  <StyledMainInfo className="maininfo">
     <div className="flex items-center items">
       <Location location={location} />
       <Divider />

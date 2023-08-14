@@ -35,16 +35,12 @@ export const SelectionSwiper = ({
     type: string
   ) => {
     if (!cardStatusChanged) {
-      history && setCardStatusChanged(value);
+      setCardStatusChanged(value);
       if (value) {
-        if (history) {
+        setTimeout(() => {
           onSwap(index, value, id, type);
-          setTimeout(() => {
-            setCardStatusChanged(null);
-          }, 3000);
-        } else {
-          onSwap(index, value, id, type);
-        }
+          setCardStatusChanged(null);
+        }, 400);
       }
     }
   };
@@ -86,7 +82,7 @@ export const SelectionSwiper = ({
         <Footer
           onChangeStatus={handleChangeStatusFooter}
           onSendRealtor={handleSendRealtor}
-          disabled={disabled}
+          disabled={disabled || !!cardStatusChanged}
         />
       )}
     </StyledSelectionSwiper>

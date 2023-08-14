@@ -6,6 +6,7 @@ import { Animation } from "./Animation";
 import { getLocation } from "../../helpers";
 import { MoreInfo } from "./Card/MoreInfo/MoreInfo";
 import noPhoto from "../../assets/images/no-photo.svg";
+import { CardList } from "./CardList";
 
 interface Props {
   cards: any[];
@@ -39,7 +40,7 @@ export const Cards = ({
   useEffect(() => {
     setLoading(true);
     setData(cards?.slice(cards.length - 3, cards.length) ?? []);
-    setTimeout(() => setLoading(false), 50);
+    setTimeout(() => setLoading(false), 1);
   }, [cards]);
 
   return (
@@ -70,43 +71,24 @@ export const Cards = ({
         />
       ) : (
         <StyledCards
-          className="flex items-center justify-center"
+          className={`flex items-center justify-center `}
           isEmpty={cards.length === 0}
         >
           {cardStatusChanged && history && (
             <Animation status={cardStatusChanged} />
           )}
-          {loading ? null : cards.length > 0 ? (
-            data.map((card: any, i: number) => (
-              <Card
-                key={i}
-                type={card?.rubric_name ?? ""}
-                currency={currency}
-                onChangeCurrency={onChangeCurrency}
-                price={card?.price ? card?.price[currency] : 0}
-                location={getLocation(card?.location)}
-                doors={"-"}
-                area={"-"}
-                stairs="- із -"
-                box="-"
-                title={card?.title ?? ""}
-                description={card?.description ?? ""}
-                index={1 + i}
-                images={
-                  card?.image_url?.length > 0 ? card?.image_url : [noPhoto]
-                }
-                onChangeStatus={(direction) =>
-                  onChangeStatus(i, direction, card?.id_object, card?.type)
-                }
-                history={history}
-                totalCards={data?.length ?? 0}
-                onSendRealtor={() => onSendRealtor(card?.type, card?.id_object)}
-                onClose={onClose}
-              />
-            ))
-          ) : (
-            <Empty />
-          )}
+
+          <CardList
+            cards={data}
+            history={history}
+            cardStatusChanged={cardStatusChanged}
+            onChangeStatus={onChangeStatus}
+            onSendRealtor={onSendRealtor}
+            currency={currency}
+            onChangeCurrency={onChangeCurrency}
+            onClose={onClose}
+            loading={loading}
+          />
         </StyledCards>
       )}
     </>
@@ -134,5 +116,8 @@ const StyledCards = styled.div<StyledCardsProps>`
   `}
   ::-webkit-scrollbar {
     display: none;
+  }
+  &.loading-cards {
+    opacity: 0;
   }
 `;

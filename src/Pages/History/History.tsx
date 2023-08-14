@@ -75,7 +75,6 @@ export const History = ({ onOpenInfo, currency }: Props) => {
     }
   }, []);
 
-  console.log(cards);
   return (
     <>
       <StyledHistory className="content" isCards={!!cards}>

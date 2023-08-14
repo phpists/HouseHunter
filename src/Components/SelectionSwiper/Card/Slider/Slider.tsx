@@ -39,12 +39,12 @@ export const Slider = ({ images, index }: Props) => {
             setCurrentSlide(1 + nextSlide)
           }
           prevArrow={
-            <button className="clickable">
+            <button className="clickable maininfo">
               <img src={prevIcon} alt="" className="clickable" />
             </button>
           }
           nextArrow={
-            <button className="clickable">
+            <button className="clickable maininfo">
               <img src={nextIcon} alt="" className="clickable" />
             </button>
           }

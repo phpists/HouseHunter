@@ -53,7 +53,7 @@ const StyledNewSelectionDesktop = styled.div`
   /* grid-auto-rows: max-content;
   justify-content: center; */
   margin: 30px 0 0;
-  height: calc(100vh - 150px);
+  height: calc(100vh - 138px);
   overflow: hidden;
   @media (max-width: 1000px) {
     display: none;

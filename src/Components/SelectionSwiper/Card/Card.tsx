@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { useEffect } from "react";
 import { styled } from "styled-components";
 import { useState, useRef } from "react";
 import { Slider } from "./Slider/Slider";
@@ -27,6 +28,8 @@ interface Props {
   history?: boolean;
   totalCards: number;
   onClose?: () => void;
+  cardStatusChanged?: null | string;
+  loading?: string;
 }
 
 export const Card = ({
@@ -49,6 +52,8 @@ export const Card = ({
   totalCards,
   onSendRealtor,
   onClose,
+  cardStatusChanged,
+  loading,
 }: Props) => {
   const [open, setOpen] = useState<boolean>(history);
   const cardRef = useRef(null);
@@ -59,7 +64,7 @@ export const Card = ({
   const [direction, setDirection] = useState<string | null>(null);
 
   const handleStartDrag = (e) => {
-    if (!open) {
+    if (!open && totalCards === index) {
       setIsDrag(true);
       const cientX = e?.touches?.length ? e?.touches[0]?.clientX : e.clientX;
       const offSetLeft = cardRef.current.offsetLeft;
@@ -86,6 +91,19 @@ export const Card = ({
       return mouseX.current >= -10;
     } else {
       return mouseX.current <= 10;
+    }
+  };
+
+  const handleAnimateBackCards = () => {
+    const backCard = document.querySelector(`.swapper-card${index - 1}`);
+
+    console.log(backCard, index - 1);
+    if (backCard) {
+      backCard.style.cssText = `
+        transition: all .3s;
+        top: 20px;
+        scale: 1;
+      `;
     }
   };
 
@@ -134,7 +152,10 @@ export const Card = ({
             ? window.innerWidth * 1.5
             : -window.innerWidth * 2
         }px) scale(0)`;
-        setTimeout(() => onChangeStatus(isSwiped), 500);
+        setTimeout(() => {
+          onChangeStatus(isSwiped);
+          handleAnimateBackCards();
+        }, 500);
       }
     } else {
       cardRef.current.style.transform = `translateX(${0}px)`;
@@ -153,6 +174,22 @@ export const Card = ({
       onClose();
     }
   };
+
+  const handleSwipeAnimation = () => {
+    const windowWidth = window.innerWidth;
+    cardRef.current.style.transition = "all .4s";
+    cardRef.current.style.transform = `translateX(${
+      cardStatusChanged === "right" ? windowWidth : -windowWidth
+    }px)`;
+    setTimeout(handleAnimateBackCards, 100);
+  };
+
+  useEffect(() => {
+    if (cardStatusChanged && totalCards === index) {
+      handleSwipeAnimation();
+    }
+  }, [cardStatusChanged]);
+
   return (
     <>
       {open && (
@@ -188,13 +225,14 @@ export const Card = ({
         onTouchEnd={handleDragEnd}
         totalCards={totalCards}
         draggable={false}
+        className={`swapper-card${index}`}
       >
         <Price
           currency={currency}
           onChangeCurrency={onChangeCurrency}
           price={price}
         />
-        <Type type={type} />
+        <Type type={type} className="maininfo" />
         <MainInfo title={title} location={location} doors={doors} area={area} />
         <Slider images={images} index={index} />
       </StyledCard>
@@ -222,8 +260,14 @@ const StyledCard = styled.div<StyledCardProps>`
   scale: ${({ index, totalCards }) =>
     totalCards === index ? 1 : totalCards - 1 === index ? 0.95 : 0.9};
   filter: blur(
-    ${({ index, totalCards }) => (totalCards === index ? 0 : 0.9)}px
+    ${({ index, totalCards }) => (totalCards === index ? 0 : 1.2)}px
   );
+  .maininfo,
+  .slick-arrow {
+    transition: all 0.3s;
+    opacity: ${({ index, totalCards }) =>
+      totalCards === index ? 1 : 0} !important;
+  }
   &::before {
     content: "";
     position: absolute;

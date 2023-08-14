@@ -16,7 +16,8 @@ interface StyledSlideProps {
 }
 
 const StyledSlide = styled.div<StyledSlideProps>`
-  height: ${({ isNew }) => (isNew ? 320 : 227)}px;
+  height: ${({ isNew }) => (isNew ? "35vh" : "227px")};
+  max-height: 320px;
   background: url(${({ image }) => image}) center/cover no-repeat;
   @media (max-width: 1000px) {
     height: 25vw;
