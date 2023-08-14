@@ -33,55 +33,54 @@ export const CardList = ({
   loading,
 }: Props) => (
   <>
-    {cards.length > 0 ? (
-      cards.map((card: any, i: number) => {
-        if (loading) {
-          return (
+    {loading ? (
+      <>
+        {cards.length > 0 ? (
+          cards.map((card: any, i: number) => (
             <EmptyCard
+              key={i}
+              index={1 + i}
+              images={card?.image_url?.length > 0 ? card?.image_url : [noPhoto]}
+              totalCards={cards?.length ?? 0}
+            />
+          ))
+        ) : (
+          <Empty />
+        )}
+      </>
+    ) : (
+      <>
+        {cards.length > 0 ? (
+          cards.map((card: any, i: number) => (
+            <Card
               key={i}
               type={card?.rubric_name ?? ""}
               currency={currency}
               onChangeCurrency={onChangeCurrency}
               price={card?.price ? card?.price[currency] : 0}
               location={getLocation(card?.location)}
+              doors={"-"}
               area={"-"}
+              stairs="- із -"
               box="-"
               title={card?.title ?? ""}
+              description={card?.description ?? ""}
               index={1 + i}
               images={card?.image_url?.length > 0 ? card?.image_url : [noPhoto]}
+              onChangeStatus={(direction) =>
+                onChangeStatus(i, direction, card?.id_object, card?.type)
+              }
+              history={history}
               totalCards={cards?.length ?? 0}
+              onSendRealtor={() => onSendRealtor(card?.type, card?.id_object)}
+              onClose={onClose}
+              cardStatusChanged={cardStatusChanged}
             />
-          );
-        }
-        return (
-          <Card
-            key={i}
-            type={card?.rubric_name ?? ""}
-            currency={currency}
-            onChangeCurrency={onChangeCurrency}
-            price={card?.price ? card?.price[currency] : 0}
-            location={getLocation(card?.location)}
-            doors={"-"}
-            area={"-"}
-            stairs="- із -"
-            box="-"
-            title={card?.title ?? ""}
-            description={card?.description ?? ""}
-            index={1 + i}
-            images={card?.image_url?.length > 0 ? card?.image_url : [noPhoto]}
-            onChangeStatus={(direction) =>
-              onChangeStatus(i, direction, card?.id_object, card?.type)
-            }
-            history={history}
-            totalCards={cards?.length ?? 0}
-            onSendRealtor={() => onSendRealtor(card?.type, card?.id_object)}
-            onClose={onClose}
-            cardStatusChanged={cardStatusChanged}
-          />
-        );
-      })
-    ) : (
-      <Empty />
+          ))
+        ) : (
+          <Empty />
+        )}
+      </>
     )}
   </>
 );

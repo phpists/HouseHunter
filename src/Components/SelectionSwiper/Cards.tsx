@@ -40,7 +40,7 @@ export const Cards = ({
   useEffect(() => {
     setLoading(true);
     setData(cards?.slice(cards.length - 3, cards.length) ?? []);
-    setTimeout(() => setLoading(false), 1);
+    setTimeout(() => setLoading(false), 100);
   }, [cards]);
 
   return (
@@ -100,12 +100,12 @@ interface StyledCardsProps {
 }
 
 const StyledCards = styled.div<StyledCardsProps>`
-  height: calc(100vh - 280px);
+  height: calc(100vh - 320px);
   width: 100%;
   margin-bottom: 15px;
   border-radius: 13px;
   position: relative;
-  overflow: unset;
+  overflow: hidden;
   transition: all 0.3s;
   overflow-x: hidden;
   ${({ isEmpty }) =>

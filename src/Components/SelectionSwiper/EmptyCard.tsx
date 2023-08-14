@@ -6,32 +6,12 @@ import { MainInfo } from "./Card/MainInfo/MainInfo";
 import { Slider } from "./Card/Slider/Slider";
 
 interface Props {
-  type: string;
-  currency: string;
-  onChangeCurrency: (value: string) => void;
-  price: number;
-  location: string;
-  box: number | string;
-  area: number | string;
-  title: string;
   index: number;
   images: string[];
   totalCards: number;
 }
 
-export const EmptyCard = ({
-  type,
-  currency,
-  onChangeCurrency,
-  price,
-  location,
-  doors,
-  area,
-  title,
-  index,
-  images,
-  totalCards,
-}: Props) => {
+export const EmptyCard = ({ index, images, totalCards }: Props) => {
   return (
     <StyledCard
       index={index}
@@ -39,13 +19,6 @@ export const EmptyCard = ({
       draggable={false}
       className={`swapper-card${index}`}
     >
-      <Price
-        currency={currency}
-        onChangeCurrency={onChangeCurrency}
-        price={price}
-      />
-      <Type type={type} className="maininfo" />
-      <MainInfo title={title} location={location} doors={doors} area={area} />
       <Slider images={images} index={index} />
     </StyledCard>
   );

@@ -247,7 +247,7 @@ interface StyledCardProps {
 
 const StyledCard = styled.div<StyledCardProps>`
   position: absolute;
-  height: calc(100vh - 310px);
+  height: calc(100vh - 330px);
   /* overflow: auto; */
   font-size: 80px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
