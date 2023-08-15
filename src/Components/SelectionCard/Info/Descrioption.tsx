@@ -19,6 +19,6 @@ const StyledDescrioption = styled.div`
   font-weight: 300;
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
-  margin: 15px 0 27px;
+  margin: 15px 0;
   opacity: 0.4;
 `;

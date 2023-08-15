@@ -30,12 +30,12 @@ export const rate = async (like: number, id_object: string, type: string) => {
     .catch((error) => error);
 };
 
-export const getHistory = async (page: number) => {
+export const getHistory = async (page: number, like?: number) => {
   const id = getIdFromUrl();
   return axios
     .post(
       `${baseUrl}/show_history_object.php`,
-      { id, page, itemOnPage: page === 1 ? 30 : 10 },
+      { id, page, itemOnPage: page === 1 ? 30 : 10, like },
       { headers }
     )
     .then((resp) => resp)
@@ -59,7 +59,7 @@ export const getChat = async () => {
 };
 
 export const sendMessage = async (
-  messege: string,
+  messege?: string,
   file?: File,
   type_table?: string,
   show_object?: any
@@ -68,8 +68,8 @@ export const sendMessage = async (
   const formData = new FormData();
 
   formData.append("id", id);
-  formData.append("messege", messege);
-  file && formData.append("files[0]", file);
+  messege && formData.append("messege", messege);
+  file && formData.append("img", file);
   type_table && formData.append("type_table", type_table);
   show_object && formData.append("show_object", show_object);
 

@@ -12,6 +12,7 @@ interface Props {
   currency: string;
   price: number;
   images: string[];
+  like?: boolean;
 }
 
 export const Banner = ({
@@ -21,14 +22,15 @@ export const Banner = ({
   currency,
   price,
   images,
+  like,
 }: Props) => {
   return (
-    <StyledBanner status={true}>
+    <StyledBanner status={!!like} isNew={!!isNew}>
       <Area area={area} onOpen={onOpen} />
       {!isNew && (
         <>
           {/* <ShowBtn onOpen={onOpen} /> */}
-          <Status status={true} onOpen={onOpen} />
+          <Status status={!!like} onOpen={onOpen} />
         </>
       )}
       <Price price={price} currency={currency} onOpen={onOpen} />
@@ -39,13 +41,15 @@ export const Banner = ({
 
 interface StyledBannerProps {
   status: boolean;
+  isNew: boolean;
 }
 
 const StyledBanner = styled.div<StyledBannerProps>`
   position: relative;
-  ${({ status }) => !status && "border: 1.4px solid rgba(237, 56, 56, 0.6);"}
   @media (max-width: 1000px) {
     border-radius: 11px;
     overflow: hidden;
+    ${({ status, isNew }) =>
+      !status && !isNew && "border: 1.4px solid rgba(237, 56, 56, 0.6);"}
   }
 `;

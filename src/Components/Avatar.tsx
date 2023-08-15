@@ -3,10 +3,11 @@ import avatarIcon from "../assets/images/avatar.png";
 
 interface Props {
   small?: boolean;
+  photo?: string;
 }
 
-export const Avatar = ({ small }: Props) => (
-  <StyledAvatar avatar={avatarIcon} small={small} />
+export const Avatar = ({ small, photo }: Props) => (
+  <StyledAvatar avatar={photo ?? avatarIcon} small={small} />
 );
 
 interface StyledAvatarProps {

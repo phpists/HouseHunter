@@ -30,9 +30,13 @@ export const Content = ({ open, data }: Props) => {
                 <Photo
                   key={i}
                   photo={msg?.messege?.img}
-                  text={`${msg?.messege?.title ?? "-"}, ${formatNumber(
-                    msg?.messege?.price
-                  )}$`}
+                  text={
+                    msg?.messege?.title || msg?.messege?.price
+                      ? `${msg?.messege?.title ?? "-"}, ${formatNumber(
+                          msg?.messege?.price
+                        )}`
+                      : undefined
+                  }
                   date={msg?.date}
                   isOwner={msg?.user === 0}
                 />

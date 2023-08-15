@@ -9,7 +9,7 @@ interface Props {
   open: boolean;
   className?: string;
   onCloseChat: () => void;
-  rieltor: { name: string };
+  rieltor: { name: string; photo: string | undefined; phones: string[] };
 }
 
 export const Chat = ({ open, className, onCloseChat, rieltor }: Props) => {

@@ -46,12 +46,8 @@ export const Info = ({
         <Divider />
         <Stairs stairs={stairs} />
       </div>
-      {isNew && (
-        <>
-          <Descrioption description={description} />
-          <Footer onSendRealtor={onSendRealtor} onSwap={onSwap} />
-        </>
-      )}
+      {isNew && <Descrioption description={description} />}
+      <Footer onSendRealtor={onSendRealtor} onSwap={onSwap} />
     </div>
     <div
       className="mobile-info flex items-center flex-wrap gap-1"

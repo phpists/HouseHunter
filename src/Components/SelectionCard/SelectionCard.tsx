@@ -19,6 +19,8 @@ interface Props {
   images: string[];
   onSwap?: (direction: string) => void;
   className?: string;
+  noAnimation?: boolean;
+  like?: boolean;
 }
 
 export const SelectionCard = ({
@@ -36,12 +38,14 @@ export const SelectionCard = ({
   images,
   onSwap,
   className,
+  noAnimation,
+  like,
 }: Props) => {
   const controls = useAnimationControls();
 
   const handleSwap = (direction: string) => {
     if (onSwap) {
-      controls.start({ scale: 0, width: 0, margin: 0 });
+      !noAnimation && controls.start({ scale: 0, width: 0, margin: 0 });
       onSwap(direction);
     }
   };
@@ -63,6 +67,7 @@ export const SelectionCard = ({
         price={price}
         area={area}
         images={images}
+        like={like}
       />
       <Info
         onOpen={onOpen}

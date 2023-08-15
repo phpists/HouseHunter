@@ -3,12 +3,12 @@ import { Avatar } from "../Avatar";
 
 interface Props {
   small?: boolean;
-  rieltor: { name: string };
+  rieltor: { name: string; photo: string | undefined; phones: string[] };
 }
 
 export const Profile = ({ small, rieltor }: Props) => (
   <StyledProfile small={small} className="flex items-center">
-    <Avatar small={small} />
+    <Avatar small={small} photo={rieltor?.photo} />
     <div className="profile-info">
       <div className="name">{rieltor.name}</div>
       <div className="role">Рієлтор</div>

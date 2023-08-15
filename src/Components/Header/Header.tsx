@@ -12,7 +12,7 @@ interface Props {
   infoOpen?: boolean;
   currency: string;
   onChangeCurrency: (value: string) => void;
-  rieltor: { name: string };
+  rieltor: { name: string; photo: string | undefined; phones: string[] };
 }
 
 export const Header = ({

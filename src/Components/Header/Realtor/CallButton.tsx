@@ -1,8 +1,12 @@
 import { styled } from "styled-components";
 import callIcon from "../../../assets/images/call.svg";
 
-export const CallButton = () => (
-  <a href="tel:+3800000">
+interface Props {
+  phone: string;
+}
+
+export const CallButton = ({ phone }: Props) => (
+  <a href={`tel:${phone}`}>
     <StyledCallButton className="flex items-center justify-center btn">
       <img src={callIcon} alt="" />
     </StyledCallButton>

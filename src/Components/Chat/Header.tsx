@@ -6,7 +6,7 @@ import callIcon from "../../assets/images/call.svg";
 
 interface Props {
   onCloseChat: () => void;
-  rieltor: { name: string };
+  rieltor: { name: string; photo: string | undefined; phones: string[] };
 }
 
 export const Header = ({ onCloseChat, rieltor }: Props) => (
@@ -20,12 +20,14 @@ export const Header = ({ onCloseChat, rieltor }: Props) => (
       />
       <Profile small rieltor={rieltor} />
     </div>
-    <img
-      src={callIcon}
-      alt=""
-      className="cursor-pointer call-btn"
-      onClick={onCloseChat}
-    />
+    <a href={`tel:${rieltor.phones[0] ?? ""}`}>
+      <img
+        src={callIcon}
+        alt=""
+        className="cursor-pointer call-btn"
+        onClick={onCloseChat}
+      />
+    </a>
     <img
       src={closeIcon}
       alt=""

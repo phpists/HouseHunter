@@ -1,16 +1,23 @@
 import { useState, useEffect, useRef } from "react";
 import { styled } from "styled-components";
 import { SelectionCard } from "../../Components/SelectionCard/SelectionCard";
-import { getHistory } from "../../api/methods";
+import { getHistory, rate } from "../../api/methods";
 import { getLocation } from "../../helpers";
 import { Spinner } from "../../Components/Spinner";
 
 interface Props {
   onOpenInfo: (card: any) => void;
   currency: string;
+  onSendRealtor: (type: string, id: string) => void;
+  filterLiked: boolean;
 }
 
-export const History = ({ onOpenInfo, currency }: Props) => {
+export const History = ({
+  onOpenInfo,
+  currency,
+  onSendRealtor,
+  filterLiked,
+}: Props) => {
   const currentPage = useRef<number>(1);
   const [cards, setCards] = useState<any>(null);
   const cardsData = useRef<any>(null);
@@ -21,7 +28,7 @@ export const History = ({ onOpenInfo, currency }: Props) => {
 
   const handleGetHistory = () => {
     if (!loading && totalPages >= currentPage.current) {
-      getHistory(currentPage.current)
+      getHistory(currentPage.current, filterLiked ? 1 : undefined)
         .then((resp: any) => {
           const data = resp?.data?.data;
           const pagesCount = resp?.data?.pages_count;
@@ -66,7 +73,7 @@ export const History = ({ onOpenInfo, currency }: Props) => {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading]);
+  }, [loading, filterLiked]);
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -75,6 +82,34 @@ export const History = ({ onOpenInfo, currency }: Props) => {
     }
   }, []);
 
+  useEffect(() => {
+    setLoading(true);
+    cardsData.current = null;
+    setCards(null);
+    currentPage.current = 1;
+    handleGetHistory();
+  }, [filterLiked]);
+
+  const handleSwap = (
+    index: number,
+    direction: string,
+    id: string,
+    type: string,
+    notRemove?: boolean
+  ) => {
+    rate(direction === "right" ? 1 : 0, id, type).then(() => {
+      const updatedData = cardsData.current.map((card: any) =>
+        card?.id_object === id
+          ? { ...card, like: direction === "right" ? 1 : 0 }
+          : card
+      );
+
+      setCards(updatedData);
+      cardsData.current = updatedData;
+    });
+  };
+
+  console.log(cards);
   return (
     <>
       <StyledHistory className="content" isCards={!!cards}>
@@ -94,6 +129,12 @@ export const History = ({ onOpenInfo, currency }: Props) => {
               stairs="- із -"
               description={card?.description ?? ""}
               images={card?.image_url ?? []}
+              onSendRealtor={() => onSendRealtor(card?.type, card?.id_object)}
+              onSwap={(direction) =>
+                handleSwap(i, direction, card?.id_object, card?.type)
+              }
+              noAnimation
+              like={card?.like === 1}
             />
           ))
         ) : (

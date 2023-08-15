@@ -5,19 +5,26 @@ import { History } from "./Pages/History/History";
 import { Chat } from "./Components/Chat/Chat";
 import { NewSelections } from "./Pages/NewSelections/NewSelections";
 import { getRieltor, sendMessage } from "./api/methods";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { Spinner } from "./Components/Spinner";
 import { Info } from "./Pages/Info/Info";
 
 export const App = () => {
-  const [activeTab, setActiveTab] = useState<number>(1);
+  const { pathname } = useLocation();
+  const [activeTab, setActiveTab] = useState<number>(
+    pathname === "/history" ? 0 : 1
+  );
   const [filterLiked, setFilterLiked] = useState<boolean>(false);
   const [chatOpen, setChatOpen] = useState<boolean>(false);
   const [infoOpen, setInfoOpen] = useState<null | any>(null);
   const [currency, setCurrency] = useState<string>(
     localStorage.getItem("currency") ?? "UAH"
   );
-  const [rieltor, setRieltor] = useState<{ name: string } | null>(null);
+  const [rieltor, setRieltor] = useState<{
+    name: string;
+    photo: string | undefined;
+    phones: string[];
+  } | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleChangeCurrency = (value: string) => {
@@ -32,18 +39,24 @@ export const App = () => {
   const handleToggleFilterLiked = () => setFilterLiked(!filterLiked);
   const handleToggleChat = () => {
     setChatOpen(!chatOpen);
-    !chatOpen && setInfoOpen(null);
+    setInfoOpen(null);
   };
   const handleOpenInfo = (card: any) => setInfoOpen(card);
 
   const handleSendSelection = (type: string, id: string) => {
+    setChatOpen(false);
     sendMessage("", undefined, type, id).then(() => setChatOpen(true));
   };
 
   const handleGetRieltor = () => {
     setLoading(true);
     getRieltor().then((resp) => {
-      resp?.data?.result && setRieltor({ name: resp?.data?.result });
+      resp?.data?.result &&
+        setRieltor({
+          name: resp?.data?.result?.name,
+          photo: resp?.data?.result?.img,
+          phones: resp?.data?.result?.phones ?? [],
+        });
       setLoading(false);
     });
   };
@@ -84,12 +97,20 @@ export const App = () => {
               onChangeCurrency={handleChangeCurrency}
             />
           )}
-          <div className="content">
+          <div
+            className="content"
+            style={{ display: !!infoOpen ? "none" : "block" }}
+          >
             <Routes>
               <Route
                 path="/history"
                 element={
-                  <History onOpenInfo={handleOpenInfo} currency={currency} />
+                  <History
+                    onOpenInfo={handleOpenInfo}
+                    currency={currency}
+                    onSendRealtor={handleSendSelection}
+                    filterLiked={filterLiked}
+                  />
                 }
               />
               <Route
@@ -122,13 +143,6 @@ const StyledApp = styled.div<StyledAppProps>`
   max-width: 1400px;
   width: calc(100% - 16px);
   margin: 0 auto;
-  ${({ infoOpen }) =>
-    infoOpen &&
-    `
-        .content {
-            display: none;
-        }
-    `}
   @media (max-width: 1000px) {
     ${({ chatOpen }) =>
       chatOpen &&

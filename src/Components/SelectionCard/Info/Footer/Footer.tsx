@@ -34,4 +34,5 @@ const StyledFooter = styled.div`
   transition: all 0.3s;
   transform: translateY(30px);
   text-align: center;
+  margin-top: 27px;
 `;

@@ -21,7 +21,7 @@ export const Input = ({ value, onChange, onRefreshData }: Props) => {
     const file = e?.target?.files[0];
 
     if (file) {
-      sendMessage("test file", file).then((resp) => {
+      sendMessage(undefined, file).then((resp) => {
         console.log(resp);
         onRefreshData();
       });
