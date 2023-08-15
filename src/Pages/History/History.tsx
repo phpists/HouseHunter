@@ -18,7 +18,7 @@ export const History = ({
   onSendRealtor,
   filterLiked,
 }: Props) => {
-  const currentPage = useRef<number>(1);
+  const currentPage = useRef<number>(0);
   const [cards, setCards] = useState<any>(null);
   const cardsData = useRef<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -34,6 +34,7 @@ export const History = ({
           const pagesCount = resp?.data?.pages_count;
           setTotalPages(pagesCount);
           currentPage.current = currentPage.current + 1;
+          isFirstRender.current = false;
           if (data && cleanPrevData) {
             cardsData.current = data;
             setCards(data);
@@ -70,6 +71,7 @@ export const History = ({
     }
     setLoading(true);
     isLoading.current = true;
+    console.log("here1");
     handleGetHistory();
   };
 
@@ -86,13 +88,15 @@ export const History = ({
   }, []);
 
   useEffect(() => {
-    currentPage.current = 1;
-    handleGetHistory(true);
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
+    if (cards) {
+      currentPage.current = 0;
+      handleGetHistory(true);
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    }
   }, [filterLiked]);
 
   const handleSwap = (

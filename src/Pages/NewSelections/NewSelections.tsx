@@ -17,7 +17,7 @@ export const NewSelections = ({
   currency,
   onChangeCurrency,
 }: Props) => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(0);
   const [cards, setCards] = useState<any[]>([]);
   const cardsData = useRef<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);

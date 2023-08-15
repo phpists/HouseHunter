@@ -35,6 +35,7 @@ export const App = () => {
   const handleChangeTab = (tabIndex: number) => {
     setActiveTab(tabIndex);
     setInfoOpen(false);
+    setFilterLiked(false);
   };
   const handleToggleFilterLiked = () => setFilterLiked(!filterLiked);
   const handleToggleChat = () => {

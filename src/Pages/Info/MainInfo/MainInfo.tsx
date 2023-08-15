@@ -13,7 +13,15 @@ interface Props {
 
 export const MainInfo = ({ infoOpen }: Props) => (
   <StyledMainInfo>
-    <Title title={infoOpen?.title ?? ""} />
+    <Title
+      title={
+        infoOpen?.title?.length > 0
+          ? infoOpen?.title
+          : infoOpen?.description
+          ? `${infoOpen?.description.substring(0, 30)}...`
+          : ""
+      }
+    />
     <div className="flex items-center info">
       <Location location={getLocation(infoOpen?.location)} />
       <div className="flex items-center info-items">
