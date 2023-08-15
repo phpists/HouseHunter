@@ -19,6 +19,7 @@ interface Props {
   onChangeCurrency: (value: string) => void;
   onClose?: () => void;
   loading: boolean;
+  onPhotoView: (photos: string[]) => void;
 }
 
 export const CardList = ({
@@ -31,6 +32,7 @@ export const CardList = ({
   onChangeCurrency,
   onClose,
   loading,
+  onPhotoView,
 }: Props) => (
   <>
     {loading ? (
@@ -59,11 +61,13 @@ export const CardList = ({
               onChangeCurrency={onChangeCurrency}
               price={card?.price ? card?.price[currency] : 0}
               location={getLocation(card?.location)}
-              doors={"-"}
-              area={"-"}
-              stairs="- із -"
-              box="-"
-              title={card?.title ?? ""}
+              doors={card?.rooms ?? "-"}
+              area={card?.total_house_area ?? "-"}
+              stairs={`${card?.storey ?? "-"} із ${card?.storey_count ?? "-"}`}
+              box={card?.kitchen_area ?? "-"}
+              title={
+                card?.title?.length > 0 ? card?.title : card?.description ?? ""
+              }
               description={card?.description ?? ""}
               index={1 + i}
               images={card?.image_url?.length > 0 ? card?.image_url : [noPhoto]}
@@ -75,6 +79,11 @@ export const CardList = ({
               onSendRealtor={() => onSendRealtor(card?.type, card?.id_object)}
               onClose={onClose}
               cardStatusChanged={cardStatusChanged}
+              onPhotoView={() =>
+                onPhotoView(
+                  card?.image_url?.length > 0 ? card?.image_url : [noPhoto]
+                )
+              }
             />
           ))
         ) : (

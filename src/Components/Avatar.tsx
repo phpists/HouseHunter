@@ -20,4 +20,5 @@ const StyledAvatar = styled.div<StyledAvatarProps>`
   height: ${({ small }) => (small ? 40 : 50)}px;
   border-radius: 100px;
   background: url(${({ avatar }) => avatar}) center/cover no-repeat;
+  flex-shrink: 0;
 `;

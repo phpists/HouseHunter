@@ -22,9 +22,10 @@ const settings = {
 interface Props {
   type: string;
   images: string[];
+  onPhotoView: () => void;
 }
 
-export const Slider = ({ type, images }: Props) => {
+export const Slider = ({ type, images, onPhotoView }: Props) => {
   const [currentSlide, setCurrentSlide] = useState<number>(1);
 
   return (
@@ -50,7 +51,7 @@ export const Slider = ({ type, images }: Props) => {
         }
       >
         {images.map((image, i) => (
-          <Slide key={i} image={image} />
+          <Slide key={i} image={image} onPhotoView={onPhotoView} />
         ))}
       </SlickSlider>
     </StyledSlider>

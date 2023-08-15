@@ -20,6 +20,9 @@ const StyledLikedFilter = styled.div`
   padding: 9px 18px 9px;
   width: 310px;
   height: 38px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   @media (max-width: 1000px) {
     position: fixed;
     bottom: 13px;

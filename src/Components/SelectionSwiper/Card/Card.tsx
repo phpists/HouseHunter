@@ -30,6 +30,7 @@ interface Props {
   onClose?: () => void;
   cardStatusChanged?: null | string;
   loading?: string;
+  onPhotoView?: () => void;
 }
 
 export const Card = ({
@@ -54,6 +55,7 @@ export const Card = ({
   onClose,
   cardStatusChanged,
   loading,
+  onPhotoView,
 }: Props) => {
   const [open, setOpen] = useState<boolean>(history);
   const cardRef = useRef(null);
@@ -202,13 +204,14 @@ export const Card = ({
           area={area}
           stairs={stairs}
           box={box}
-          title={title}
+          title={title.substring(0, 30)}
           description={description}
           index={index}
           onClose={handleCloseMoreInfo}
           images={images}
           onChangeStatus={onChangeStatus}
           onSendRealtor={handleSendRealtor}
+          onPhotoView={onPhotoView}
         />
       )}
       {direction === "right" && <SwipeStatus status={direction === "right"} />}

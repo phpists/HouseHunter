@@ -10,13 +10,17 @@ interface Props {
 
 export const Footer = ({ onRefreshData }: Props) => {
   const [value, setValue] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSendMessage = () => {
-    sendMessage(value).then((resp) => {
-      console.log("yes");
-      setValue("");
-      onRefreshData();
-    });
+    if (!loading && value.length > 0) {
+      setLoading(true);
+      sendMessage(value).then((resp) => {
+        setValue("");
+        onRefreshData();
+        setLoading(false);
+      });
+    }
   };
 
   return (
@@ -25,8 +29,9 @@ export const Footer = ({ onRefreshData }: Props) => {
         value={value}
         onChange={(value: string) => setValue(value)}
         onRefreshData={onRefreshData}
+        loading={loading}
       />
-      <SendButton onSend={handleSendMessage} />
+      <SendButton onSend={handleSendMessage} loading={loading} />
     </StyledFooter>
   );
 };

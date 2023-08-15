@@ -79,30 +79,6 @@ export const Content = ({ open, data }: Props) => {
             return null;
           })
         : null}
-      {/* <Message
-        text="Доброго дня! Я шукаю квартиру в Україні. Чи можете мені допомогти з цим?"
-        isOwner
-      />
-      <Message text="Звичайно! Радий допомогти з пошуком квартири." first />
-      <Message
-        text="Можете розповісти мені більше про ваші вимоги та бюджет?"
-        last
-      />
-      <Message text="Звичайно." isOwner first />
-      <Message
-        text="Я шукаю 2-кімнатну квартиру в центрі міста. Бажано з балконом та паркінгом."
-        isOwner
-        between
-      />
-      <Message text="Мій бюджет складає до $1000 на місяць." isOwner last />
-      <Message text="Розумію ваші вимоги. Я розпочну пошук та надішлю вам пропозиції найближчим часом. Якщо ви маєте якісь додаткові побажання, будь ласка, повідомте мене." />
-      <Photo photo={testImage} isOwner />
-      <Photo
-        photo={testImage}
-        text="Буду вам повідомляти про нові варіанти квартир та задавати питання, якщо потрібно буде додаткове уточнення."
-        isOwner
-      />
-      <Photo photo={testImage} text="Ось наприклад" /> */}
     </StyledContent>
   );
 };
@@ -119,7 +95,7 @@ const StyledContent = styled.div`
     }
   }
   @media (max-width: 1000px) {
-    height: calc(100vh - 115px);
+    height: calc(100vh - 150px);
     div {
       &::after {
         background: #2c2c2c;

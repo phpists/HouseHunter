@@ -3,11 +3,14 @@ import sendIcon from "../../../assets/images/arrow-right.svg";
 
 interface Props {
   onSend: () => void;
+  loading: boolean;
 }
 
-export const SendButton = ({ onSend }: Props) => (
+export const SendButton = ({ onSend, loading }: Props) => (
   <StyledSendButton
-    className="flex items-center justify-center"
+    className={`flex items-center justify-center ${
+      loading && "cursor-not-allowed opacity-90"
+    }`}
     onClick={onSend}
   >
     <img src={sendIcon} alt="" />

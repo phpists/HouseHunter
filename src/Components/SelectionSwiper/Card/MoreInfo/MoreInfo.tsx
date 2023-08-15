@@ -47,6 +47,7 @@ interface Props {
   images: string[];
   onChangeStatus: (value: string | null) => void;
   onSendRealtor: () => void;
+  onPhotoView: () => void;
 }
 
 export const MoreInfo = ({
@@ -65,6 +66,7 @@ export const MoreInfo = ({
   images,
   onChangeStatus,
   onSendRealtor,
+  onPhotoView,
 }: Props) => {
   const controls = useAnimationControls();
 
@@ -90,7 +92,7 @@ export const MoreInfo = ({
     >
       <Header onClose={handleClose} price={price} currency={currency} />
       <div className="content-wrapper">
-        <Slider images={images} type={type} />
+        <Slider images={images} type={type} onPhotoView={onPhotoView} />
         <div className="content-info">
           <Title title={title} />
           <div className="info-items">
@@ -135,6 +137,9 @@ const StyledMoreInfo = styled(motion.div)<StyledMoreInfoProps>`
   background: #2c2c2c;
   padding: 7px 15px 13px;
   padding-top: 7px;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   .info-items {
     font-family: "Open Sans", sans-serif;
     font-size: 13px !important;

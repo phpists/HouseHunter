@@ -8,13 +8,16 @@ interface Props {
   value: string;
   onChange: (value: string) => void;
   onRefreshData: () => void;
+  loading: boolean;
 }
 
-export const Input = ({ value, onChange, onRefreshData }: Props) => {
+export const Input = ({ value, onChange, onRefreshData, loading }: Props) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSelectPhoto = () => {
-    fileInputRef.current && fileInputRef.current.click();
+    if (fileInputRef.current && !loading) {
+      fileInputRef.current.click();
+    }
   };
 
   const handleUploadPhoto = (e: any) => {
@@ -29,12 +32,17 @@ export const Input = ({ value, onChange, onRefreshData }: Props) => {
   };
 
   return (
-    <StyledInput className="flex items-center">
+    <StyledInput
+      className={`flex items-center ${
+        loading && "cursor-not-allowed opacity-90"
+      }`}
+    >
       <input
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Повідомлення"
+        disabled={loading}
       />
       <input
         type="file"

@@ -26,13 +26,15 @@ export const NewSelectionDesktop = ({
           onOpen={() => onOpenInfo(card)}
           isNew
           onSendRealtor={() => onSendRealtor(card?.type, card?.id_object)}
-          area={"-"}
+          area={card?.total_house_area ?? "-"}
           currency={currency}
           price={card?.price ? card?.price[currency] : 0}
-          title={card?.title ?? ""}
+          title={
+            card?.title?.length > 0 ? card?.title : card?.description ?? ""
+          }
           location={getLocation(card?.location)}
-          doors={"-"}
-          stairs="- із -"
+          doors={card?.rooms ?? "-"}
+          stairs={`${card?.storey ?? "-"} із ${card?.storey_count ?? "-"}`}
           description={card?.description ?? ""}
           images={card?.image_url ?? []}
           onSwap={(direction) =>

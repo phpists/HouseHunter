@@ -21,7 +21,7 @@ export const MainInfo = ({ title, location, doors, area }: Props) => (
       <Divider />
       <Expand area={area} />
     </div>
-    <Title title={title ?? "Оренда 1 кім квартири п. орлика Дрогобич"} />
+    <Title title={title ?? ""} />
   </StyledMainInfo>
 );
 

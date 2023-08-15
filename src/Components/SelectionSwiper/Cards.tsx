@@ -7,6 +7,7 @@ import { getLocation } from "../../helpers";
 import { MoreInfo } from "./Card/MoreInfo/MoreInfo";
 import noPhoto from "../../assets/images/no-photo.svg";
 import { CardList } from "./CardList";
+import { PhotosView } from "./PhotosView/Photos";
 
 interface Props {
   cards: any[];
@@ -36,6 +37,18 @@ export const Cards = ({
 }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>([]);
+  const [openPhotoView, setOpenPhotoView] = useState<boolean>(false);
+  const [photosView, setPhotosView] = useState<string[]>([]);
+
+  const handleOpenPhotoView = (photos: string[]) => {
+    setOpenPhotoView(true);
+    setPhotosView(photos?.length > 0 ? photos : []);
+  };
+
+  const handleClosePhotoView = () => {
+    setOpenPhotoView(false);
+    setPhotosView([]);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -45,17 +58,30 @@ export const Cards = ({
 
   return (
     <>
+      <PhotosView
+        open={openPhotoView}
+        onClose={handleClosePhotoView}
+        images={photosView}
+      />
       {history ? (
         <MoreInfo
           type={cards[0]?.type ?? ""}
           price={cards[0]?.price ? cards[0]?.price[currency] : 0}
           currency={currency}
           location={getLocation(cards[0]?.location)}
-          doors={"-"}
-          area={"-"}
-          stairs="- із -"
-          box="-"
-          title={cards[0]?.title}
+          doors={cards[0]?.rooms ?? "-"}
+          area={cards[0]?.total_house_area ?? "-"}
+          stairs={`${cards[0]?.storey ?? "-"} із ${
+            cards[0]?.storey_count ?? "-"
+          }`}
+          box={cards[0]?.kitchen_area ?? "-"}
+          title={
+            cards[0]?.title?.length > 0
+              ? cards[0]?.title
+              : cards[0]?.description
+              ? cards[0]?.description.substring(0, 30)
+              : ""
+          }
           description={cards[0]?.description}
           index={10}
           onClose={() => (onClose ? onClose() : null)}
@@ -68,6 +94,11 @@ export const Cards = ({
           onSendRealtor={() =>
             onSendRealtor(cards[0]?.type, cards[0]?.id_object)
           }
+          onPhotoView={() =>
+            handleOpenPhotoView(
+              cards[0]?.image_url?.length > 0 ? cards[0]?.image_url : [noPhoto]
+            )
+          }
         />
       ) : (
         <StyledCards
@@ -77,7 +108,6 @@ export const Cards = ({
           {cardStatusChanged && history && (
             <Animation status={cardStatusChanged} />
           )}
-
           <CardList
             cards={data}
             history={history}
@@ -88,6 +118,7 @@ export const Cards = ({
             onChangeCurrency={onChangeCurrency}
             onClose={onClose}
             loading={loading}
+            onPhotoView={handleOpenPhotoView}
           />
         </StyledCards>
       )}

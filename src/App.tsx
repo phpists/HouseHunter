@@ -70,7 +70,7 @@ export const App = () => {
       {loading ? (
         <Spinner className="app-spinner" />
       ) : rieltor ? (
-        <StyledApp chatOpen={chatOpen} infoOpen={infoOpen}>
+        <StyledApp chatOpen={!!chatOpen} infoOpen={infoOpen}>
           <Header
             activeTab={activeTab}
             onChangeTab={handleChangeTab}
@@ -98,7 +98,7 @@ export const App = () => {
             />
           )}
           <div
-            className="content"
+            className={`content ${!!chatOpen && "chat-opened"}`}
             style={{ display: !!infoOpen ? "none" : "block" }}
           >
             <Routes>
@@ -136,7 +136,7 @@ export const App = () => {
 
 interface StyledAppProps {
   chatOpen: boolean;
-  infoOpen: any;
+  infoOpen: boolean;
 }
 
 const StyledApp = styled.div<StyledAppProps>`
@@ -144,12 +144,8 @@ const StyledApp = styled.div<StyledAppProps>`
   width: calc(100% - 16px);
   margin: 0 auto;
   @media (max-width: 1000px) {
-    ${({ chatOpen }) =>
-      chatOpen &&
-      `
-        .content {
-            display: none;
-        }
-    `}
+    .chat-opened {
+      display: none !important;
+    }
   }
 `;

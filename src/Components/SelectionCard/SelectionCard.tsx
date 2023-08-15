@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { Banner } from "./Banner/Banner";
 import { Info } from "./Info/Info";
 import { motion, useAnimationControls } from "framer-motion";
-import { useEffect } from "react";
+import { useState } from "react";
 
 interface Props {
   onOpen: () => void;
@@ -42,6 +42,7 @@ export const SelectionCard = ({
   like,
 }: Props) => {
   const controls = useAnimationControls();
+  const [isHide, setIsHide] = useState<boolean>(false);
 
   const handleSwap = (direction: string) => {
     if (onSwap) {
@@ -51,38 +52,42 @@ export const SelectionCard = ({
   };
 
   return (
-    <StyledSelectionCard
-      className={`${className}`}
-      animate={controls}
-      transition={{
-        type: "linear",
-        stiffness: 260,
-        damping: 30,
-      }}
-    >
-      <Banner
-        onOpen={onOpen}
-        isNew={isNew}
-        currency={currency}
-        price={price}
-        area={area}
-        images={images}
-        like={like}
-      />
-      <Info
-        onOpen={onOpen}
-        isNew={isNew}
-        onSendRealtor={onSendRealtor}
-        title={title}
-        location={location}
-        currency={currency}
-        price={price}
-        doors={doors}
-        stairs={stairs}
-        description={description}
-        onSwap={handleSwap}
-      />
-    </StyledSelectionCard>
+    <>
+      {!isHide && (
+        <StyledSelectionCard
+          className={`${className}`}
+          animate={controls}
+          transition={{
+            type: "linear",
+            stiffness: 260,
+            damping: 30,
+          }}
+        >
+          <Banner
+            onOpen={onOpen}
+            isNew={isNew}
+            currency={currency}
+            price={price}
+            area={area}
+            images={images}
+            like={like}
+          />
+          <Info
+            onOpen={onOpen}
+            isNew={isNew}
+            onSendRealtor={onSendRealtor}
+            title={title}
+            location={location}
+            currency={currency}
+            price={price}
+            doors={doors}
+            stairs={stairs}
+            description={description}
+            onSwap={handleSwap}
+          />
+        </StyledSelectionCard>
+      )}
+    </>
   );
 };
 

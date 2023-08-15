@@ -26,7 +26,7 @@ export const History = ({
   const [totalPages, setTotalPages] = useState<number>(10);
   const isFirstRender = useRef(true);
 
-  const handleGetHistory = () => {
+  const handleGetHistory = (cleanPrevData?: boolean) => {
     if (!loading && totalPages >= currentPage.current) {
       getHistory(currentPage.current, filterLiked ? 1 : undefined)
         .then((resp: any) => {
@@ -34,7 +34,10 @@ export const History = ({
           const pagesCount = resp?.data?.pages_count;
           setTotalPages(pagesCount);
           currentPage.current = currentPage.current + 1;
-          if (data) {
+          if (data && cleanPrevData) {
+            cardsData.current = data;
+            setCards(data);
+          } else if (data) {
             const updatedCards = cardsData.current
               ? [...cardsData.current, ...data]
               : [...data];
@@ -83,11 +86,13 @@ export const History = ({
   }, []);
 
   useEffect(() => {
-    setLoading(true);
-    cardsData.current = null;
-    setCards(null);
     currentPage.current = 1;
-    handleGetHistory();
+    handleGetHistory(true);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   }, [filterLiked]);
 
   const handleSwap = (
@@ -109,7 +114,6 @@ export const History = ({
     });
   };
 
-  console.log(cards);
   return (
     <>
       <StyledHistory className="content" isCards={!!cards}>
@@ -120,13 +124,13 @@ export const History = ({
             <SelectionCard
               key={i}
               onOpen={() => onOpenInfo(card)}
-              area={"-"}
+              area={card?.total_house_area ?? "-"}
               currency={currency}
               price={card?.price ? card?.price[currency] : 0}
               title={card?.title ?? ""}
               location={getLocation(card?.location)}
-              doors={"-"}
-              stairs="- із -"
+              doors={card?.rooms ?? "-"}
+              stairs={`${card?.storey ?? "-"} із ${card?.storey_count ?? "-"}`}
               description={card?.description ?? ""}
               images={card?.image_url ?? []}
               onSendRealtor={() => onSendRealtor(card?.type, card?.id_object)}
@@ -135,6 +139,7 @@ export const History = ({
               }
               noAnimation
               like={card?.like === 1}
+              className={"history-card"}
             />
           ))
         ) : (
@@ -142,7 +147,7 @@ export const History = ({
         )}
       </StyledHistory>
       {loading && cards && (
-        <div className="flex items-center justify-center my-2 mb-3">
+        <div className="flex items-center justify-center my-1 mb-16 spinner-more">
           <Spinner className="spinner" />
         </div>
       )}
@@ -156,11 +161,14 @@ interface StyledHistoryProps {
 
 const StyledHistory = styled.div<StyledHistoryProps>`
   margin: 50px 0;
+  display: flex;
+  flex-wrap: wrap;
   display: grid;
   grid-template-columns: repeat(4, calc((98% - (12px * 3)) / 4));
   gap: 24px 30px;
   grid-auto-rows: max-content;
   justify-content: center;
+
   .chat-card {
     grid-column: 3/4;
     grid-row: 1/3;
@@ -184,23 +192,23 @@ const StyledHistory = styled.div<StyledHistoryProps>`
     transform: translateX(-50%);
   }
   @media (max-width: 1200px) {
-    grid-template-columns: repeat(3, calc((98% - (24px * 2)) / 3));
+    grid-template-columns: repeat(3, calc((98% - (30px * 2)) / 3));
   }
   @media (min-width: 1000px) {
-    grid-template-columns: repeat(3, calc((98% - 24px) / 3));
+    grid-template-columns: repeat(3, calc((98% - 30px) / 3));
     .chat-card {
       display: block;
     }
   }
   @media (min-width: 1400px) {
-    grid-template-columns: repeat(4, calc((1400px - (24px * 3)) / 4));
+    grid-template-columns: repeat(4, calc((1400px - (30px * 3)) / 4));
     .chat-card {
       grid-column: 4/5;
       grid-row: 1/3;
     }
   }
   @media (max-width: 1000px) {
-    margin: 15px 0 100px;
+    margin: 15px 0 80px;
     border-radius: 13px;
     background: rgba(255, 255, 255, 0.12);
     ${({ isCards }) => isCards && "padding: 10px;"}
