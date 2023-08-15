@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { Banner } from "./Banner/Banner";
 import { Info } from "./Info/Info";
 import { motion, useAnimationControls } from "framer-motion";
-import { useState } from "react";
+import { useEffect } from "react";
 
 interface Props {
   onOpen: () => void;
@@ -21,6 +21,7 @@ interface Props {
   className?: string;
   noAnimation?: boolean;
   like?: boolean;
+  isHide?: boolean;
 }
 
 export const SelectionCard = ({
@@ -40,9 +41,9 @@ export const SelectionCard = ({
   className,
   noAnimation,
   like,
+  isHide,
 }: Props) => {
   const controls = useAnimationControls();
-  const [isHide, setIsHide] = useState<boolean>(false);
 
   const handleSwap = (direction: string) => {
     if (onSwap) {
@@ -51,43 +52,52 @@ export const SelectionCard = ({
     }
   };
 
+  useEffect(() => {
+    console.log("here");
+    controls.start({
+      scale: isHide ? 0 : 1,
+      opacity: isHide ? 0 : 1,
+    });
+  }, [isHide]);
+
+  useEffect(() => {
+    controls.start({ scale: 1, opacity: 1 });
+  }, []);
+
   return (
-    <>
-      {!isHide && (
-        <StyledSelectionCard
-          className={`${className}`}
-          animate={controls}
-          transition={{
-            type: "linear",
-            stiffness: 260,
-            damping: 30,
-          }}
-        >
-          <Banner
-            onOpen={onOpen}
-            isNew={isNew}
-            currency={currency}
-            price={price}
-            area={area}
-            images={images}
-            like={like}
-          />
-          <Info
-            onOpen={onOpen}
-            isNew={isNew}
-            onSendRealtor={onSendRealtor}
-            title={title}
-            location={location}
-            currency={currency}
-            price={price}
-            doors={doors}
-            stairs={stairs}
-            description={description}
-            onSwap={handleSwap}
-          />
-        </StyledSelectionCard>
-      )}
-    </>
+    <StyledSelectionCard
+      className={`${className}`}
+      animate={controls}
+      transition={{
+        type: "linear",
+        stiffness: 260,
+        damping: 30,
+      }}
+      initial={{ scale: 0, opacity: 0 }}
+    >
+      <Banner
+        onOpen={onOpen}
+        isNew={isNew}
+        currency={currency}
+        price={price}
+        area={area}
+        images={images}
+        like={like}
+      />
+      <Info
+        onOpen={onOpen}
+        isNew={isNew}
+        onSendRealtor={onSendRealtor}
+        title={title}
+        location={location}
+        currency={currency}
+        price={price}
+        doors={doors}
+        stairs={stairs}
+        description={description}
+        onSwap={handleSwap}
+      />
+    </StyledSelectionCard>
   );
 };
 

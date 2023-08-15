@@ -25,6 +25,7 @@ export const History = ({
   const isLoading = useRef(false);
   const [totalPages, setTotalPages] = useState<number>(10);
   const isFirstRender = useRef(true);
+  const [isFiltered, setIsFiltered] = useState<boolean>(false);
 
   const handleGetHistory = (cleanPrevData?: boolean) => {
     if (!loading && totalPages >= currentPage.current) {
@@ -36,8 +37,11 @@ export const History = ({
           currentPage.current = currentPage.current + 1;
           isFirstRender.current = false;
           if (data && cleanPrevData) {
-            cardsData.current = data;
             setCards(data);
+            cardsData.current = data;
+            setTimeout(() => {
+              setIsFiltered(filterLiked);
+            }, 100);
           } else if (data) {
             const updatedCards = cardsData.current
               ? [...cardsData.current, ...data]
@@ -71,7 +75,6 @@ export const History = ({
     }
     setLoading(true);
     isLoading.current = true;
-    console.log("here1");
     handleGetHistory();
   };
 
@@ -96,6 +99,7 @@ export const History = ({
         left: 0,
         behavior: "smooth",
       });
+      filterLiked && setIsFiltered(true);
     }
   }, [filterLiked]);
 
@@ -143,7 +147,7 @@ export const History = ({
               }
               noAnimation
               like={card?.like === 1}
-              className={"history-card"}
+              isHide={isFiltered && card?.like === 0}
             />
           ))
         ) : (
@@ -172,7 +176,7 @@ const StyledHistory = styled.div<StyledHistoryProps>`
   gap: 24px 30px;
   grid-auto-rows: max-content;
   justify-content: center;
-
+  transition: all 0.3s;
   .chat-card {
     grid-column: 3/4;
     grid-row: 1/3;
@@ -195,6 +199,7 @@ const StyledHistory = styled.div<StyledHistoryProps>`
     left: 50%;
     transform: translateX(-50%);
   }
+
   @media (max-width: 1200px) {
     grid-template-columns: repeat(3, calc((98% - (30px * 2)) / 3));
   }

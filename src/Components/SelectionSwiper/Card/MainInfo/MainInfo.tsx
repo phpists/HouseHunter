@@ -14,12 +14,14 @@ interface Props {
 
 export const MainInfo = ({ title, location, doors, area }: Props) => (
   <StyledMainInfo className="maininfo">
-    <div className="flex items-center items">
+    <div className="flex items-center items justify-between">
       <Location location={location} />
-      <Divider />
-      <Doors doors={doors} />
-      <Divider />
-      <Expand area={area} />
+      <div className="flex items-center">
+        <Divider />
+        <Doors doors={doors} />
+        <Divider />
+        <Expand area={area} />
+      </div>
     </div>
     <Title title={title ?? ""} />
   </StyledMainInfo>

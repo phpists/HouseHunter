@@ -12,10 +12,10 @@ export const Location = ({ location }: Props) => (
 );
 
 const StyledLocation = styled.div`
+  width: 60%;
   span {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 195px;
   }
 `;
