@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { BackButton } from "./BackButton";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PhotoProvider, PhotoSlider, PhotoView } from "react-photo-view";
 
 interface Props {
@@ -14,6 +14,7 @@ interface Props {
 export const PhotosView = ({ open, onClose, images, defaultPhoto }: Props) => {
   const [openView, setOpenView] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
+  const photosViewRef = useRef<HTMLDivElement>(null);
 
   const handleCheckWidth = () => {
     if (window.innerWidth > 1000) {
@@ -27,9 +28,12 @@ export const PhotosView = ({ open, onClose, images, defaultPhoto }: Props) => {
   }, []);
 
   useEffect(() => {
-    if (open && defaultPhoto?.toString()) {
-      setOpenView(true);
-      setIndex(defaultPhoto);
+    if (open && defaultPhoto?.toString() && photosViewRef.current) {
+      const photo: any = photosViewRef.current.children[1 + defaultPhoto];
+      const photoOffsetTop = photo?.offsetTop ?? 0;
+      photosViewRef.current.scroll({
+        top: photoOffsetTop,
+      });
     }
   }, [open]);
 
@@ -49,6 +53,7 @@ export const PhotosView = ({ open, onClose, images, defaultPhoto }: Props) => {
             stiffness: 260,
             damping: 30,
           }}
+          ref={photosViewRef}
         >
           <BackButton onClick={onClose} />
           <PhotoSlider
