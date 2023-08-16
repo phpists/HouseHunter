@@ -52,13 +52,13 @@ export const SelectionCard = ({
     }
   };
 
-  useEffect(() => {
-    console.log("here");
-    controls.start({
-      scale: isHide ? 0 : 1,
-      opacity: isHide ? 0 : 1,
-    });
-  }, [isHide]);
+  //   useEffect(() => {
+  //     controls.start({
+  //       scale: isHide ? 0 : 1,
+  //       opacity: isHide ? 0 : 1,
+  //       display: isHide ? "none" : "block",
+  //     });
+  //   }, [isHide]);
 
   useEffect(() => {
     controls.start({ scale: 1, opacity: 1 });

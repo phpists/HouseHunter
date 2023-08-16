@@ -16,7 +16,6 @@ export const Content = ({ open, data }: Props) => {
     if (contentRef.current) {
       contentRef.current.scroll({
         top: contentRef.current.scrollHeight,
-        behavior: "smooth",
       });
     }
   }, [open, data]);
@@ -95,7 +94,7 @@ const StyledContent = styled.div`
     }
   }
   @media (max-width: 1000px) {
-    height: calc(100vh - 150px);
+    height: calc(100svh - 150px);
     div {
       &::after {
         background: #2c2c2c;

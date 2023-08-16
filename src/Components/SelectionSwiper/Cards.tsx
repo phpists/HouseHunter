@@ -99,6 +99,7 @@ export const Cards = ({
               cards[0]?.image_url?.length > 0 ? cards[0]?.image_url : [noPhoto]
             )
           }
+          cardStatusChanged={cardStatusChanged}
         />
       ) : (
         <StyledCards
@@ -131,7 +132,7 @@ interface StyledCardsProps {
 }
 
 const StyledCards = styled.div<StyledCardsProps>`
-  height: calc(100vh - 320px);
+  height: calc(100svh - 230px);
   width: 100%;
   margin-bottom: 15px;
   border-radius: 13px;

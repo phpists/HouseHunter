@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect, useRef } from "react";
 import { styled } from "styled-components";
 import { SelectionCard } from "../../Components/SelectionCard/SelectionCard";
@@ -10,6 +11,7 @@ interface Props {
   currency: string;
   onSendRealtor: (type: string, id: string) => void;
   filterLiked: boolean;
+  infoOpen: boolean;
 }
 
 export const History = ({
@@ -17,6 +19,7 @@ export const History = ({
   currency,
   onSendRealtor,
   filterLiked,
+  infoOpen,
 }: Props) => {
   const currentPage = useRef<number>(0);
   const [cards, setCards] = useState<any>(null);
@@ -116,7 +119,6 @@ export const History = ({
           ? { ...card, like: direction === "right" ? 1 : 0 }
           : card
       );
-
       setCards(updatedData);
       cardsData.current = updatedData;
     });
@@ -131,7 +133,13 @@ export const History = ({
           cards?.map((card: any, i: number) => (
             <SelectionCard
               key={i}
-              onOpen={() => onOpenInfo(card)}
+              onOpen={() =>
+                onOpenInfo({
+                  ...card,
+                  handleSwap: (direction) =>
+                    handleSwap(i, direction, card?.id_object, card?.type),
+                })
+              }
               area={card?.total_house_area ?? "-"}
               currency={currency}
               price={card?.price ? card?.price[currency] : 0}

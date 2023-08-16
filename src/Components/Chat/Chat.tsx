@@ -54,7 +54,7 @@ const StyledChat = styled.div`
     background: #2c2c2c;
     display: none;
     transform: translateX(0);
-    position: relative;
+    position: unset;
     width: 100%;
     bottom: unset;
     right: unset;

@@ -250,7 +250,7 @@ interface StyledCardProps {
 
 const StyledCard = styled.div<StyledCardProps>`
   position: absolute;
-  height: calc(100vh - 330px);
+  height: calc(100svh - 240px);
   /* overflow: auto; */
   font-size: 80px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
@@ -259,7 +259,7 @@ const StyledCard = styled.div<StyledCardProps>`
   background: #2c2c2c;
   border-radius: 13px;
   top: ${({ index, totalCards }) =>
-    totalCards === index ? 20 : totalCards - 1 === index ? 0 : -15}px;
+    totalCards === index ? 20 : totalCards - 1 === index ? 0 : -20}px;
   scale: ${({ index, totalCards }) =>
     totalCards === index ? 1 : totalCards - 1 === index ? 0.95 : 0.9};
   filter: blur(

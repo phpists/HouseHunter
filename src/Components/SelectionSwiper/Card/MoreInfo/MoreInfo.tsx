@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { Slider } from "./Slider/Slider";
 import { Header } from "./Header";
 import { Footer } from "../../Footer/Footer";
+import { Animation } from "../../Animation";
 // const AMENITIES_DATA = [
 //   { icon: dogIcon, title: "Можна з тваринами" },
 //   { icon: washingMachineIcon, title: "Пральна машина є" },
@@ -48,6 +49,7 @@ interface Props {
   onChangeStatus: (value: string | null) => void;
   onSendRealtor: () => void;
   onPhotoView: () => void;
+  cardStatusChanged: string | null;
 }
 
 export const MoreInfo = ({
@@ -67,6 +69,7 @@ export const MoreInfo = ({
   onChangeStatus,
   onSendRealtor,
   onPhotoView,
+  cardStatusChanged,
 }: Props) => {
   const controls = useAnimationControls();
 
@@ -92,6 +95,7 @@ export const MoreInfo = ({
     >
       <Header onClose={handleClose} price={price} currency={currency} />
       <div className="content-wrapper">
+        {cardStatusChanged && <Animation status={cardStatusChanged} />}
         <Slider images={images} type={type} onPhotoView={onPhotoView} />
         <div className="content-info">
           <Title title={title} />
@@ -162,6 +166,7 @@ const StyledMoreInfo = styled(motion.div)<StyledMoreInfoProps>`
     height: calc(100vh - 220px);
     overflow: auto;
     margin-bottom: 15px;
+    position: relative;
     .content-info {
       padding: 14px;
     }

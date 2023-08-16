@@ -111,6 +111,7 @@ export const App = () => {
                     currency={currency}
                     onSendRealtor={handleSendSelection}
                     filterLiked={filterLiked}
+                    infoOpen={!!infoOpen}
                   />
                 }
               />

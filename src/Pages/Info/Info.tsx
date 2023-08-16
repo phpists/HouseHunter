@@ -56,7 +56,11 @@ export const Info = ({
     id: string,
     type: string
   ) => {
-    rate(direction === "right" ? 1 : 0, id, type);
+    if (infoOpen?.handleSwap) {
+      infoOpen?.handleSwap(direction);
+    } else {
+      rate(direction === "right" ? 1 : 0, id, type);
+    }
   };
 
   return (

@@ -37,10 +37,17 @@ export const SelectionSwiper = ({
     if (!cardStatusChanged) {
       setCardStatusChanged(value);
       if (value) {
-        setTimeout(() => {
+        if (history) {
           onSwap(index, value, id, type);
-          setCardStatusChanged(null);
-        }, 400);
+          setTimeout(() => {
+            setCardStatusChanged(null);
+          }, 3000);
+        } else {
+          setTimeout(() => {
+            onSwap(index, value, id, type);
+            setCardStatusChanged(null);
+          }, 400);
+        }
       }
     }
   };
