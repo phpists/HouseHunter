@@ -46,7 +46,10 @@ export const App = () => {
 
   const handleSendSelection = (type: string, id: string) => {
     setChatOpen(false);
-    sendMessage("", undefined, type, id).then(() => setChatOpen(true));
+    sendMessage("", undefined, type, id).then(() => {
+      setChatOpen(true);
+      setInfoOpen(null);
+    });
   };
 
   const handleGetRieltor = () => {
