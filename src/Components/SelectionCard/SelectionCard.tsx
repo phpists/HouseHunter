@@ -22,6 +22,7 @@ interface Props {
   noAnimation?: boolean;
   like?: boolean;
   isHide?: boolean;
+  isFiltering?: boolean;
 }
 
 export const SelectionCard = ({
@@ -52,13 +53,14 @@ export const SelectionCard = ({
     }
   };
 
-  //   useEffect(() => {
-  //     controls.start({
-  //       scale: isHide ? 0 : 1,
-  //       opacity: isHide ? 0 : 1,
-  //       display: isHide ? "none" : "block",
-  //     });
-  //   }, [isHide]);
+  useEffect(() => {
+    controls.start({
+      scale: isHide ? 0 : 1,
+      filter: isHide ? "blur(10px)" : "blur(0px)",
+      opacity: isHide ? 0 : 1,
+      transition: { duration: 0.5 },
+    });
+  }, [isHide]);
 
   useEffect(() => {
     controls.start({ scale: 1, opacity: 1 });
@@ -83,6 +85,7 @@ export const SelectionCard = ({
         area={area}
         images={images}
         like={like}
+        isHide={isHide}
       />
       <Info
         onOpen={onOpen}

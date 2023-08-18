@@ -40,3 +40,15 @@ export const handleDownload = (fileLink: string) => {
   link.click();
   link.remove();
 };
+
+export const removeDublicats = (array: any) => {
+  const updatedArray: any = [];
+
+  array.forEach((element: any) => {
+    if (!updatedArray.find((e: any) => e.id_object === element.id_object)) {
+      updatedArray.push(element);
+    }
+  });
+
+  return updatedArray;
+};

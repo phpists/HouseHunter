@@ -23,7 +23,7 @@ interface Props {
 }
 
 export const Slider = ({ images, index }: Props) => {
-  const [currentSlide, setCurrentSlide] = useState<number>(1);
+  const [currentSlide, setCurrentSlide] = useState(1);
 
   return (
     <>

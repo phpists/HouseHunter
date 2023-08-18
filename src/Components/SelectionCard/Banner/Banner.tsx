@@ -4,7 +4,7 @@ import { Area } from "./Area";
 import { Status } from "./Status";
 import { Price } from "./Price";
 import { ShowBtn } from "./ShowBtn";
-
+import noPhoto from "../../../assets/images/no-photo.svg";
 interface Props {
   onOpen: () => void;
   isNew?: boolean;
@@ -13,6 +13,7 @@ interface Props {
   price: number;
   images: string[];
   like?: boolean;
+  isHide?: boolean;
 }
 
 export const Banner = ({
@@ -23,18 +24,23 @@ export const Banner = ({
   price,
   images,
   like,
+  isHide,
 }: Props) => {
   return (
     <StyledBanner status={!!like} isNew={!!isNew}>
       <Area area={area} onOpen={onOpen} />
-      {!isNew && (
+      {!isNew && !isHide && (
         <>
           {/* <ShowBtn onOpen={onOpen} /> */}
           <Status status={!!like} onOpen={onOpen} />
         </>
       )}
       <Price price={price} currency={currency} onOpen={onOpen} />
-      <Slider isNew={isNew} onOpen={onOpen} images={images} />
+      <Slider
+        isNew={isNew}
+        onOpen={onOpen}
+        images={images?.length > 0 ? images : [noPhoto]}
+      />
     </StyledBanner>
   );
 };

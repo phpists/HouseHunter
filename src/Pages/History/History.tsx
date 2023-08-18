@@ -26,12 +26,13 @@ export const History = ({
   const cardsData = useRef<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const isLoading = useRef(false);
-  const [totalPages, setTotalPages] = useState<number>(10);
+  const [totalPages, setTotalPages] = useState<number>(3);
   const isFirstRender = useRef(true);
   const [isFiltered, setIsFiltered] = useState<boolean>(false);
 
   const handleGetHistory = (cleanPrevData?: boolean) => {
     if (!loading && totalPages >= currentPage.current) {
+      console.log(currentPage.current, totalPages);
       getHistory(currentPage.current, filterLiked ? 1 : undefined)
         .then((resp: any) => {
           const data = resp?.data?.data;
@@ -44,7 +45,7 @@ export const History = ({
             cardsData.current = data;
             setTimeout(() => {
               setIsFiltered(filterLiked);
-            }, 100);
+            }, 1000);
           } else if (data) {
             const updatedCards = cardsData.current
               ? [...cardsData.current, ...data]
@@ -53,6 +54,10 @@ export const History = ({
             setCards(updatedCards);
             setLoading(false);
             isLoading.current = false;
+          } else if (cardsData.current.length > 0) {
+            setLoading(false);
+            isLoading.current = false;
+            setTotalPages(1);
           } else {
             cardsData.current = [];
             setCards([]);
@@ -96,7 +101,9 @@ export const History = ({
   useEffect(() => {
     if (cards) {
       currentPage.current = 0;
-      handleGetHistory(true);
+      setTimeout(() => {
+        handleGetHistory(true);
+      }, 300);
       window.scrollTo({
         top: 0,
         left: 0,
@@ -132,7 +139,7 @@ export const History = ({
         ) : cards?.length > 0 ? (
           cards?.map((card: any, i: number) => (
             <SelectionCard
-              key={i}
+              //   key={i}
               onOpen={() =>
                 onOpenInfo({
                   ...card,

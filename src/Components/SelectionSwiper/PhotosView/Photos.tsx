@@ -63,6 +63,7 @@ const StyledPhotosView = styled(motion.div)`
     display: none !important;
   }
   img {
-    width: 100%;
+    width: 90%;
+    margin: 20px auto;
   }
 `;

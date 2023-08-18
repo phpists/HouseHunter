@@ -102,5 +102,6 @@ const StyledInfo = styled.div`
     margin: 50px auto;
     display: block;
     z-index: 1000;
+    padding-top: 50px;
   }
 `;

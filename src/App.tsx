@@ -74,7 +74,7 @@ export const App = () => {
       {loading ? (
         <Spinner className="app-spinner" />
       ) : rieltor ? (
-        <StyledApp chatOpen={!!chatOpen} infoOpen={infoOpen}>
+        <>
           <Header
             activeTab={activeTab}
             onChangeTab={handleChangeTab}
@@ -87,51 +87,55 @@ export const App = () => {
             onChangeCurrency={handleChangeCurrency}
             rieltor={rieltor}
           />
-          <Chat
-            open={chatOpen}
-            onCloseChat={() => setChatOpen(false)}
-            rieltor={rieltor}
-          />
-          {infoOpen && (
-            <Info
-              infoOpen={infoOpen}
-              onClose={() => setInfoOpen(null)}
-              onSendRealtor={handleSendSelection}
-              currency={currency}
-              onChangeCurrency={handleChangeCurrency}
+          <StyledApp chatOpen={!!chatOpen} infoOpen={infoOpen}>
+            <Chat
+              open={chatOpen}
+              onCloseChat={() => setChatOpen(false)}
+              rieltor={rieltor}
             />
-          )}
-          <div
-            className={`content ${!!chatOpen && "chat-opened"}`}
-            style={{ display: !!infoOpen ? "none" : "block" }}
-          >
-            <Routes>
-              <Route
-                path="/history"
-                element={
-                  <History
-                    onOpenInfo={handleOpenInfo}
-                    currency={currency}
-                    onSendRealtor={handleSendSelection}
-                    filterLiked={filterLiked}
-                    infoOpen={!!infoOpen}
-                  />
-                }
+            {infoOpen && (
+              <Info
+                infoOpen={infoOpen}
+                onClose={() => setInfoOpen(null)}
+                onSendRealtor={handleSendSelection}
+                currency={currency}
+                onChangeCurrency={handleChangeCurrency}
               />
-              <Route
-                path="*"
-                element={
-                  <NewSelections
-                    onOpenInfo={handleOpenInfo}
-                    onSendRealtor={handleSendSelection}
-                    currency={currency}
-                    onChangeCurrency={handleChangeCurrency}
-                  />
-                }
-              />
-            </Routes>
-          </div>
-        </StyledApp>
+            )}
+            <div
+              className={`content main-app-content ${
+                !!chatOpen && "chat-opened"
+              }`}
+              style={{ display: !!infoOpen ? "none" : "block" }}
+            >
+              <Routes>
+                <Route
+                  path="/history"
+                  element={
+                    <History
+                      onOpenInfo={handleOpenInfo}
+                      currency={currency}
+                      onSendRealtor={handleSendSelection}
+                      filterLiked={filterLiked}
+                      infoOpen={!!infoOpen}
+                    />
+                  }
+                />
+                <Route
+                  path="*"
+                  element={
+                    <NewSelections
+                      onOpenInfo={handleOpenInfo}
+                      onSendRealtor={handleSendSelection}
+                      currency={currency}
+                      onChangeCurrency={handleChangeCurrency}
+                    />
+                  }
+                />
+              </Routes>
+            </div>
+          </StyledApp>
+        </>
       ) : (
         <div className="empty-title">Підбірку не знайдено</div>
       )}
@@ -148,9 +152,15 @@ const StyledApp = styled.div<StyledAppProps>`
   max-width: 1400px;
   width: calc(100% - 16px);
   margin: 0 auto;
+  .main-app-content {
+    padding-top: 73px;
+  }
   @media (max-width: 1000px) {
     .chat-opened {
       display: none !important;
+    }
+    .main-app-content {
+      padding-top: 140px;
     }
   }
 `;

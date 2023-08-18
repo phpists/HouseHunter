@@ -89,6 +89,7 @@ const StyledPhotosView = styled(motion.div)`
   background: #454545;
   overflow: auto;
   img {
-    width: 100%;
+    width: 80%;
+    margin: 20px auto;
   }
 `;

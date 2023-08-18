@@ -8,7 +8,7 @@ import { MainInfo } from "./MainInfo/MainInfo";
 import { MoreInfo } from "./MoreInfo/MoreInfo";
 import { Type } from "./Type";
 import { SwipeStatus } from "./SwipeStatus";
-
+import noPhoto from "../../../assets/images/no-photo.svg";
 interface Props {
   type: string;
   currency: string;
@@ -237,7 +237,10 @@ export const Card = ({
         />
         <Type type={type} className="maininfo" />
         <MainInfo title={title} location={location} doors={doors} area={area} />
-        <Slider images={images} index={index} />
+        <Slider
+          images={images?.length === 0 ? [noPhoto] : images}
+          index={index}
+        />
       </StyledCard>
     </>
   );

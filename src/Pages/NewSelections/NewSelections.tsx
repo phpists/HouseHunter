@@ -3,6 +3,7 @@ import { NewSelectionDesktop } from "./NewSelectionDesktop/NewSelectionDesktop";
 import { useEffect, useState, useRef } from "react";
 import { getNewSelections, rate } from "../../api/methods";
 import { Spinner } from "../../Components/Spinner";
+import { removeDublicats } from "../../helpers";
 
 interface Props {
   onOpenInfo: (card: any) => void;
@@ -30,8 +31,9 @@ export const NewSelections = ({
       const data = resp?.data?.data;
       setLoading(false);
       if (data) {
-        cardsData.current = [...cardsData.current, ...data];
-        setCards(cardsData.current);
+        const updatedData = removeDublicats([...cardsData.current, ...data]);
+        cardsData.current = updatedData;
+        setCards(updatedData);
       }
     });
   };
@@ -51,13 +53,13 @@ export const NewSelections = ({
       cardsData.current = updatedCards;
       rate(direction === "right" ? 1 : 0, id, type).then(() => {
         if (updatedCards.length <= 10) {
-          handleGetSelections(10);
+          handleGetSelections(20);
         }
       });
     } else {
       removed.current = [...removed.current, id];
       rate(direction === "right" ? 1 : 0, id, type).then(() => {
-        if (removed.current.length >= 10 || cardsData.current.length <= 10) {
+        if (removed.current.length >= 15 || cardsData.current.length <= 10) {
           const updatedCards = [...cardsData.current].filter(
             (card, i) =>
               !removed.current.find((id: any) => card.id_object === id)
@@ -65,7 +67,7 @@ export const NewSelections = ({
           setCards(updatedCards);
           cardsData.current = updatedCards;
           removed.current = [];
-          handleGetSelections(10);
+          handleGetSelections(20);
         }
       });
     }
@@ -78,6 +80,7 @@ export const NewSelections = ({
     }
   }, []);
 
+  console.log(cards);
   return (
     <>
       {loading ? (

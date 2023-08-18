@@ -136,7 +136,7 @@ const StyledMoreInfo = styled(motion.div)<StyledMoreInfoProps>`
   right: 0;
   height: 100vh;
   overflow: auto;
-  z-index: ${({ index }) => 1 + index};
+  z-index: ${({ index }) => 100 + index};
   color: #fff;
   background: #2c2c2c;
   padding: 7px 15px 13px;
