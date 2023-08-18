@@ -67,7 +67,7 @@ export const History = ({
           cardsData.current = [];
           setCards([]);
         });
-    } else if (totalPages < currentPage.current) {
+    } else {
       setLoading(false);
       isLoading.current = false;
     }
