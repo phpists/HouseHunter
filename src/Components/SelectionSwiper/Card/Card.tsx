@@ -31,6 +31,7 @@ interface Props {
   cardStatusChanged?: null | string;
   loading?: string;
   onPhotoView?: () => void;
+  disabled?: boolean;
 }
 
 export const Card = ({

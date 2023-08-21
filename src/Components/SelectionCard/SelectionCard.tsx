@@ -48,7 +48,6 @@ export const SelectionCard = ({
 
   const handleSwap = (direction: string) => {
     if (onSwap) {
-      !noAnimation && controls.start({ scale: 0, width: 0, margin: 0 });
       onSwap(direction);
     }
   };
@@ -58,6 +57,7 @@ export const SelectionCard = ({
       scale: isHide ? 0 : 1,
       filter: isHide ? "blur(10px)" : "blur(0px)",
       opacity: isHide ? 0 : 1,
+      flexShrink: isHide ? "initial" : 0,
       transition: { duration: 0.5 },
     });
   }, [isHide]);

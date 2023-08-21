@@ -9,6 +9,7 @@ interface Props {
   onSendRealtor: (type: string, id: string) => void;
   currency: string;
   onSwap: (index: number, direction: string, id: string, type: string) => void;
+  removed: any[];
 }
 
 export const NewSelectionDesktop = ({
@@ -17,6 +18,7 @@ export const NewSelectionDesktop = ({
   onSendRealtor,
   currency,
   onSwap,
+  removed,
 }: Props) => (
   <StyledNewSelectionDesktop>
     {cards?.length > 0 ? (
@@ -40,7 +42,10 @@ export const NewSelectionDesktop = ({
           onSwap={(direction) =>
             onSwap(i, direction, card?.id_object, card?.type)
           }
-          className={`selection-card-desctop`}
+          className={`selection-card-desctop ${
+            !!removed.find((id: any) => id === card?.id_object) &&
+            "selection-card-desctop-hide"
+          }`}
         />
       ))
     ) : (
@@ -51,9 +56,6 @@ export const NewSelectionDesktop = ({
 
 const StyledNewSelectionDesktop = styled.div`
   display: flex;
-  /* grid-template-columns: repeat(4, minmax(0px, calc((98% - (24px * 2)) / 4))); */
-  /* grid-auto-rows: max-content;
-  justify-content: center; */
   margin: 30px 0 0;
   height: calc(100vh - 138px);
   overflow: hidden;
@@ -64,12 +66,14 @@ const StyledNewSelectionDesktop = styled.div`
     width: calc((98% - (24px * 2)) / 4);
     margin-right: 24px;
   }
+  .selection-card-desctop-hide {
+    scale: 0;
+    margin: 0 !important;
+    transition: all 0.3s;
+    flex-shrink: initial !important;
+    width: 0 !important;
+  }
   @media (max-width: 1200px) {
-    /* grid-template-columns: repeat(3, minmax(0, calc((98% - (24px * 2)) / 3))); */
-
-    .selection-card-desctop:nth-child(4) {
-      display: none;
-    }
     .selection-card-desctop {
       width: calc((98% - (24px * 2)) / 3);
     }

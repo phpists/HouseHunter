@@ -23,7 +23,8 @@ export const NewSelections = ({
   const cardsData = useRef<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const isFirstRender = useRef(true);
-  const removed = useRef<any>([]);
+  const [removed, setRemoved] = useState<any[]>([]);
+  const removedData = useRef<any>([]);
 
   const handleGetSelections = (perPage?: number, isMore?: boolean) => {
     setLoading(!isMore);
@@ -34,6 +35,7 @@ export const NewSelections = ({
       isLastPage.current = totalPage === 1;
       if (data) {
         const updatedData = removeDublicats([...cardsData.current, ...data]);
+        console.log(updatedData);
         cardsData.current = updatedData;
         setCards(updatedData);
       }
@@ -48,17 +50,14 @@ export const NewSelections = ({
     notRemove?: boolean
   ) => {
     if (!notRemove) {
-      const prevCards = [...cardsData.current];
-      const updatedCards = [...cardsData.current].filter(
-        (card, i) => card.id_object !== id
-      );
-      setCards(updatedCards);
-      cardsData.current = updatedCards;
       rate(direction === "right" ? 1 : 0, id, type).then(
         (errorCode: number) => {
-          if (errorCode !== 0) {
-            setCards(prevCards);
-            cardsData.current = prevCards;
+          if (errorCode === 0) {
+            const updatedCards = [...cardsData.current].filter(
+              (card, i) => card.id_object !== id
+            );
+            setCards(updatedCards);
+            cardsData.current = updatedCards;
           }
           if (cardsData.current.length <= 10 && !isLastPage.current) {
             setTimeout(() => handleGetSelections(20, true), 400);
@@ -66,20 +65,23 @@ export const NewSelections = ({
         }
       );
     } else {
-      removed.current = [...removed.current, id];
+      setRemoved([...removedData.current, id]);
+      removedData.current = [...removedData.current, id];
       rate(direction === "right" ? 1 : 0, id, type).then(() => {
         if (
-          removed.current.length >= 15 ||
-          (cardsData.current.length <= 10 && !isLastPage.current)
+          removedData.current.length >= 15 ||
+          (cardsData.current.length <= 10 && !isLastPage.current) ||
+          cardsData.current.length === removedData.current.length
         ) {
           const updatedCards = [...cardsData.current].filter(
             (card, i) =>
-              !removed.current.find((id: any) => card.id_object === id)
+              !removedData.current.find((id: any) => card.id_object === id)
           );
           setCards(updatedCards);
           cardsData.current = updatedCards;
-          removed.current = [];
-          setTimeout(() => handleGetSelections(20, true), 400);
+          removedData.current = [];
+          setRemoved([]);
+          handleGetSelections(20, true);
         }
       });
     }
@@ -106,6 +108,7 @@ export const NewSelections = ({
             onSwap={(index, direction, id, type) =>
               handleSwap(index, direction, id, type, true)
             }
+            removed={removed}
           />
           <SelectionSwiper
             cards={[...cards].reverse()}

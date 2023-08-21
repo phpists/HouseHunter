@@ -2,6 +2,7 @@ import axios from "axios";
 import { baseUrl } from "./baseUrl";
 import { getIdFromUrl } from "../helpers";
 import { errors } from "../constants/errors";
+import cogoToast from "cogo-toast";
 
 const headers = {
   "Content-Type": "application/x-www-form-urlencoded",
@@ -33,7 +34,7 @@ export const rate = async (like: number, id_object: string, type: string) => {
         return errorCode;
       } else {
         // @ts-ignore: Unreachable code error
-        alert(errors[errorCode] ?? "Помилка");
+        cogoToast.error(errors[errorCode] ?? "Помилка");
         return errorCode;
       }
     })
@@ -93,7 +94,7 @@ export const sendMessage = async (
         return resp;
       } else {
         // @ts-ignore: Unreachable code error
-        alert(errors[errorCode] ?? "Помилка");
+        cogoToast.error(errors[errorCode] ?? "Помилка");
         return resp;
       }
     })
