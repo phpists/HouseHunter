@@ -29,6 +29,8 @@ export const History = ({
   const [totalPages, setTotalPages] = useState<number>(3);
   const isFirstRender = useRef(true);
   const [isFiltered, setIsFiltered] = useState<boolean>(false);
+  const historyRef = useRef<HTMLDivElement>(null);
+  const scrolledTop = useRef<null | number>(null);
 
   const handleGetHistory = (cleanPrevData?: boolean) => {
     if (!loading && totalPages >= currentPage.current) {
@@ -131,22 +133,35 @@ export const History = ({
     });
   };
 
+  const handleOpenInfo = (card: any, i: number) => {
+    scrolledTop.current = window.scrollY;
+    onOpenInfo({
+      ...card,
+      handleSwap: (direction) =>
+        handleSwap(i, direction, card?.id_object, card?.type),
+    });
+  };
+
+  useEffect(() => {
+    if (!infoOpen && scrolledTop.current) {
+      window.scrollTo({
+        top: scrolledTop.current,
+        left: 0,
+      });
+      scrolledTop.current = null;
+    }
+  }, [infoOpen]);
+
   return (
     <>
-      <StyledHistory className="content" isCards={!!cards}>
+      <StyledHistory className="content" isCards={!!cards} ref={historyRef}>
         {!cards ? (
           <Spinner className="main-spinner" />
         ) : cards?.length > 0 ? (
           cards?.map((card: any, i: number) => (
             <SelectionCard
               //   key={i}
-              onOpen={() =>
-                onOpenInfo({
-                  ...card,
-                  handleSwap: (direction) =>
-                    handleSwap(i, direction, card?.id_object, card?.type),
-                })
-              }
+              onOpen={() => handleOpenInfo(card, i)}
               area={card?.total_house_area ?? "-"}
               currency={currency}
               price={card?.price ? card?.price[currency] : 0}
