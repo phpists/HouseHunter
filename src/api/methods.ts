@@ -1,6 +1,7 @@
 import axios from "axios";
 import { baseUrl } from "./baseUrl";
 import { getIdFromUrl } from "../helpers";
+import { errors } from "../constants/errors";
 
 const headers = {
   "Content-Type": "application/x-www-form-urlencoded",
@@ -26,8 +27,19 @@ export const rate = async (like: number, id_object: string, type: string) => {
       { id, like, id_object, type },
       { headers }
     )
-    .then((resp) => resp)
-    .catch((error) => error);
+    .then((resp) => {
+      const errorCode = resp?.data.error;
+      if (errorCode === 0) {
+        return errorCode;
+      } else {
+        // @ts-ignore: Unreachable code error
+        alert(errors[errorCode] ?? "Помилка");
+        return errorCode;
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 export const getHistory = async (page: number, like?: number) => {
@@ -75,6 +87,15 @@ export const sendMessage = async (
 
   return axios
     .post(`${baseUrl}/add_messege_chat.php`, formData, { headers })
-    .then((resp) => resp)
+    .then((resp) => {
+      const errorCode = resp?.data.error;
+      if (errorCode === 0) {
+        return resp;
+      } else {
+        // @ts-ignore: Unreachable code error
+        alert(errors[errorCode] ?? "Помилка");
+        return resp;
+      }
+    })
     .catch((error) => console.log(error));
 };

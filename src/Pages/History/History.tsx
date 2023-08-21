@@ -34,7 +34,6 @@ export const History = ({
 
   const handleGetHistory = (cleanPrevData?: boolean) => {
     if (!loading && totalPages >= currentPage.current) {
-      console.log(currentPage.current, totalPages);
       getHistory(currentPage.current, filterLiked ? 1 : undefined)
         .then((resp: any) => {
           const data = resp?.data?.data;

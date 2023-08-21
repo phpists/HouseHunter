@@ -3,10 +3,11 @@ import { styled } from "styled-components";
 interface Props {
   image: string;
   onPhotoView: () => void;
+  active: boolean;
 }
 
-export const Slide = ({ image, onPhotoView }: Props) => (
-  <StyledSlide image={image} onClick={onPhotoView} />
+export const Slide = ({ image, onPhotoView, active }: Props) => (
+  <StyledSlide image={active ? image : ""} onClick={onPhotoView} />
 );
 
 interface StyledSlideProps {

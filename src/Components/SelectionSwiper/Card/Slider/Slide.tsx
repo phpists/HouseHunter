@@ -2,10 +2,11 @@ import { styled } from "styled-components";
 
 interface Props {
   image: string;
+  active: boolean;
 }
 
-export const Slide = ({ image }: Props) => (
-  <StyledSlide image={image} className="clickable" />
+export const Slide = ({ image, active }: Props) => (
+  <StyledSlide image={active ? image : ""} className="clickable" />
 );
 
 interface StyledSlideProps {

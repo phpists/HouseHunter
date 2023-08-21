@@ -25,7 +25,6 @@ export const Input = ({ value, onChange, onRefreshData, loading }: Props) => {
 
     if (file) {
       sendMessage(undefined, file).then((resp) => {
-        console.log(resp);
         onRefreshData();
       });
     }
@@ -50,6 +49,7 @@ export const Input = ({ value, onChange, onRefreshData, loading }: Props) => {
         value=""
         className="file-input"
         onChange={handleUploadPhoto}
+        accept="image/png, image/jpg, image/jpeg"
       />
       {/* <img src={fileIcon} alt="" className="file-btn" /> */}
       <img src={imageIcon} alt="" onClick={handleSelectPhoto} />

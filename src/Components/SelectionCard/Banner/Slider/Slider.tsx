@@ -49,7 +49,13 @@ export const Slider = ({ isNew, onOpen, images }: Props) => {
           }
         >
           {images.map((image, i: number) => (
-            <Slide key={i} image={image} isNew={isNew} onOpen={onOpen} />
+            <Slide
+              key={i}
+              image={image}
+              isNew={isNew}
+              onOpen={onOpen}
+              active={currentSlide === 1 + i}
+            />
           ))}
         </SlickSlider>
       </StyledSlider>

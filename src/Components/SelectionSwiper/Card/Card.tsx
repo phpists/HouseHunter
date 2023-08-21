@@ -99,7 +99,6 @@ export const Card = ({
   const handleAnimateBackCards = () => {
     const backCard = document.querySelector(`.swapper-card${index - 1}`);
 
-    console.log(backCard, index - 1);
     if (backCard) {
       backCard.style.cssText = `
         transition: all .3s;

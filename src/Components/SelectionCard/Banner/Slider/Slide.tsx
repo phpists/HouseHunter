@@ -4,10 +4,11 @@ interface Props {
   image: string;
   isNew?: boolean;
   onOpen: () => void;
+  active: boolean;
 }
 
-export const Slide = ({ image, isNew, onOpen }: Props) => (
-  <StyledSlide image={image} isNew={isNew} onClick={onOpen} />
+export const Slide = ({ image, isNew, onOpen, active }: Props) => (
+  <StyledSlide image={active ? image : ""} isNew={isNew} onClick={onOpen} />
 );
 
 interface StyledSlideProps {

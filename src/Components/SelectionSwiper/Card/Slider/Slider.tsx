@@ -50,7 +50,7 @@ export const Slider = ({ images, index }: Props) => {
           }
         >
           {images.map((image, i) => (
-            <Slide key={i} image={image} />
+            <Slide key={i} image={image} active={currentSlide === 1 + i} />
           ))}
         </SlickSlider>
       </StyledSlider>

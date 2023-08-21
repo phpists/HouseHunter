@@ -51,7 +51,12 @@ export const Slider = ({ type, images, onPhotoView }: Props) => {
         }
       >
         {images.map((image, i) => (
-          <Slide key={i} image={image} onPhotoView={onPhotoView} />
+          <Slide
+            key={i}
+            image={image}
+            onPhotoView={onPhotoView}
+            active={currentSlide === 1 + i}
+          />
         ))}
       </SlickSlider>
     </StyledSlider>
