@@ -69,7 +69,7 @@ const StyledNewSelectionDesktop = styled.div`
   .selection-card-desctop-hide {
     scale: 0;
     margin: 0 !important;
-    transition: all 0.3s;
+    transition: all 0.7s;
     flex-shrink: initial !important;
     width: 0 !important;
   }
