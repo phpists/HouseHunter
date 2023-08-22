@@ -32,7 +32,7 @@ const StyledActionButton = styled.div<StyledActionButtonProps>`
   flex-shrink: 0;
   background: ${({ status }) => (status ? "#5A9E49" : "#D15B5B")};
   cursor: pointer;
-  ${({ disabled }) => disabled && `opacity: 0.8; cursor: no-allowed;`}
+  ${({ disabled }) => disabled && `opacity: 0.5; cursor: no-allowed;`}
   img {
     height: 22px;
     margin: 0 !important;

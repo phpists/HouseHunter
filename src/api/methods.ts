@@ -48,7 +48,7 @@ export const getHistory = async (page: number, like?: number) => {
   return axios
     .post(
       `${baseUrl}/show_history_object.php`,
-      { id, page, itemOnPage: page === 1 ? 30 : 10, like },
+      { id, page, itemOnPage: 20, like },
       { headers }
     )
     .then((resp) => resp)

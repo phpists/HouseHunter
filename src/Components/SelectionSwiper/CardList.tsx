@@ -20,6 +20,7 @@ interface Props {
   onClose?: () => void;
   loading: boolean;
   onPhotoView: (photos: string[]) => void;
+  disabled?: boolean;
 }
 
 export const CardList = ({
@@ -33,6 +34,7 @@ export const CardList = ({
   onClose,
   loading,
   onPhotoView,
+  disabled,
 }: Props) => (
   <>
     {loading ? (
@@ -84,6 +86,7 @@ export const CardList = ({
                   card?.image_url?.length > 0 ? card?.image_url : [noPhoto]
                 )
               }
+              disabled={disabled}
             />
           ))
         ) : (

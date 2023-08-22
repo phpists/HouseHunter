@@ -22,6 +22,7 @@ export const NewSelections = ({
   const [cards, setCards] = useState<any[]>([]);
   const cardsData = useRef<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [rating, setRating] = useState<boolean>(false);
   const isFirstRender = useRef(true);
   const [removed, setRemoved] = useState<any[]>([]);
   const removedData = useRef<any>([]);
@@ -49,9 +50,14 @@ export const NewSelections = ({
     type: string,
     notRemove?: boolean
   ) => {
+    console.log("here 1");
     if (!notRemove) {
+      setRating(true);
+      console.log("here 2");
       rate(direction === "right" ? 1 : 0, id, type).then(
         (errorCode: number) => {
+          console.log("here 3");
+          setRating(false);
           if (errorCode === 0) {
             const updatedCards = [...cardsData.current].filter(
               (card, i) => card.id_object !== id
@@ -65,6 +71,7 @@ export const NewSelections = ({
         }
       );
     } else {
+      console.log("here 4");
       setRemoved([...removedData.current, id]);
       removedData.current = [...removedData.current, id];
       rate(direction === "right" ? 1 : 0, id, type).then(() => {
@@ -111,12 +118,12 @@ export const NewSelections = ({
             removed={removed}
           />
           <SelectionSwiper
-            cards={[...cards].reverse()}
+            cards={cards}
             onSwap={handleSwap}
             onSendRealtor={onSendRealtor}
             currency={currency}
             onChangeCurrency={onChangeCurrency}
-            disabled={loading}
+            disabled={loading || rating}
           />
         </>
       )}

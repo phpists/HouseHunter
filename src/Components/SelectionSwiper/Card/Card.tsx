@@ -57,6 +57,7 @@ export const Card = ({
   cardStatusChanged,
   loading,
   onPhotoView,
+  disabled,
 }: Props) => {
   const [open, setOpen] = useState<boolean>(history);
   const cardRef = useRef(null);
@@ -113,7 +114,7 @@ export const Card = ({
     if (!isDrag && !handleCheckIsClick()) {
       setIsDraged(true);
     }
-    if (isDrag) {
+    if (isDrag && !disabled) {
       const cientX = e?.touches?.length ? e?.touches[0]?.clientX : e.clientX;
       const mouseXPos = cientX - posX.current;
       cardRef.current.style.transform = `translateX(${mouseXPos}px)`;
@@ -135,7 +136,7 @@ export const Card = ({
   };
 
   const handleDragEnd = (e) => {
-    if (!isDraged && handleCheckIsClick(e)) {
+    if (!isDraged && handleCheckIsClick(e) && !disabled) {
       setOpen(true);
     }
     setIsDrag(false);

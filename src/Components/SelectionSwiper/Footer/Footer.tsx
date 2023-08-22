@@ -13,14 +13,14 @@ export const Footer = ({ onChangeStatus, onSendRealtor, disabled }: Props) => (
   <div className="flex items-center">
     <ActionButton
       icon={dislikeIcon}
-      onClick={() => onChangeStatus("left")}
+      onClick={() => (disabled ? null : onChangeStatus("left"))}
       status={false}
       disabled={disabled}
     />
     <SendButton onClick={onSendRealtor} />
     <ActionButton
       icon={likeIcon}
-      onClick={() => onChangeStatus("right")}
+      onClick={() => (disabled ? null : onChangeStatus("right"))}
       status={true}
       disabled={disabled}
     />

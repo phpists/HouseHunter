@@ -84,6 +84,7 @@ export const SelectionSwiper = ({
         currency={currency}
         onChangeCurrency={onChangeCurrency}
         onClose={onClose}
+        disabled={disabled}
       />
       {!history && (
         <Footer
