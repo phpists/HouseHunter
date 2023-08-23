@@ -20,6 +20,7 @@ interface Props {
   stairs: string;
   description?: string;
   onSwap?: (direction: string) => void;
+  disabled?: boolean;
 }
 
 export const Info = ({
@@ -34,6 +35,7 @@ export const Info = ({
   stairs,
   description,
   onSwap,
+  disabled,
 }: Props) => (
   <StyledInfo>
     <div className="full-info">
@@ -47,7 +49,11 @@ export const Info = ({
         <Stairs stairs={stairs} />
       </div>
       {isNew && <Descrioption description={description} />}
-      <Footer onSendRealtor={onSendRealtor} onSwap={onSwap} />
+      <Footer
+        onSendRealtor={onSendRealtor}
+        onSwap={onSwap}
+        disabled={disabled}
+      />
     </div>
     <div
       className="mobile-info flex items-center flex-wrap gap-1"

@@ -23,6 +23,7 @@ interface Props {
   like?: boolean;
   isHide?: boolean;
   isFiltering?: boolean;
+  disabled?: boolean;
 }
 
 export const SelectionCard = ({
@@ -43,6 +44,7 @@ export const SelectionCard = ({
   noAnimation,
   like,
   isHide,
+  disabled,
 }: Props) => {
   const controls = useAnimationControls();
 
@@ -99,6 +101,7 @@ export const SelectionCard = ({
         stairs={stairs}
         description={description}
         onSwap={handleSwap}
+        disabled={disabled}
       />
     </StyledSelectionCard>
   );

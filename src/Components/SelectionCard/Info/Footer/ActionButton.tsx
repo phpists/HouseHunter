@@ -4,13 +4,15 @@ interface Props {
   icon: string;
   onClick: () => void;
   status: boolean;
+  disabled?: boolean;
 }
 
-export const ActionButton = ({ icon, onClick, status }: Props) => (
+export const ActionButton = ({ icon, onClick, status, disabled }: Props) => (
   <StyledActionButton
     className="flex items-center justify-center"
     onClick={onClick}
     status={status}
+    disabled={disabled}
   >
     <img src={icon} alt="" />
   </StyledActionButton>
@@ -18,6 +20,7 @@ export const ActionButton = ({ icon, onClick, status }: Props) => (
 
 interface StyledActionButtonProps {
   status: boolean;
+  disabled?: boolean;
 }
 
 const StyledActionButton = styled.div<StyledActionButtonProps>`
@@ -31,4 +34,5 @@ const StyledActionButton = styled.div<StyledActionButtonProps>`
   img {
     height: 22px;
   }
+  ${({ disabled }) => disabled && "opacity: 0.5; cursor: no-allowed;"}
 `;

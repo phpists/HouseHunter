@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import { SelectionCard } from "../../../Components/SelectionCard/SelectionCard";
 import { getLocation } from "../../../helpers";
 import { Empty } from "./Empty";
+import { Spinner } from "../../../Components/Spinner";
 
 interface Props {
   cards: any;
@@ -10,6 +11,8 @@ interface Props {
   currency: string;
   onSwap: (index: number, direction: string, id: string, type: string) => void;
   removed: any[];
+  rating: boolean;
+  loadingMore: boolean;
 }
 
 export const NewSelectionDesktop = ({
@@ -19,6 +22,8 @@ export const NewSelectionDesktop = ({
   currency,
   onSwap,
   removed,
+  rating,
+  loadingMore,
 }: Props) => (
   <StyledNewSelectionDesktop>
     {cards?.length > 0 ? (
@@ -46,8 +51,11 @@ export const NewSelectionDesktop = ({
             !!removed.find((id: any) => id === card?.id_object) &&
             "selection-card-desctop-hide"
           }`}
+          disabled={rating}
         />
       ))
+    ) : loadingMore ? (
+      <Spinner className="loading-more-desktop" />
     ) : (
       <Empty />
     )}
@@ -59,6 +67,7 @@ const StyledNewSelectionDesktop = styled.div`
   margin: 30px 0 0;
   height: calc(100vh - 138px);
   overflow: hidden;
+  position: relative;
   @media (max-width: 1000px) {
     display: none;
   }
@@ -72,6 +81,12 @@ const StyledNewSelectionDesktop = styled.div`
     transition: all 0.7s;
     flex-shrink: initial !important;
     width: 0 !important;
+  }
+  .loading-more-desktop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
   @media (max-width: 1200px) {
     .selection-card-desctop {

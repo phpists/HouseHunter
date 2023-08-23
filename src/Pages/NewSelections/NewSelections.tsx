@@ -22,25 +22,39 @@ export const NewSelections = ({
   const [cards, setCards] = useState<any[]>([]);
   const cardsData = useRef<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingMore, setLoadingMore] = useState<boolean>(false);
+  const isLoading = useRef<boolean>(false);
   const [rating, setRating] = useState<boolean>(false);
   const isFirstRender = useRef(true);
   const [removed, setRemoved] = useState<any[]>([]);
   const removedData = useRef<any>([]);
+  const removedBeforeData = useRef<any>([]);
 
   const handleGetSelections = (perPage?: number, isMore?: boolean) => {
-    setLoading(!isMore);
-    getNewSelections(0, perPage).then((resp: any) => {
-      const data = resp?.data?.data;
-      const totalPage = resp?.data?.pages_count ?? 1;
-      setLoading(false);
-      isLastPage.current = totalPage === 1;
-      if (data) {
-        const updatedData = removeDublicats([...cardsData.current, ...data]);
-        console.log(updatedData);
-        cardsData.current = updatedData;
-        setCards(updatedData);
-      }
-    });
+    if (!isLastPage.current && !isLoading.current) {
+      setLoading(!isMore);
+      setLoadingMore(!!isMore);
+      isLoading.current = true;
+      getNewSelections(0, perPage).then((resp: any) => {
+        const data = resp?.data?.data;
+        const totalPage = resp?.data?.pages_count ?? 1;
+        setLoading(false);
+        setLoadingMore(false);
+        isLoading.current = false;
+        isLastPage.current = totalPage === 1;
+        if (data) {
+          let updatedData = removeDublicats([...cardsData.current, ...data]);
+          updatedData = updatedData.filter(
+            (item: any) =>
+              !removedBeforeData.current.find(
+                (id: any) => id === item.id_object
+              )
+          );
+          cardsData.current = updatedData;
+          setCards(updatedData);
+        }
+      });
+    }
   };
 
   const handleSwap = (
@@ -50,13 +64,10 @@ export const NewSelections = ({
     type: string,
     notRemove?: boolean
   ) => {
-    console.log("here 1");
     if (!notRemove) {
       setRating(true);
-      console.log("here 2");
       rate(direction === "right" ? 1 : 0, id, type).then(
         (errorCode: number) => {
-          console.log("here 3");
           setRating(false);
           if (errorCode === 0) {
             const updatedCards = [...cardsData.current].filter(
@@ -65,26 +76,36 @@ export const NewSelections = ({
             setCards(updatedCards);
             cardsData.current = updatedCards;
           }
-          if (cardsData.current.length <= 10 && !isLastPage.current) {
+          if (
+            cardsData.current.length <= 10 &&
+            !isLastPage.current &&
+            !isLoading.current
+          ) {
             setTimeout(() => handleGetSelections(20, true), 400);
           }
         }
       );
     } else {
-      console.log("here 4");
+      setRating(true);
       setRemoved([...removedData.current, id]);
       removedData.current = [...removedData.current, id];
       rate(direction === "right" ? 1 : 0, id, type).then(() => {
+        setRating(false);
         if (
           removedData.current.length >= 15 ||
           (cardsData.current.length <= 10 && !isLastPage.current) ||
-          cardsData.current.length === removedData.current.length
+          (cardsData.current.length === removedData.current.length &&
+            !isLoading.current)
         ) {
           const updatedCards = [...cardsData.current].filter(
             (card, i) =>
               !removedData.current.find((id: any) => card.id_object === id)
           );
           setCards(updatedCards);
+          removedBeforeData.current = [
+            ...removedBeforeData.current,
+            ...removedData.current,
+          ];
           cardsData.current = updatedCards;
           removedData.current = [];
           setRemoved([]);
@@ -116,6 +137,8 @@ export const NewSelections = ({
               handleSwap(index, direction, id, type, true)
             }
             removed={removed}
+            rating={false}
+            loadingMore={loadingMore}
           />
           <SelectionSwiper
             cards={cards}
