@@ -54,7 +54,7 @@ export const Cards = ({
 
   useEffect(() => {
     setLoading(true);
-    setData(cards?.slice(cards.length - 3, cards.length) ?? []);
+    setData(cards?.slice(0, 3)?.reverse() ?? []);
     setTimeout(() => setLoading(false), 100);
   }, [cards]);
 
