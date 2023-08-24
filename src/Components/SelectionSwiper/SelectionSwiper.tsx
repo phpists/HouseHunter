@@ -56,8 +56,8 @@ export const SelectionSwiper = ({
 
   const handleSendRealtor = () => {
     if (cards.length > 0) {
-      const type = cards[cards.length - 1]?.type ?? "";
-      const id = cards[cards.length - 1]?.id_object ?? "";
+      const type = cards[0]?.type ?? "";
+      const id = cards[0]?.id_object ?? "";
 
       onSendRealtor(type, id);
     }

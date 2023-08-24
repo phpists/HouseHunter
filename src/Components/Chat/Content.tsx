@@ -3,13 +3,21 @@ import { Message } from "./Message/Message";
 import { Photo } from "./Photo/Photo";
 import { useEffect, useRef } from "react";
 import { formatNumber } from "../../helpers/numbers";
+import noPhoto from "../../assets/images/no-photo.svg";
 
 interface Props {
   open: boolean;
   data: any;
+  onOpenObject: (id_object_hash: string, type: string, state: string) => void;
+  loadingInfoMore: string | null;
 }
 
-export const Content = ({ open, data }: Props) => {
+export const Content = ({
+  open,
+  data,
+  onOpenObject,
+  loadingInfoMore,
+}: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,7 +36,9 @@ export const Content = ({ open, data }: Props) => {
               return (
                 <Photo
                   key={i}
-                  photo={msg?.messege?.img}
+                  photo={
+                    msg?.messege?.img?.length > 0 ? msg?.messege?.img : noPhoto
+                  }
                   text={
                     msg?.messege?.title || msg?.messege?.price
                       ? `${msg?.messege?.title ?? "-"}, ${formatNumber(
@@ -38,6 +48,19 @@ export const Content = ({ open, data }: Props) => {
                   }
                   date={msg?.date}
                   isOwner={msg?.user === 0}
+                  onOpenObject={
+                    msg?.messege?.id_object_hash &&
+                    msg?.messege?.type &&
+                    !loadingInfoMore
+                      ? () =>
+                          onOpenObject(
+                            msg?.messege?.id_object_hash,
+                            msg?.messege?.type,
+                            msg?.messege?.state
+                          )
+                      : null
+                  }
+                  loading={loadingInfoMore === msg?.messege?.id_object_hash}
                 />
               );
             } else if (msg?.messege) {

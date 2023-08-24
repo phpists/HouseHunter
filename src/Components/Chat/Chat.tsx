@@ -10,9 +10,18 @@ interface Props {
   className?: string;
   onCloseChat: () => void;
   rieltor: { name: string; photo: string | undefined; phones: string[] };
+  onOpenObject: (id_object_hash: string, type: string, state: string) => void;
+  loadingInfoMore: string | null;
 }
 
-export const Chat = ({ open, className, onCloseChat, rieltor }: Props) => {
+export const Chat = ({
+  open,
+  className,
+  onCloseChat,
+  rieltor,
+  onOpenObject,
+  loadingInfoMore,
+}: Props) => {
   const [data, setData] = useState<any>([]);
 
   const handleGetMessages = () => {
@@ -30,7 +39,12 @@ export const Chat = ({ open, className, onCloseChat, rieltor }: Props) => {
       }`}
     >
       <Header onCloseChat={onCloseChat} rieltor={rieltor} />
-      <Content open={open} data={data} />
+      <Content
+        open={open}
+        data={data}
+        onOpenObject={onOpenObject}
+        loadingInfoMore={loadingInfoMore}
+      />
       <Footer onRefreshData={handleGetMessages} />
     </StyledChat>
   );

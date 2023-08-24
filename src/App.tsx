@@ -4,12 +4,13 @@ import { useState, useEffect } from "react";
 import { History } from "./Pages/History/History";
 import { Chat } from "./Components/Chat/Chat";
 import { NewSelections } from "./Pages/NewSelections/NewSelections";
-import { getRieltor, sendMessage } from "./api/methods";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { getInfoObject, getRieltor, sendMessage } from "./api/methods";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Spinner } from "./Components/Spinner";
 import { Info } from "./Pages/Info/Info";
 
 export const App = () => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const [activeTab, setActiveTab] = useState<number>(
     pathname === "/history" ? 0 : 1
@@ -26,6 +27,10 @@ export const App = () => {
     phones: string[];
   } | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingInfoMore, setLoadingInfoMore] = useState<string | null>(null);
+  const [appendObjectToList, setAppendObjectToList] = useState<any | null>(
+    null
+  );
 
   const handleChangeCurrency = (value: string) => {
     setCurrency(value);
@@ -43,6 +48,10 @@ export const App = () => {
     setInfoOpen(null);
   };
   const handleOpenInfo = (card: any) => setInfoOpen(card);
+  const handleCloseInfo = () => {
+    setInfoOpen(null);
+    setAppendObjectToList(null);
+  };
 
   const handleSendSelection = (type: string, id: string) => {
     setChatOpen(false);
@@ -69,6 +78,35 @@ export const App = () => {
     handleGetRieltor();
   }, []);
 
+  const handleChangeOpenObjectStatus = (objectInfo: any, like: number) => {
+    setAppendObjectToList({ ...objectInfo, like });
+    navigate("/history");
+    setActiveTab(0);
+  };
+
+  const handleOpenObjectFromChat = (
+    id_object_hash: string,
+    type: string,
+    state: string
+  ) => {
+    setLoadingInfoMore(id_object_hash);
+    getInfoObject(id_object_hash, type).then((resp: any) => {
+      setLoadingInfoMore(null);
+      const objectInfo = resp?.data?.data ? resp?.data?.data[0] : null;
+      if (objectInfo) {
+        setChatOpen(false);
+        setInfoOpen({
+          ...objectInfo,
+          onChangeStatus: (like: number) =>
+            handleChangeOpenObjectStatus(objectInfo, like),
+        });
+        navigate(state === "new" ? "/" : "/history");
+        setActiveTab(state === "new" ? 1 : 0);
+        setAppendObjectToList(objectInfo);
+      }
+    });
+  };
+
   return (
     <>
       {loading ? (
@@ -92,11 +130,13 @@ export const App = () => {
               open={chatOpen}
               onCloseChat={() => setChatOpen(false)}
               rieltor={rieltor}
+              onOpenObject={handleOpenObjectFromChat}
+              loadingInfoMore={loadingInfoMore}
             />
             {infoOpen && (
               <Info
                 infoOpen={infoOpen}
-                onClose={() => setInfoOpen(null)}
+                onClose={handleCloseInfo}
                 onSendRealtor={handleSendSelection}
                 currency={currency}
                 onChangeCurrency={handleChangeCurrency}
@@ -119,6 +159,7 @@ export const App = () => {
                       onSendRealtor={handleSendSelection}
                       filterLiked={filterLiked}
                       infoOpen={!!infoOpen}
+                      appendObjectToList={appendObjectToList}
                     />
                   }
                 />
@@ -131,6 +172,7 @@ export const App = () => {
                       currency={currency}
                       onChangeCurrency={handleChangeCurrency}
                       rieltor={rieltor}
+                      appendObjectToList={appendObjectToList}
                     />
                   }
                 />

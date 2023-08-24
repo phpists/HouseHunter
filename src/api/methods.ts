@@ -100,3 +100,24 @@ export const sendMessage = async (
     })
     .catch((error) => console.log(error));
 };
+
+export const getInfoObject = async (id_object_hash: string, type: string) => {
+  const folder = getIdFromUrl();
+  return axios
+    .post(
+      `${baseUrl}/get_info_object.php`,
+      { folder, id_object_hash, type },
+      { headers }
+    )
+    .then((resp) => {
+      const errorCode = resp?.data.error;
+      if (errorCode === 0) {
+        return resp;
+      } else {
+        // @ts-ignore: Unreachable code error
+        cogoToast.error(errors[errorCode] ?? "Помилка");
+        return resp;
+      }
+    })
+    .catch((error) => console.log(error));
+};

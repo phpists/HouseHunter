@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { styled } from "styled-components";
 import { SelectionCard } from "../../Components/SelectionCard/SelectionCard";
 import { getHistory, rate } from "../../api/methods";
-import { getLocation } from "../../helpers";
+import { getLocation, removeDublicats } from "../../helpers";
 import { Spinner } from "../../Components/Spinner";
 
 interface Props {
@@ -12,6 +12,7 @@ interface Props {
   onSendRealtor: (type: string, id: string) => void;
   filterLiked: boolean;
   infoOpen: boolean;
+  appendObjectToList: any;
 }
 
 export const History = ({
@@ -20,6 +21,7 @@ export const History = ({
   onSendRealtor,
   filterLiked,
   infoOpen,
+  appendObjectToList,
 }: Props) => {
   const currentPage = useRef<number>(0);
   const [cards, setCards] = useState<any>(null);
@@ -49,7 +51,7 @@ export const History = ({
             }, 1000);
           } else if (data) {
             const updatedCards = cardsData.current
-              ? [...cardsData.current, ...data]
+              ? removeDublicats([...cardsData.current, ...data])
               : [...data];
             cardsData.current = updatedCards;
             setCards(updatedCards);
@@ -150,6 +152,18 @@ export const History = ({
       scrolledTop.current = null;
     }
   }, [infoOpen]);
+
+  useEffect(() => {
+    if (appendObjectToList) {
+      const filteredCards = cardsData.current
+        ? cardsData.current.filter(
+            (card: any) => card.id_object !== appendObjectToList.id_object
+          )
+        : [];
+      cardsData.current = [appendObjectToList, ...filteredCards];
+      setCards(cardsData.current);
+    }
+  }, [appendObjectToList]);
 
   return (
     <>

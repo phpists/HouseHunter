@@ -4,17 +4,35 @@ import { Download } from "./Download";
 import { Text } from "./Text";
 import { getHours } from "../../../helpers";
 import noPhoto from "../../../assets/images/no-photo.svg";
+import { Spinner } from "../../Spinner";
 
 interface Props {
   photo?: string;
   text?: string;
   isOwner?: boolean;
   date: number;
+  onOpenObject: any;
+  loading: boolean;
 }
 
-export const Photo = ({ photo, text, isOwner, date }: Props) => {
+export const Photo = ({
+  photo,
+  text,
+  isOwner,
+  date,
+  onOpenObject,
+  loading,
+}: Props) => {
   return (
-    <StyledPhoto photo={photo ?? noPhoto} text={text} isOwner={isOwner}>
+    <StyledPhoto
+      photo={photo ?? noPhoto}
+      text={text}
+      isOwner={isOwner}
+      onClick={onOpenObject ?? null}
+      className={`${!!onOpenObject && "cursor-pointer"}`}
+      loading={loading}
+    >
+      {loading && <Spinner className="loading-spinner" />}
       {photo && <Download photo={photo} />}
       <div className="image" />
       {text && <Text text={text} isOwner={isOwner} date={date} />}
@@ -27,6 +45,7 @@ interface StyledPhotoProps {
   photo: string;
   text?: string;
   isOwner?: boolean;
+  loading: boolean;
 }
 
 const StyledPhoto = styled.div<StyledPhotoProps>`
@@ -44,5 +63,13 @@ const StyledPhoto = styled.div<StyledPhotoProps>`
     height: 268px;
     background: url(${({ photo }) => photo}) center/cover no-repeat, #000;
     border-radius: ${({ text }) => (text ? "12px 12px 0 0" : "12px")};
+    ${({ loading }) => loading && "filter: blur(2px);"}
+  }
+  .loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
   }
 `;

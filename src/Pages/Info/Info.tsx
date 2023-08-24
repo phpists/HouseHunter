@@ -15,7 +15,7 @@ import { Photos } from "./Photos/Photos";
 import { useEffect } from "react";
 import { rate } from "../../api/methods";
 import { SelectionSwiper } from "../../Components/SelectionSwiper/SelectionSwiper";
-
+import { useState } from "react";
 // const AMENITIES_DATA = [
 //   { icon: dogIcon, title: "Можна з тваринами" },
 //   { icon: washingMachineIcon, title: "Пральна машина є" },
@@ -44,6 +44,8 @@ export const Info = ({
   onChangeCurrency,
   rieltor,
 }: Props) => {
+  const [loading, setLoading] = useState<boolean>(false);
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -61,7 +63,13 @@ export const Info = ({
     if (infoOpen?.handleSwap) {
       infoOpen?.handleSwap(direction);
     } else {
-      rate(direction === "right" ? 1 : 0, id, type);
+      setLoading(true);
+      rate(direction === "right" ? 1 : 0, id, type).then((code) => {
+        setLoading(false);
+        if (code === 0 && infoOpen.onChangeStatus) {
+          infoOpen.onChangeStatus(direction === "right" ? 1 : 0);
+        }
+      });
     }
   };
 
@@ -92,6 +100,7 @@ export const Info = ({
         onChangeCurrency={onChangeCurrency}
         onClose={onClose}
         rieltor={rieltor}
+        disabled={loading}
       />
     </>
   );

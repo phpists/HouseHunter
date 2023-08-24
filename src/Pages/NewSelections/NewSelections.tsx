@@ -11,6 +11,7 @@ interface Props {
   currency: string;
   onChangeCurrency: (value: string) => void;
   rieltor: { name: string; photo: string | undefined; phones: string[] };
+  appendObjectToList: any;
 }
 
 export const NewSelections = ({
@@ -19,6 +20,7 @@ export const NewSelections = ({
   currency,
   onChangeCurrency,
   rieltor,
+  appendObjectToList,
 }: Props) => {
   const isLastPage = useRef<boolean>(false);
   const [cards, setCards] = useState<any[]>([]);
@@ -123,6 +125,18 @@ export const NewSelections = ({
       handleGetSelections(20);
     }
   }, []);
+
+  useEffect(() => {
+    if (appendObjectToList) {
+      const filteredCards = cardsData.current
+        ? cardsData.current.filter(
+            (card: any) => card.id_object !== appendObjectToList.id_object
+          )
+        : [];
+      cardsData.current = [appendObjectToList, ...filteredCards];
+      setCards(cardsData.current);
+    }
+  }, [appendObjectToList]);
 
   return (
     <>
