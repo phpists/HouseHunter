@@ -24,6 +24,7 @@ interface Props {
   onChangeCurrency: (value: string) => void;
   onClose?: () => void;
   disabled?: boolean;
+  rieltor: { name: string; photo: string | undefined; phones: string[] };
 }
 
 export const Cards = ({
@@ -36,6 +37,7 @@ export const Cards = ({
   onChangeCurrency,
   onClose,
   disabled,
+  rieltor,
 }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>([]);
@@ -102,6 +104,7 @@ export const Cards = ({
             )
           }
           cardStatusChanged={cardStatusChanged}
+          rieltor={rieltor}
         />
       ) : (
         <StyledCards
@@ -123,6 +126,7 @@ export const Cards = ({
             loading={loading}
             onPhotoView={handleOpenPhotoView}
             disabled={disabled}
+            rieltor={rieltor}
           />
         </StyledCards>
       )}

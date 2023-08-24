@@ -10,6 +10,7 @@ interface Props {
   onSendRealtor: (type: string, id: string) => void;
   currency: string;
   onChangeCurrency: (value: string) => void;
+  rieltor: { name: string; photo: string | undefined; phones: string[] };
 }
 
 export const NewSelections = ({
@@ -17,6 +18,7 @@ export const NewSelections = ({
   onSendRealtor,
   currency,
   onChangeCurrency,
+  rieltor,
 }: Props) => {
   const isLastPage = useRef<boolean>(false);
   const [cards, setCards] = useState<any[]>([]);
@@ -147,6 +149,7 @@ export const NewSelections = ({
             currency={currency}
             onChangeCurrency={onChangeCurrency}
             disabled={loading || rating}
+            rieltor={rieltor}
           />
         </>
       )}

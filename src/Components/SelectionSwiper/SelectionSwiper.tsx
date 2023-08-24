@@ -12,6 +12,7 @@ interface Props {
   onChangeCurrency: (value: string) => void;
   disabled?: boolean;
   onClose?: () => void;
+  rieltor: { name: string; photo: string | undefined; phones: string[] };
 }
 
 export const SelectionSwiper = ({
@@ -23,6 +24,7 @@ export const SelectionSwiper = ({
   onChangeCurrency,
   disabled,
   onClose,
+  rieltor,
 }: Props) => {
   const [cardStatusChanged, setCardStatusChanged] = useState<null | string>(
     null
@@ -85,6 +87,7 @@ export const SelectionSwiper = ({
         onChangeCurrency={onChangeCurrency}
         onClose={onClose}
         disabled={disabled}
+        rieltor={rieltor}
       />
       {!history && (
         <Footer

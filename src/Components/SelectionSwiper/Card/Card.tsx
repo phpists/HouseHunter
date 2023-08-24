@@ -32,6 +32,7 @@ interface Props {
   loading?: string;
   onPhotoView?: () => void;
   disabled?: boolean;
+  rieltor: { name: string; photo: string | undefined; phones: string[] };
 }
 
 export const Card = ({
@@ -58,6 +59,7 @@ export const Card = ({
   loading,
   onPhotoView,
   disabled,
+  rieltor,
 }: Props) => {
   const [open, setOpen] = useState<boolean>(history);
   const cardRef = useRef(null);
@@ -213,6 +215,7 @@ export const Card = ({
           onChangeStatus={onChangeStatus}
           onSendRealtor={handleSendRealtor}
           onPhotoView={onPhotoView}
+          rieltor={rieltor}
         />
       )}
       {direction === "right" && <SwipeStatus status={direction === "right"} />}

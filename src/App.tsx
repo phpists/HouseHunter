@@ -100,6 +100,7 @@ export const App = () => {
                 onSendRealtor={handleSendSelection}
                 currency={currency}
                 onChangeCurrency={handleChangeCurrency}
+                rieltor={rieltor}
               />
             )}
             <div
@@ -129,6 +130,7 @@ export const App = () => {
                       onSendRealtor={handleSendSelection}
                       currency={currency}
                       onChangeCurrency={handleChangeCurrency}
+                      rieltor={rieltor}
                     />
                   }
                 />

@@ -33,6 +33,7 @@ interface Props {
   onSendRealtor: (type: string, id: string) => void;
   currency: string;
   onChangeCurrency: (value: string) => void;
+  rieltor: { name: string; photo: string | undefined; phones: string[] };
 }
 
 export const Info = ({
@@ -41,6 +42,7 @@ export const Info = ({
   onSendRealtor,
   currency,
   onChangeCurrency,
+  rieltor,
 }: Props) => {
   useEffect(() => {
     window.scrollTo({
@@ -89,6 +91,7 @@ export const Info = ({
         currency={currency}
         onChangeCurrency={onChangeCurrency}
         onClose={onClose}
+        rieltor={rieltor}
       />
     </>
   );

@@ -21,6 +21,7 @@ interface Props {
   loading: boolean;
   onPhotoView: (photos: string[]) => void;
   disabled?: boolean;
+  rieltor: { name: string; photo: string | undefined; phones: string[] };
 }
 
 export const CardList = ({
@@ -35,6 +36,7 @@ export const CardList = ({
   loading,
   onPhotoView,
   disabled,
+  rieltor,
 }: Props) => (
   <>
     {loading ? (
@@ -87,6 +89,7 @@ export const CardList = ({
                 )
               }
               disabled={disabled}
+              rieltor={rieltor}
             />
           ))
         ) : (
