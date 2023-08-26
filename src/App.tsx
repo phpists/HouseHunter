@@ -8,6 +8,7 @@ import { getInfoObject, getRieltor, sendMessage } from "./api/methods";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Spinner } from "./Components/Spinner";
 import { Info } from "./Pages/Info/Info";
+import { checkIsBrowserSupportTouch } from "./helpers";
 
 export const App = () => {
   const navigate = useNavigate();
@@ -76,6 +77,7 @@ export const App = () => {
 
   useEffect(() => {
     handleGetRieltor();
+    checkIsBrowserSupportTouch();
   }, []);
 
   const handleChangeOpenObjectStatus = (objectInfo: any, like: number) => {
