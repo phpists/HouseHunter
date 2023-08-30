@@ -24,6 +24,7 @@ interface Props {
   isHide?: boolean;
   isFiltering?: boolean;
   disabled?: boolean;
+  tag?: string;
 }
 
 export const SelectionCard = ({
@@ -45,6 +46,7 @@ export const SelectionCard = ({
   like,
   isHide,
   disabled,
+  tag,
 }: Props) => {
   const controls = useAnimationControls();
 
@@ -62,10 +64,18 @@ export const SelectionCard = ({
       flexShrink: isHide ? "initial" : 0,
       transition: { duration: 0.5 },
     });
+
+    if (isHide) {
+      setTimeout(() => {
+        controls.start({ display: "none" });
+      }, 300);
+    } else {
+      controls.start({ display: "block" });
+    }
   }, [isHide]);
 
   useEffect(() => {
-    controls.start({ scale: 1, opacity: 1 });
+    controls.start({ scale: 1, opacity: 1, display: "block" });
   }, []);
 
   return (
@@ -88,6 +98,7 @@ export const SelectionCard = ({
         images={images}
         like={like}
         isHide={isHide}
+        tag={tag}
       />
       <Info
         onOpen={onOpen}

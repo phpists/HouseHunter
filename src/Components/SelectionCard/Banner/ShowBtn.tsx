@@ -1,15 +1,12 @@
 import { styled } from "styled-components";
 
 interface Props {
-  onOpen: () => void;
+  tag: string;
 }
 
-export const ShowBtn = ({ onOpen }: Props) => (
-  <StyledShowButton
-    className="flex items-center justify-center"
-    onClick={onOpen}
-  >
-    <div>Показ</div>
+export const ShowBtn = ({ tag }: Props) => (
+  <StyledShowButton className="flex items-center justify-center">
+    <div>{tag}</div>
   </StyledShowButton>
 );
 

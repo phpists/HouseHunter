@@ -14,6 +14,7 @@ interface Props {
   images: string[];
   like?: boolean;
   isHide?: boolean;
+  tag?: string;
 }
 
 export const Banner = ({
@@ -25,13 +26,17 @@ export const Banner = ({
   images,
   like,
   isHide,
+  tag,
 }: Props) => {
   return (
     <StyledBanner status={!!like} isNew={!!isNew}>
-      <Area area={area} onOpen={onOpen} />
+      {!isNew && tag ? (
+        <ShowBtn tag={tag} />
+      ) : (
+        <Area area={area} onOpen={onOpen} />
+      )}
       {!isNew && !isHide && (
         <>
-          {/* <ShowBtn onOpen={onOpen} /> */}
           <Status status={!!like} onOpen={onOpen} />
         </>
       )}
