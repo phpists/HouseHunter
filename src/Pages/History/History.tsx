@@ -191,7 +191,7 @@ export const History = ({
               noAnimation
               like={card?.like === 1}
               isHide={isFiltered && card?.like === 0}
-              tag={card?.tags[0] ?? null}
+              tag={card?.tags?.length ? card?.tags : null}
             />
           ))
         ) : (
