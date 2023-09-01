@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const MessageFooter = ({ date }: Props) => (
-  <StyledMessageFooter className="flex items-center justify-end">
+  <StyledMessageFooter className="flex items-center justify-end message">
     {getHours(date)} <img src={checkIcon} alt="" />
   </StyledMessageFooter>
 );

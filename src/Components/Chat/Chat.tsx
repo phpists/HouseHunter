@@ -23,6 +23,10 @@ export const Chat = ({
   loadingInfoMore,
 }: Props) => {
   const [data, setData] = useState<any>([]);
+  const [selectedMessage, setSelectedMessage] = useState<any>(null);
+
+  const handleSelectMessage = (msg: any) =>
+    setSelectedMessage(msg === selectedMessage ? null : msg);
 
   const handleGetMessages = () => {
     getChat().then((resp: any) => setData(resp?.data ?? []));
@@ -30,6 +34,7 @@ export const Chat = ({
 
   useEffect(() => {
     handleGetMessages();
+    setSelectedMessage(null);
   }, [open]);
 
   return (
@@ -44,8 +49,16 @@ export const Chat = ({
         data={data}
         onOpenObject={onOpenObject}
         loadingInfoMore={loadingInfoMore}
+        selected={selectedMessage}
+        onSelect={handleSelectMessage}
+        rieltorName={rieltor?.name ?? "Рієлтор"}
       />
-      <Footer onRefreshData={handleGetMessages} />
+      <Footer
+        onRefreshData={handleGetMessages}
+        selectedMessage={selectedMessage}
+        onCloseSelectedMessage={() => setSelectedMessage(null)}
+        rieltorName={rieltor?.name ?? "Рієлтор"}
+      />
     </StyledChat>
   );
 };

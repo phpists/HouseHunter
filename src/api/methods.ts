@@ -75,7 +75,8 @@ export const sendMessage = async (
   messege?: string,
   file?: File,
   type_table?: string,
-  show_object?: any
+  show_object?: any,
+  id_parent?: any
 ) => {
   const id = getIdFromUrl();
   const formData = new FormData();
@@ -85,6 +86,7 @@ export const sendMessage = async (
   file && formData.append("img", file);
   type_table && formData.append("type_table", type_table);
   show_object && formData.append("show_object", show_object);
+  id_parent && formData.append("id_parent", id_parent);
 
   return axios
     .post(`${baseUrl}/add_messege_chat.php`, formData, { headers })

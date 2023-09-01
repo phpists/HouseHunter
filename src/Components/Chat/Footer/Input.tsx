@@ -3,15 +3,27 @@ import { styled } from "styled-components";
 // import fileIcon from "../../../assets/images/file-text.svg";
 import imageIcon from "../../../assets/images/image.svg";
 import { sendMessage } from "../../../api/methods";
+import { SelectedMessage } from "./SelectedMessage";
 
 interface Props {
   value: string;
   onChange: (value: string) => void;
   onRefreshData: () => void;
   loading: boolean;
+  selectedMessage: any;
+  onCloseSelectedMessage: () => void;
+  rieltorName: string;
 }
 
-export const Input = ({ value, onChange, onRefreshData, loading }: Props) => {
+export const Input = ({
+  value,
+  onChange,
+  onRefreshData,
+  loading,
+  selectedMessage,
+  onCloseSelectedMessage,
+  rieltorName,
+}: Props) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSelectPhoto = () => {
@@ -35,7 +47,15 @@ export const Input = ({ value, onChange, onRefreshData, loading }: Props) => {
       className={`flex items-center ${
         loading && "cursor-not-allowed opacity-90"
       }`}
+      selectedMessage={!!selectedMessage}
     >
+      {!!selectedMessage && (
+        <SelectedMessage
+          selectedMessage={selectedMessage}
+          onCloseSelectedMessage={onCloseSelectedMessage}
+          rieltorName={rieltorName}
+        />
+      )}
       <input
         type="text"
         value={value}
@@ -43,22 +63,31 @@ export const Input = ({ value, onChange, onRefreshData, loading }: Props) => {
         placeholder="Повідомлення"
         disabled={loading}
       />
-      <input
-        type="file"
-        ref={fileInputRef}
-        value=""
-        className="file-input"
-        onChange={handleUploadPhoto}
-        accept="image/png, image/jpg, image/jpeg"
-      />
+      {!selectedMessage && (
+        <>
+          <input
+            type="file"
+            ref={fileInputRef}
+            value=""
+            className="file-input"
+            onChange={handleUploadPhoto}
+            accept="image/png, image/jpg, image/jpeg"
+          />
+          <img src={imageIcon} alt="" onClick={handleSelectPhoto} />
+        </>
+      )}
       {/* <img src={fileIcon} alt="" className="file-btn" /> */}
-      <img src={imageIcon} alt="" onClick={handleSelectPhoto} />
     </StyledInput>
   );
 };
 
-const StyledInput = styled.div`
-  border-radius: 9px;
+interface StyledInputProps {
+  selectedMessage: boolean;
+}
+
+const StyledInput = styled.div<StyledInputProps>`
+  border-radius: ${({ selectedMessage }) =>
+    selectedMessage ? "0 0 9px 9px" : "9px"};
   background: #343434;
   height: 40px;
   padding: 12px 10px 10px 14px;
@@ -70,6 +99,7 @@ const StyledInput = styled.div`
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   width: 100%;
+  position: relative;
   input {
     width: 100%;
     padding-right: 10px;

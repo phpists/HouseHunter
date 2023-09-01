@@ -5,6 +5,7 @@ import { Text } from "./Text";
 import { getHours } from "../../../helpers";
 import noPhoto from "../../../assets/images/no-photo.svg";
 import { Spinner } from "../../Spinner";
+import { Response } from "../Response";
 
 interface Props {
   photo?: string;
@@ -13,6 +14,11 @@ interface Props {
   date: number;
   onOpenObject: any;
   loading: boolean;
+  onSelect: () => void;
+  isSelected: boolean;
+  idParent?: string;
+  onScrollToResponseMessage: () => any;
+  id: number;
 }
 
 export const Photo = ({
@@ -22,19 +28,30 @@ export const Photo = ({
   date,
   onOpenObject,
   loading,
+  isSelected,
+  onSelect,
+  id,
 }: Props) => {
+  const handleOpen = (e: any) => {
+    if (!e.target.classList.contains("image") || !onOpenObject) {
+      onSelect();
+    }
+  };
+
   return (
     <StyledPhoto
       photo={photo ?? noPhoto}
       text={text}
       isOwner={isOwner}
-      onClick={onOpenObject ?? null}
       className={`${!!onOpenObject && "cursor-pointer"}`}
       loading={loading}
+      onClick={handleOpen}
+      isSelected={isSelected}
+      data-id={id}
     >
       {loading && <Spinner className="loading-spinner" />}
       {photo && <Download photo={photo} />}
-      <div className="image" />
+      <div className="image" onClick={onOpenObject ?? null} />
       {text && <Text text={text} isOwner={isOwner} date={date} />}
       {!text && <Time time={getHours(date)} />}
     </StyledPhoto>
@@ -46,6 +63,7 @@ interface StyledPhotoProps {
   text?: string;
   isOwner?: boolean;
   loading: boolean;
+  isSelected: boolean;
 }
 
 const StyledPhoto = styled.div<StyledPhotoProps>`
@@ -55,9 +73,13 @@ const StyledPhoto = styled.div<StyledPhotoProps>`
   flex-shrink: 0;
   border-radius: 12px;
   background: ${({ isOwner }) => (isOwner ? "#5D63FF" : "#5c5c5c")};
-  margin: ${({ isOwner }) => (isOwner ? "0 11px 0 auto" : "0 auto 0 11px")};
+  margin: ${({ isOwner, isSelected }) =>
+    isOwner
+      ? `0 ${isSelected ? 25 : 11}px 0 auto`
+      : `0 auto 0 ${isSelected ? 25 : 11}px`};
   padding: 1px;
   margin-bottom: 14px;
+  transition: all 0.3s;
   .image {
     width: 271px;
     height: 268px;

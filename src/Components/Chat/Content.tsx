@@ -10,6 +10,9 @@ interface Props {
   data: any;
   onOpenObject: (id_object_hash: string, type: string, state: string) => void;
   loadingInfoMore: string | null;
+  selected: any;
+  onSelect: (msg: any) => void;
+  rieltorName: string;
 }
 
 export const Content = ({
@@ -17,8 +20,26 @@ export const Content = ({
   data,
   onOpenObject,
   loadingInfoMore,
+  selected,
+  onSelect,
+  rieltorName,
 }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
+
+  const handleScrollToMessage = (id: any) => {
+    if (contentRef.current) {
+      Array.from(contentRef.current.children).forEach((e: any) => {
+        const elementId = Number(e.getAttribute("data-id"));
+        if (elementId === Number(id) && e?.offsetTop && contentRef.current) {
+          contentRef.current.scroll({
+            top: e?.offsetTop - 100,
+          });
+          e.classList.add("show-animation");
+          setTimeout(() => e.classList.remove("show-animation"), 600);
+        }
+      });
+    }
+  };
 
   useEffect(() => {
     if (contentRef.current) {
@@ -33,19 +54,19 @@ export const Content = ({
       {data?.length > 0
         ? data.map((msg: any, i: number) => {
             if (msg?.messege?.title || msg?.messege?.img) {
+              const text =
+                msg?.messege?.title || msg?.messege?.price
+                  ? `${msg?.messege?.title ?? "-"}, ${formatNumber(
+                      msg?.messege?.price
+                    )}`
+                  : undefined;
               return (
                 <Photo
                   key={i}
                   photo={
                     msg?.messege?.img?.length > 0 ? msg?.messege?.img : noPhoto
                   }
-                  text={
-                    msg?.messege?.title || msg?.messege?.price
-                      ? `${msg?.messege?.title ?? "-"}, ${formatNumber(
-                          msg?.messege?.price
-                        )}`
-                      : undefined
-                  }
+                  text={text}
                   date={msg?.date}
                   isOwner={msg?.user === 0}
                   onOpenObject={
@@ -61,6 +82,13 @@ export const Content = ({
                       : null
                   }
                   loading={loadingInfoMore === msg?.messege?.id_object_hash}
+                  onSelect={() => onSelect({ ...msg, text })}
+                  isSelected={selected?.id === msg.id}
+                  id={msg.id}
+                  idParent={msg?.id_parent}
+                  onScrollToResponseMessage={() =>
+                    handleScrollToMessage(msg?.id_parent)
+                  }
                 />
               );
             } else if (msg?.messege) {
@@ -94,6 +122,19 @@ export const Content = ({
                     !data[i - 1]?.messege?.image &&
                     !data[1 + i]?.messege?.image
                   }
+                  isSelected={selected?.id === msg.id}
+                  onSelect={() =>
+                    onSelect({ ...msg, text: msg?.messege ?? "" })
+                  }
+                  idParent={msg?.id_parent}
+                  parentMsg={data.find(
+                    (m: any) => m.id.toString() === msg?.id_parent?.toString()
+                  )}
+                  onScrollToResponseMessage={() =>
+                    handleScrollToMessage(msg?.id_parent)
+                  }
+                  id={msg.id}
+                  rieltorName={rieltorName}
                 />
               );
             }
@@ -123,5 +164,8 @@ const StyledContent = styled.div`
         background: #2c2c2c;
       }
     }
+  }
+  .show-animation {
+    opacity: 0.5;
   }
 `;

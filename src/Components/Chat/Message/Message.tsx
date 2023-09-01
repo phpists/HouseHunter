@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import { MessageFooter } from "../MessageFooter";
+import { Response } from "../Response";
 
 interface Props {
   text: string;
@@ -8,6 +9,13 @@ interface Props {
   last?: boolean;
   between?: boolean;
   date: number;
+  isSelected: boolean;
+  onSelect: () => void;
+  idParent?: string;
+  onScrollToResponseMessage: () => any;
+  id: number;
+  parentMsg: any;
+  rieltorName: string;
 }
 
 export const Message = ({
@@ -17,21 +25,49 @@ export const Message = ({
   last,
   between,
   date,
-}: Props) => (
-  <StyledMessage isOwner={isOwner} first={first} last={last} between={between}>
-    <div>
-      {text}
-      {/* {first && "first"} {last && "last"} {between && "between"} */}
-    </div>
-    <MessageFooter date={date} />
-  </StyledMessage>
-);
+  isSelected,
+  onSelect,
+  idParent,
+  parentMsg,
+  onScrollToResponseMessage,
+  id,
+  rieltorName,
+}: Props) => {
+  const handleSelectMessage = (e: any) =>
+    e.target.classList.contains("message") && onSelect();
 
+  return (
+    <StyledMessage
+      isOwner={isOwner}
+      first={first}
+      last={last}
+      between={between}
+      onClick={handleSelectMessage}
+      isSelected={isSelected}
+      className="message"
+      data-id={id}
+    >
+      {idParent && parentMsg && (
+        <Response
+          onClick={onScrollToResponseMessage}
+          parentMsg={parentMsg}
+          rieltorName={rieltorName}
+        />
+      )}
+      <div className="message">
+        {text}
+        {/* {first && "first"} {last && "last"} {between && "between"} */}
+      </div>
+      <MessageFooter date={date} />
+    </StyledMessage>
+  );
+};
 interface StyledMessageProps {
   isOwner?: boolean;
   first?: boolean;
   last?: boolean;
   between?: boolean;
+  isSelected: boolean;
 }
 
 const StyledMessage = styled.div<StyledMessageProps>`
@@ -44,10 +80,15 @@ const StyledMessage = styled.div<StyledMessageProps>`
       ? `12px ${last || between ? 0 : 12}px 0px 12px`
       : `${last || between ? 0 : 12}px 12px 12px 2px`};
   background: ${({ isOwner }) => (isOwner ? "#5D63FF" : "#5c5c5c")};
-  margin: ${({ isOwner }) => (isOwner ? "0 11px 0 auto" : "0 auto 0 11px")};
+  margin: ${({ isOwner, isSelected }) =>
+    isOwner
+      ? `0 ${isSelected ? 25 : 11}px 0 auto`
+      : `0 auto 0 ${isSelected ? 25 : 11}px`};
   position: relative;
   margin-bottom: ${({ first, between }) => (first || between ? 2 : 12)}px;
   word-wrap: break-word;
+  cursor: pointer;
+  transition: all 0.3s;
   &::before {
     content: "";
     display: block;
