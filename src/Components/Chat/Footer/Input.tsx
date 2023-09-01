@@ -54,6 +54,7 @@ export const Input = ({
           selectedMessage={selectedMessage}
           onCloseSelectedMessage={onCloseSelectedMessage}
           rieltorName={rieltorName}
+          loading={loading}
         />
       )}
       <input

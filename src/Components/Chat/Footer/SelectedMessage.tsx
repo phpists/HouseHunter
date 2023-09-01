@@ -8,12 +8,14 @@ interface Props {
   selectedMessage: any;
   onCloseSelectedMessage: () => void;
   rieltorName: string;
+  loading: boolean;
 }
 
 export const SelectedMessage = ({
   selectedMessage,
   onCloseSelectedMessage,
   rieltorName,
+  loading,
 }: Props) => {
   const controls = useAnimationControls();
   const isOwner = selectedMessage.user === 0;
@@ -54,7 +56,9 @@ export const SelectedMessage = ({
           <span>{isPhoto ? "Фотографія" : selectedMessage?.messege}</span>
         </div>
       </div>
-      <img src={closeIcon} alt="" onClick={handleClose} className="close" />
+      {!loading && (
+        <img src={closeIcon} alt="" onClick={handleClose} className="close" />
+      )}
     </StyledSelectedMessage>
   );
 };
