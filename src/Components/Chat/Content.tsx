@@ -82,7 +82,11 @@ export const Content = ({
                       : null
                   }
                   loading={loadingInfoMore === msg?.messege?.id_object_hash}
-                  onSelect={() => onSelect({ ...msg, text })}
+                  onSelect={() =>
+                    msg.id === selected?.id
+                      ? onSelect(null)
+                      : onSelect({ ...msg, text })
+                  }
                   isSelected={selected?.id === msg.id}
                   id={msg.id}
                   idParent={msg?.id_parent}
@@ -124,7 +128,9 @@ export const Content = ({
                   }
                   isSelected={selected?.id === msg.id}
                   onSelect={() =>
-                    onSelect({ ...msg, text: msg?.messege ?? "" })
+                    msg.id === selected?.id
+                      ? onSelect(null)
+                      : onSelect({ ...msg, text: msg?.messege ?? "" })
                   }
                   idParent={msg?.id_parent}
                   parentMsg={data.find(
