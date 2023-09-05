@@ -5,6 +5,7 @@ import { Status } from "./Status";
 import { Price } from "./Price";
 import { ShowBtn } from "./ShowBtn";
 import noPhoto from "../../../assets/images/no-photo.svg";
+import { Recomended } from "./Recomended";
 interface Props {
   onOpen: () => void;
   isNew?: boolean;
@@ -15,6 +16,7 @@ interface Props {
   like?: boolean;
   isHide?: boolean;
   tag?: string;
+  recommended?: boolean;
 }
 
 export const Banner = ({
@@ -27,6 +29,7 @@ export const Banner = ({
   like,
   isHide,
   tag,
+  recommended,
 }: Props) => {
   return (
     <StyledBanner status={!!like} isNew={!!isNew}>
@@ -40,6 +43,7 @@ export const Banner = ({
           <Status status={!!like} onOpen={onOpen} />
         </>
       )}
+      {isNew && recommended && <Recomended />}
       <Price price={price} currency={currency} onOpen={onOpen} />
       <Slider
         isNew={isNew}

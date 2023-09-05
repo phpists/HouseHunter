@@ -6,6 +6,7 @@ import { getHours } from "../../../helpers";
 import noPhoto from "../../../assets/images/no-photo.svg";
 import { Spinner } from "../../Spinner";
 import { Response } from "../Response";
+import { Tag } from "./Tag";
 
 interface Props {
   photo?: string;
@@ -49,10 +50,18 @@ export const Photo = ({
       isSelected={isSelected}
       data-id={id}
     >
+      {text && <Tag />}
       {loading && <Spinner className="loading-spinner" />}
       {photo && <Download photo={photo} />}
       <div className="image" onClick={onOpenObject ?? null} />
-      {text && <Text text={text} isOwner={isOwner} date={date} />}
+      {text && (
+        <Text
+          text={text}
+          isOwner={isOwner}
+          date={date}
+          isSelected={isSelected}
+        />
+      )}
       {!text && <Time time={getHours(date)} />}
     </StyledPhoto>
   );

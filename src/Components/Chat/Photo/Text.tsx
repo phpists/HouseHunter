@@ -5,12 +5,13 @@ interface Props {
   text: string;
   isOwner?: boolean;
   date: number;
+  isSelected: boolean;
 }
 
-export const Text = ({ text, isOwner, date }: Props) => (
+export const Text = ({ text, isOwner, date, isSelected }: Props) => (
   <StyledText isOwner={isOwner}>
     <div>{text}</div>
-    <MessageFooter date={date} />
+    <MessageFooter date={date} isOwner={!!isOwner} isSelected={isSelected} />
   </StyledText>
 );
 

@@ -33,6 +33,7 @@ interface Props {
   onPhotoView?: () => void;
   disabled?: boolean;
   rieltor: { name: string; photo: string | undefined; phones: string[] };
+  recommended?: boolean;
 }
 
 export const Card = ({
@@ -60,6 +61,7 @@ export const Card = ({
   onPhotoView,
   disabled,
   rieltor,
+  recommended,
 }: Props) => {
   const [open, setOpen] = useState<boolean>(history);
   const cardRef = useRef(null);
@@ -239,7 +241,10 @@ export const Card = ({
           onChangeCurrency={onChangeCurrency}
           price={price}
         />
-        <Type type={type} className="maininfo" />
+        <Type
+          type={recommended ? "Рекомендація" : type ? type : null}
+          className="maininfo"
+        />
         <MainInfo title={title} location={location} doors={doors} area={area} />
         <Slider
           images={images?.length === 0 ? [noPhoto] : images}

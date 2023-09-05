@@ -33,7 +33,6 @@ export const SelectedMessage = ({
 
   return (
     <StyledSelectedMessage
-      className="flex items-center justify-between"
       animate={controls}
       transition={{
         type: "linear",
@@ -49,16 +48,18 @@ export const SelectedMessage = ({
           : noPhoto
       }
     >
-      <div className="flex items-center">
-        {isPhoto && <div className="photo" />}
-        <div>
-          <div className="name">{isOwner ? "Ви" : rieltorName}</div>
-          <span>{isPhoto ? "Фотографія" : selectedMessage?.messege}</span>
+      <div className="selected-msg-content flex items-center justify-between">
+        <div className="flex items-center">
+          {isPhoto && <div className="photo" />}
+          <div>
+            <div className="name">{isOwner ? "Ви" : rieltorName}</div>
+            <span>{isPhoto ? "Фотографія" : selectedMessage?.messege}</span>
+          </div>
         </div>
+        {/* {!loading && (
+          <img src={closeIcon} alt="" onClick={handleClose} className="close" />
+        )} */}
       </div>
-      {!loading && (
-        <img src={closeIcon} alt="" onClick={handleClose} className="close" />
-      )}
     </StyledSelectedMessage>
   );
 };
@@ -71,7 +72,7 @@ interface StyledSelectedMessageProps {
 
 const StyledSelectedMessage = styled(motion.div)<StyledSelectedMessageProps>`
   position: absolute;
-  bottom: calc(100% + 2px);
+  bottom: 100%;
   background: #343434;
   width: 100%;
   padding: 10px;
@@ -83,6 +84,11 @@ const StyledSelectedMessage = styled(motion.div)<StyledSelectedMessageProps>`
   line-height: 118%;
   letter-spacing: 0.3px;
   left: 0;
+  .selected-msg-content {
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.12);
+    padding: 4px 7px 2px;
+  }
   .name {
     color: ${({ isOwner }) => (isOwner ? "#81fb21" : "#98F9FF")};
     text-overflow: ellipsis;
@@ -94,6 +100,8 @@ const StyledSelectedMessage = styled(motion.div)<StyledSelectedMessageProps>`
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     height: 18px;
+    max-width: 200px;
+    overflow: hidden;
   }
   span {
     display: block;
@@ -101,7 +109,7 @@ const StyledSelectedMessage = styled(motion.div)<StyledSelectedMessageProps>`
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
-    max-width: 280px;
+    max-width: 200px;
   }
   .photo {
     width: 36px;
@@ -112,5 +120,6 @@ const StyledSelectedMessage = styled(motion.div)<StyledSelectedMessageProps>`
   }
   .close {
     cursor: pointer;
+    flex-shrink: 0;
   }
 `;

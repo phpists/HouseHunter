@@ -25,6 +25,7 @@ interface Props {
   isFiltering?: boolean;
   disabled?: boolean;
   tag?: string;
+  recommended?: boolean;
 }
 
 export const SelectionCard = ({
@@ -47,6 +48,7 @@ export const SelectionCard = ({
   isHide,
   disabled,
   tag,
+  recommended,
 }: Props) => {
   const controls = useAnimationControls();
 
@@ -99,6 +101,7 @@ export const SelectionCard = ({
         like={like}
         isHide={isHide}
         tag={tag}
+        recommended={recommended}
       />
       <Info
         onOpen={onOpen}

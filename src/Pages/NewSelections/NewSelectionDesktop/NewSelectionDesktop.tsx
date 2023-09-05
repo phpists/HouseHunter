@@ -52,6 +52,7 @@ export const NewSelectionDesktop = ({
             "selection-card-desctop-hide"
           }`}
           disabled={rating}
+          recommended={card?.recommended}
         />
       ))
     ) : loadingMore ? (

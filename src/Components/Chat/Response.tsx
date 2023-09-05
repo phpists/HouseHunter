@@ -43,7 +43,7 @@ const StyledResponse = styled.div<StyledResponseProps>`
   margin-bottom: 8px;
   color: rgba(255, 255, 255, 0.5);
   text-overflow: ellipsis;
-  whitespace: nowrap;
+  white-space: nowrap;
   font-family: Overpass;
   font-size: 15px;
   font-style: normal;
@@ -53,7 +53,7 @@ const StyledResponse = styled.div<StyledResponseProps>`
   .name {
     color: ${({ isOwner }) => (isOwner ? "#81fb21" : "#98F9FF")};
     text-overflow: ellipsis;
-    whitespace: nowrap;
+    white-space: nowrap;
     font-family: Overpass;
     font-size: 15px;
     font-style: normal;
@@ -61,6 +61,9 @@ const StyledResponse = styled.div<StyledResponseProps>`
     line-height: 118%; /* 17.7px */
     letter-spacing: 0.3px;
     height: 18px;
+    width: 100%;
+    max-width: 200px;
+    overflow: hidden;
   }
   span {
     display: block;
@@ -68,7 +71,7 @@ const StyledResponse = styled.div<StyledResponseProps>`
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
-    max-width: 280px;
+    max-width: 200px;
   }
   .photo {
     width: 36px;

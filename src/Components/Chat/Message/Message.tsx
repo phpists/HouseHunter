@@ -43,6 +43,7 @@ export const Message = ({
       last={last}
       between={between}
       onClick={handleSelectMessage}
+      onTouchEnd={handleSelectMessage}
       isSelected={isSelected}
       className="message"
       data-id={id}
@@ -58,7 +59,7 @@ export const Message = ({
         {text}
         {/* {first && "first"} {last && "last"} {between && "between"} */}
       </div>
-      <MessageFooter date={date} />
+      <MessageFooter date={date} isOwner={!!isOwner} isSelected={isSelected} />
     </StyledMessage>
   );
 };
@@ -77,8 +78,8 @@ const StyledMessage = styled.div<StyledMessageProps>`
     isOwner ? "8px 10px 5px 10px" : `8px 10px 5px 10px`};
   border-radius: ${({ isOwner, last, between }) =>
     isOwner
-      ? `12px ${last || between ? 0 : 12}px 0px 12px`
-      : `${last || between ? 0 : 12}px 12px 12px 2px`};
+      ? `12px ${last || between ? 2 : 12}px 2px 12px`
+      : `${last || between ? 2 : 12}px 12px 12px 2px`};
   background: ${({ isOwner }) => (isOwner ? "#5D63FF" : "#5c5c5c")};
   margin: ${({ isOwner, isSelected }) =>
     isOwner

@@ -90,6 +90,7 @@ export const CardList = ({
               }
               disabled={disabled}
               rieltor={rieltor}
+              recommended={card?.recommended}
             />
           ))
         ) : (
