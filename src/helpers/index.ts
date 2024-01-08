@@ -47,7 +47,7 @@ export const removeDublicats = (array: any) => {
   const updatedArray: any = [];
 
   array.forEach((element: any) => {
-    if (!updatedArray.find((e: any) => e.id_object === element.id_object)) {
+    if (!updatedArray.find((e: any) => e.id === element.id)) {
       updatedArray.push(element);
     }
   });
@@ -80,4 +80,14 @@ export const checkIsBrowserSupportTouch = () => {
   if (isMobile && !isSupportTouch) {
     cogoToast.error("Оновіть браузер", { hideAfter: 5 });
   }
+};
+
+export const handleToFormData = (data: any): any => {
+  const formData = new FormData();
+
+  Object.entries(data).forEach((field) => {
+    formData.append(field[0], field[1]);
+  });
+
+  return formData;
 };

@@ -8,7 +8,7 @@ import noPhoto from "../../assets/images/no-photo.svg";
 interface Props {
   open: boolean;
   data: any;
-  onOpenObject: (id_object_hash: string, type: string, state: string) => void;
+  onOpenObject: (id_hash: string, type: string, state: string) => void;
   loadingInfoMore: string | null;
   selected: any;
   onSelect: (msg: any) => void;
@@ -26,13 +26,18 @@ export const Content = ({
 }: Props) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const handleScrollToMessage = (id: any) => {
+  const handleScrollToMessage = (id: any, toBottom?: boolean) => {
     if (contentRef.current) {
-      Array.from(contentRef.current.children).forEach((e: any) => {
+      Array.from(contentRef.current.children).forEach((e: any, i: number) => {
         const elementId = Number(e.getAttribute("data-id"));
         if (elementId === Number(id) && e?.offsetTop && contentRef.current) {
+          const isToBottom =
+            toBottom && i === Array.from(contentRef.current.children).length - 1
+              ? e.offsetHeight
+              : 0;
+
           contentRef.current.scroll({
-            top: e?.offsetTop - 100,
+            top: e?.offsetTop - 100 + isToBottom,
           });
           e.classList.add("show-animation");
           setTimeout(() => e.classList.remove("show-animation"), 600);
@@ -49,11 +54,32 @@ export const Content = ({
     }
   }, [open, data]);
 
+  const handleClickOnContent = (e: any) => {
+    if (e.target.classList.contains("content-wrapper")) {
+      onSelect(null);
+    }
+  };
+
+  useEffect(() => {
+    if (selected) {
+      handleScrollToMessage(selected?.id, true);
+    }
+  }, [selected]);
+
   return (
-    <StyledContent ref={contentRef}>
+    <StyledContent
+      ref={contentRef}
+      className="content-wrapper"
+      onClick={handleClickOnContent}
+      selected={!!selected}
+    >
       {data?.length > 0
         ? data.map((msg: any, i: number) => {
-            if (msg?.messege?.title || msg?.messege?.img) {
+            if (
+              msg?.messege?.title ||
+              msg?.messege?.img?.img ||
+              msg?.messege?.object
+            ) {
               const text =
                 msg?.messege?.title || msg?.messege?.price
                   ? `${msg?.messege?.title ?? "-"}, ${formatNumber(
@@ -64,35 +90,38 @@ export const Content = ({
                 <Photo
                   key={i}
                   photo={
-                    msg?.messege?.img?.length > 0 ? msg?.messege?.img : noPhoto
+                    msg?.messege?.object?.photo?.length > 0
+                      ? msg?.messege?.object?.photo
+                      : msg?.messege?.img?.img?.length > 0
+                      ? msg?.messege?.img?.img
+                      : noPhoto
                   }
                   text={text}
-                  date={msg?.date}
-                  isOwner={msg?.user === 0}
+                  date={msg?.time}
+                  isOwner={!msg?.id_user}
                   onOpenObject={
-                    msg?.messege?.id_object_hash &&
-                    msg?.messege?.type &&
-                    !loadingInfoMore
+                    msg?.messege?.object?.id && !loadingInfoMore
                       ? () =>
                           onOpenObject(
-                            msg?.messege?.id_object_hash,
-                            msg?.messege?.type,
-                            msg?.messege?.state
+                            msg?.messege?.object?.id,
+                            msg?.messege?.object?.type,
+                            msg?.messege?.object?.state
                           )
                       : null
                   }
-                  loading={loadingInfoMore === msg?.messege?.id_object_hash}
+                  loading={loadingInfoMore === msg?.messege?.object?.id}
                   onSelect={() =>
-                    msg.id === selected?.id
+                    i === selected?.id
                       ? onSelect(null)
-                      : onSelect({ ...msg, text })
+                      : onSelect({ ...msg, text, id: i })
                   }
                   isSelected={selected?.id === msg.id}
-                  id={msg.id}
+                  id={i}
                   idParent={msg?.id_parent}
                   onScrollToResponseMessage={() =>
                     handleScrollToMessage(msg?.id_parent)
                   }
+                  isObject={!!msg?.messege?.object?.id}
                 />
               );
             } else if (msg?.messege) {
@@ -100,8 +129,8 @@ export const Content = ({
                 <Message
                   key={i}
                   text={msg?.messege ?? ""}
-                  date={msg?.date}
-                  isOwner={msg?.user === 0}
+                  date={msg?.time}
+                  isOwner={!msg?.id_user}
                   first={
                     (!data[i - 1]?.messege?.image &&
                       !data[1 + i]?.messege?.image &&
@@ -126,20 +155,21 @@ export const Content = ({
                     !data[i - 1]?.messege?.image &&
                     !data[1 + i]?.messege?.image
                   }
-                  isSelected={selected?.id === msg.id}
+                  isSelected={selected?.id === i}
                   onSelect={() =>
-                    msg.id === selected?.id
+                    i === selected?.id
                       ? onSelect(null)
-                      : onSelect({ ...msg, text: msg?.messege ?? "" })
+                      : onSelect({ ...msg, text: msg?.messege ?? "", id: i })
                   }
                   idParent={msg?.id_parent}
                   parentMsg={data.find(
-                    (m: any) => m.id.toString() === msg?.id_parent?.toString()
+                    (m: any, j: number) =>
+                      j.toString() === msg?.id_parent?.toString()
                   )}
                   onScrollToResponseMessage={() =>
                     handleScrollToMessage(msg?.id_parent)
                   }
-                  id={msg.id}
+                  id={i}
                   rieltorName={rieltorName}
                 />
               );
@@ -152,12 +182,17 @@ export const Content = ({
   );
 };
 
-const StyledContent = styled.div`
+interface StyledContentProps {
+  selected: boolean;
+}
+
+const StyledContent = styled.div<StyledContentProps>`
   height: 490px;
   overflow: auto;
   overflow-x: hidden;
   overflow-y: auto;
   margin: 13px 0;
+  ${({ selected }) => selected && "padding-bottom: 61px;"}
   div {
     &::after {
       background: #454545;

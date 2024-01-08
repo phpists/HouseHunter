@@ -7,6 +7,7 @@ import { Descrioption } from "./Descrioption";
 import { Title } from "./Title";
 import { Footer } from "./Footer/Footer";
 import { getCurrencySymbol } from "../../../helpers";
+import { formatNumber } from "../../../helpers/numbers";
 
 interface Props {
   onOpen: () => void;
@@ -63,7 +64,7 @@ export const Info = ({
         {location?.length > 25 ? `${location.substring(0, 25)}...` : location}
       </div>
       <div>
-        • {price}
+        • {formatNumber(Number(price))}
         {getCurrencySymbol(currency)}
       </div>{" "}
       <div> • {doors}к</div>

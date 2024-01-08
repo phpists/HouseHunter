@@ -1,8 +1,9 @@
 import { styled } from "styled-components";
-import closeIcon from "../../../assets/images/close-.svg";
+import replyIcon from "../../../assets/images/reply.svg";
 import { motion, useAnimationControls } from "framer-motion";
 import { useEffect } from "react";
 import noPhoto from "../../../assets/images/no-photo.svg";
+import closeIcon from "../../../assets/images/close-circle.svg";
 
 interface Props {
   selectedMessage: any;
@@ -47,7 +48,9 @@ export const SelectedMessage = ({
           ? selectedMessage?.messege?.img
           : noPhoto
       }
+      className="flex items-center"
     >
+      <img src={replyIcon} alt="" className="reply-icon" />
       <div className="selected-msg-content flex items-center justify-between">
         <div className="flex items-center">
           {isPhoto && <div className="photo" />}
@@ -56,10 +59,13 @@ export const SelectedMessage = ({
             <span>{isPhoto ? "Фотографія" : selectedMessage?.messege}</span>
           </div>
         </div>
-        {/* {!loading && (
-          <img src={closeIcon} alt="" onClick={handleClose} className="close" />
-        )} */}
       </div>
+      <img
+        src={closeIcon}
+        alt=""
+        onClick={() => (loading ? null : handleClose())}
+        className="close"
+      />
     </StyledSelectedMessage>
   );
 };
@@ -73,10 +79,9 @@ interface StyledSelectedMessageProps {
 const StyledSelectedMessage = styled(motion.div)<StyledSelectedMessageProps>`
   position: absolute;
   bottom: 100%;
-  background: #343434;
+  background: #454545;
   width: 100%;
-  padding: 10px;
-  border-radius: 9px 9px 0 0;
+  padding: 4px 7px;
   z-index: 101;
   color: rgba(255, 255, 255, 0.7);
   font-size: 15px;
@@ -84,10 +89,18 @@ const StyledSelectedMessage = styled(motion.div)<StyledSelectedMessageProps>`
   line-height: 118%;
   letter-spacing: 0.3px;
   left: 0;
+  border-top: 1px solid #999;
+
+  .reply-icon {
+    height: 14px;
+    margin-right: 4px;
+    width: 17px;
+  }
   .selected-msg-content {
     border-radius: 5px;
-    background: rgba(0, 0, 0, 0.12);
+    background: #3d3d3d;
     padding: 4px 7px 2px;
+    width: 100%;
   }
   .name {
     color: ${({ isOwner }) => (isOwner ? "#81fb21" : "#98F9FF")};

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { baseUrl } from "./baseUrl";
-import { getIdFromUrl } from "../helpers";
+import { getIdFromUrl, handleToFormData } from "../helpers";
 import { errors } from "../constants/errors";
 import cogoToast from "cogo-toast";
 
@@ -9,27 +9,37 @@ const headers = {
 };
 
 export const getNewSelections = async (page: number, perPage?: number) => {
-  const id = getIdFromUrl();
+  const id_request_group = getIdFromUrl();
   return axios
     .post(
-      `${baseUrl}/show_new_object.php`,
-      { id, page, itemOnPage: perPage },
+      `${baseUrl}`,
+      handleToFormData({
+        id_request_group,
+        mod: "notepad_client",
+        action: "view_folder_client",
+      }),
       { headers }
     )
     .then((resp) => resp)
     .catch((error) => console.log(error));
 };
 
-export const rate = async (like: number, id_object: string, type: string) => {
-  const id = getIdFromUrl();
+export const rate = async (like: number, id: string, type: string) => {
+  const id_request_group = getIdFromUrl();
   return axios
     .post(
-      `${baseUrl}/object_state.php`,
-      { id, like, id_object, type },
+      `${baseUrl}`,
+      handleToFormData({
+        id_request_group,
+        mod: "notepad_client",
+        action: "add_choise_to_object",
+        choise: like,
+        id_object: id,
+      }),
       { headers }
     )
     .then((resp) => {
-      const errorCode = resp?.data.error;
+      const errorCode = resp?.data?.error;
       if (errorCode === 0) {
         return errorCode;
       } else {
@@ -44,11 +54,15 @@ export const rate = async (like: number, id_object: string, type: string) => {
 };
 
 export const getHistory = async (page: number, like?: number) => {
-  const id = getIdFromUrl();
+  const id_request_group = getIdFromUrl();
   return axios
     .post(
-      `${baseUrl}/show_history_object.php`,
-      { id, page, itemOnPage: 20, like },
+      `${baseUrl}`,
+      handleToFormData({
+        id_request_group,
+        mod: "notepad_client",
+        action: "view_folder_client_choise_object",
+      }),
       { headers }
     )
     .then((resp) => resp)
@@ -56,17 +70,33 @@ export const getHistory = async (page: number, like?: number) => {
 };
 
 export const getRieltor = async () => {
-  const id = getIdFromUrl();
+  const id_request_group = getIdFromUrl();
   return axios
-    .post(`${baseUrl}/get_agency_name.php`, { id }, { headers })
+    .post(
+      `${baseUrl}`,
+      handleToFormData({
+        id_request_group,
+        mod: "notepad_client",
+        action: "view_folder_client",
+      }),
+      { headers }
+    )
     .then((resp) => resp)
     .catch((error) => console.log(error));
 };
 
 export const getChat = async () => {
-  const id = getIdFromUrl();
+  const id_request_group = getIdFromUrl();
   return axios
-    .post(`${baseUrl}/show_chat.php`, { id }, { headers })
+    .post(
+      `${baseUrl}`,
+      handleToFormData({
+        id_request_group,
+        mod: "notepad_chat_client",
+        action: "show_chat",
+      }),
+      { headers }
+    )
     .then((resp) => resp)
     .catch((error) => console.log(error));
 };
@@ -78,18 +108,20 @@ export const sendMessage = async (
   show_object?: any,
   id_parent?: any
 ) => {
-  const id = getIdFromUrl();
-  const formData = new FormData();
-
-  formData.append("id", id);
-  messege && formData.append("messege", messege);
-  file && formData.append("img", file);
-  type_table && formData.append("type_table", type_table);
-  show_object && formData.append("show_object", show_object);
-  id_parent && formData.append("id_parent", id_parent);
-
+  const id_request_group = getIdFromUrl();
   return axios
-    .post(`${baseUrl}/add_messege_chat.php`, formData, { headers })
+    .post(
+      `${baseUrl}`,
+      handleToFormData({
+        id_request_group,
+        action: "add_messege_to_chat_client",
+        mod: "notepad_chat_client",
+        ...(messege ? { messege } : {}),
+        ...(show_object ? { show_object } : {}),
+        ...(file ? { img: file } : {}),
+      }),
+      { headers }
+    )
     .then((resp) => {
       const errorCode = resp?.data.error;
       if (errorCode === 0) {
@@ -103,12 +135,15 @@ export const sendMessage = async (
     .catch((error) => console.log(error));
 };
 
-export const getInfoObject = async (id_object_hash: string, type: string) => {
-  const folder = getIdFromUrl();
+export const getInfoObject = async (id_hash: string, type: string) => {
   return axios
     .post(
-      `${baseUrl}/get_info_object.php`,
-      { folder, id_object_hash, type },
+      `${baseUrl}`,
+      handleToFormData({
+        id_object: id_hash,
+        mod: "notepad_client",
+        action: "get_info_object",
+      }),
       { headers }
     )
     .then((resp) => {

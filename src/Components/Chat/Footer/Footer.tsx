@@ -44,7 +44,10 @@ export const Footer = ({
   };
 
   return (
-    <StyledFooter className="flex items-center">
+    <StyledFooter
+      className="flex items-center"
+      selectedMessage={!!selectedMessage}
+    >
       <Input
         value={value}
         onChange={(value: string) => setValue(value)}
@@ -59,7 +62,29 @@ export const Footer = ({
   );
 };
 
-const StyledFooter = styled.div`
+interface StyledFooterProps {
+  selectedMessage: boolean;
+}
+
+const StyledFooter = styled.div<StyledFooterProps>`
   margin: 0 4px;
   position: relative;
+  z-index: 400;
+  transition: all 0.3s;
+  ${({ selectedMessage }) =>
+    selectedMessage &&
+    `
+    padding: 4px;
+    margin: 0 -7px;
+    &:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        background: #454545;
+        height: 57px;
+        left: 0;
+    }
+  `}
 `;

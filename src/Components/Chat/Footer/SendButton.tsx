@@ -25,6 +25,7 @@ const StyledSendButton = styled.button`
   margin-left: 4px;
   flex-shrink: 0;
   transition: all 0.3s;
+  z-index: 2;
   &:hover {
     background: rgba(93, 99, 255, 1);
   }

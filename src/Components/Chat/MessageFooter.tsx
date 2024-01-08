@@ -15,7 +15,14 @@ export const MessageFooter = ({ date, isOwner, isSelected }: Props) => (
     isOwner={isOwner}
   >
     {getHours(date)}
-    {isSelected ? <img src={replyIcon} alt="" /> : <CheckIcon />}
+    {isSelected ? (
+      <img src={replyIcon} alt="" className="message" />
+    ) : (
+      <>
+        <CheckIcon className="message" />
+        <img src={replyIcon} alt="" className="reply-icon message" />
+      </>
+    )}
   </StyledMessageFooter>
 );
 
@@ -29,10 +36,23 @@ const StyledMessageFooter = styled.div<StyledMessageFooterProps>`
   font-weight: 300;
   line-height: 100%; /* 12px */
   letter-spacing: 0.24px;
+  min-height: 16px;
   svg,
   img {
     margin-left: 3px;
   }
+  .reply-icon {
+    display: none;
+  }
+  &:hover {
+    svg {
+      display: none;
+    }
+    .reply-icon {
+      display: block;
+    }
+  }
+
   ${({ isOwner }) =>
     isOwner &&
     `

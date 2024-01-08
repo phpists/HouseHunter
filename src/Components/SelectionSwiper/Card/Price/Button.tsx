@@ -16,7 +16,7 @@ export const Button = ({
 }: Props) => (
   <StyledButton onClick={onToggleOpen} className="flex items-center clickable">
     <div className="price-value clickable">
-      {formatNumber(price)}
+      {formatNumber(Number(price))}
       {activeCurrency}
     </div>
     <Arrow open={open} />

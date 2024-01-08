@@ -10,7 +10,7 @@ interface Props {
 
 export const Price = ({ price, currency, onOpen }: Props) => (
   <StyledPice onClick={onOpen}>
-    {formatNumber(price)} {getCurrencySymbol(currency)}
+    {formatNumber(Number(price))} {getCurrencySymbol(currency)}
   </StyledPice>
 );
 

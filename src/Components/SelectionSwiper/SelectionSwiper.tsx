@@ -57,7 +57,7 @@ export const SelectionSwiper = ({
   const handleSendRealtor = () => {
     if (cards.length > 0) {
       const type = cards[0]?.type ?? "";
-      const id = cards[0]?.id_object ?? "";
+      const id = cards[0]?.id ?? "";
 
       onSendRealtor(type, id);
     }
@@ -66,7 +66,7 @@ export const SelectionSwiper = ({
   const handleChangeStatusFooter = (direction: string | null) => {
     if (cards.length > 0) {
       const type = cards[0]?.type ?? "";
-      const id = cards[0]?.id_object ?? "";
+      const id = cards[0]?.id ?? "";
 
       handleChangeCardStatus(0, direction, id, type);
     }

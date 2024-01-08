@@ -56,7 +56,7 @@ export const App = () => {
 
   const handleSendSelection = (type: string, id: string) => {
     setChatOpen(false);
-    sendMessage("", undefined, type, id).then(() => {
+    sendMessage(undefined, undefined, type, id).then(() => {
       setChatOpen(true);
       setInfoOpen(null);
     });
@@ -65,11 +65,11 @@ export const App = () => {
   const handleGetRieltor = () => {
     setLoading(true);
     getRieltor().then((resp) => {
-      resp?.data?.result &&
+      resp?.data?.agency_inf &&
         setRieltor({
-          name: resp?.data?.result?.name,
-          photo: resp?.data?.result?.img,
-          phones: resp?.data?.result?.phones ?? [],
+          name: resp?.data?.agency_inf?.name,
+          photo: resp?.data?.agency_inf?.img,
+          phones: resp?.data?.agency_inf?.phones ?? [],
         });
       setLoading(false);
     });
@@ -87,14 +87,15 @@ export const App = () => {
   };
 
   const handleOpenObjectFromChat = (
-    id_object_hash: string,
+    id_hash: string,
     type: string,
     state: string
   ) => {
-    setLoadingInfoMore(id_object_hash);
-    getInfoObject(id_object_hash, type).then((resp: any) => {
+    console.log(id_hash, type, state);
+    setLoadingInfoMore(id_hash);
+    getInfoObject(id_hash, type).then((resp: any) => {
       setLoadingInfoMore(null);
-      const objectInfo = resp?.data?.data ? resp?.data?.data[0] : null;
+      const objectInfo = resp?.data?.data ?? null;
       if (objectInfo) {
         setChatOpen(false);
         setInfoOpen({
@@ -104,7 +105,7 @@ export const App = () => {
         });
         navigate(state === "new" ? "/" : "/history");
         setActiveTab(state === "new" ? 1 : 0);
-        setAppendObjectToList(objectInfo);
+        setAppendObjectToList({ ...objectInfo, id: id_hash });
       }
     });
   };
@@ -125,7 +126,7 @@ export const App = () => {
             infoOpen={infoOpen}
             currency={currency}
             onChangeCurrency={handleChangeCurrency}
-            rieltor={rieltor}
+            rieltor={rieltor ?? null}
           />
           <StyledApp chatOpen={!!chatOpen} infoOpen={infoOpen}>
             <Chat

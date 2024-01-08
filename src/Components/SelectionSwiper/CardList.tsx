@@ -46,7 +46,11 @@ export const CardList = ({
             <EmptyCard
               key={i}
               index={1 + i}
-              images={card?.image_url?.length > 0 ? card?.image_url : [noPhoto]}
+              images={
+                card?.img?.length > 0
+                  ? card?.img?.map((i: any) => i?.name)
+                  : [noPhoto]
+              }
               totalCards={cards?.length ?? 0}
             />
           ))
@@ -63,29 +67,37 @@ export const CardList = ({
               type={card?.rubric_name ?? ""}
               currency={currency}
               onChangeCurrency={onChangeCurrency}
-              price={card?.price ? card?.price[currency] : 0}
-              location={getLocation(card?.location)}
+              price={card[`price_${currency}`] ?? 0}
+              location={card?.location}
               doors={card?.rooms ?? "-"}
-              area={card?.total_house_area ?? "-"}
-              stairs={`${card?.storey ?? "-"} із ${card?.storey_count ?? "-"}`}
+              area={card?.area_total ?? "-"}
+              stairs={`${card?.address_apartment_number ?? "-"} із ${
+                card?.address_storey ?? "-"
+              }`}
               box={card?.kitchen_area ?? "-"}
               title={
                 card?.title?.length > 0 ? card?.title : card?.description ?? ""
               }
               description={card?.description ?? ""}
               index={1 + i}
-              images={card?.image_url?.length > 0 ? card?.image_url : [noPhoto]}
+              images={
+                card?.img?.length > 0
+                  ? card?.img?.map((i: any) => i?.name)
+                  : [noPhoto]
+              }
               onChangeStatus={(direction) =>
-                onChangeStatus(i, direction, card?.id_object, card?.type)
+                onChangeStatus(i, direction, card?.id, card?.type)
               }
               history={history}
               totalCards={cards?.length ?? 0}
-              onSendRealtor={() => onSendRealtor(card?.type, card?.id_object)}
+              onSendRealtor={() => onSendRealtor(card?.type, card?.id)}
               onClose={onClose}
               cardStatusChanged={cardStatusChanged}
               onPhotoView={() =>
                 onPhotoView(
-                  card?.image_url?.length > 0 ? card?.image_url : [noPhoto]
+                  card?.img?.length > 0
+                    ? card?.img?.map((i: any) => i?.name)
+                    : [noPhoto]
                 )
               }
               disabled={disabled}

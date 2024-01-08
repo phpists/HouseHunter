@@ -32,23 +32,25 @@ export const NewSelectionDesktop = ({
           key={i}
           onOpen={() => onOpenInfo(card)}
           isNew
-          onSendRealtor={() => onSendRealtor(card?.type, card?.id_object)}
-          area={card?.total_house_area ?? "-"}
+          onSendRealtor={() => onSendRealtor(card?.type, card?.id)}
+          area={card?.area_total ?? "-"}
           currency={currency}
-          price={card?.price ? card?.price[currency] : 0}
+          price={card[`price_${currency}`] ?? 0}
           title={
             card?.title?.length > 0 ? card?.title : card?.description ?? ""
           }
-          location={getLocation(card?.location)}
+          location={card?.location}
           doors={card?.rooms ?? "-"}
-          stairs={`${card?.storey ?? "-"} із ${card?.storey_count ?? "-"}`}
+          stairs={`${card?.address_apartment_number ?? "-"} із ${
+            card?.address_storey ?? "-"
+          }`}
           description={card?.description ?? ""}
-          images={card?.image_url ?? []}
-          onSwap={(direction) =>
-            onSwap(i, direction, card?.id_object, card?.type)
+          images={
+            card?.img?.length > 0 ? card?.img?.map((i: any) => i.name) : []
           }
+          onSwap={(direction) => onSwap(i, direction, card?.id, card?.type)}
           className={`selection-card-desctop ${
-            !!removed.find((id: any) => id === card?.id_object) &&
+            !!removed.find((id: any) => id === card?.id) &&
             "selection-card-desctop-hide"
           }`}
           disabled={rating}

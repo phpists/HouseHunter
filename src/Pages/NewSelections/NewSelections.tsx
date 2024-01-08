@@ -50,9 +50,7 @@ export const NewSelections = ({
           let updatedData = removeDublicats([...cardsData.current, ...data]);
           updatedData = updatedData.filter(
             (item: any) =>
-              !removedBeforeData.current.find(
-                (id: any) => id === item.id_object
-              )
+              !removedBeforeData.current.find((id: any) => id === item.id)
           );
           cardsData.current = updatedData;
           setCards(updatedData);
@@ -75,7 +73,7 @@ export const NewSelections = ({
           setRating(false);
           if (errorCode === 0) {
             const updatedCards = [...cardsData.current].filter(
-              (card, i) => card.id_object !== id
+              (card, i) => card.id !== id
             );
             setCards(updatedCards);
             cardsData.current = updatedCards;
@@ -102,8 +100,7 @@ export const NewSelections = ({
             !isLoading.current)
         ) {
           const updatedCards = [...cardsData.current].filter(
-            (card, i) =>
-              !removedData.current.find((id: any) => card.id_object === id)
+            (card, i) => !removedData.current.find((id: any) => card.id === id)
           );
           setCards(updatedCards);
           removedBeforeData.current = [
@@ -130,7 +127,7 @@ export const NewSelections = ({
     if (appendObjectToList) {
       const filteredCards = cardsData.current
         ? cardsData.current.filter(
-            (card: any) => card.id_object !== appendObjectToList.id_object
+            (card: any) => card.id !== appendObjectToList.id
           )
         : [];
       cardsData.current = [appendObjectToList, ...filteredCards];

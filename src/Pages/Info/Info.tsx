@@ -78,7 +78,14 @@ export const Info = ({
       <StyledInfo>
         <div className="desktop">
           <div>
-            <Photos onClose={onClose} photos={infoOpen?.image_url ?? []} />
+            <Photos
+              onClose={onClose}
+              photos={
+                infoOpen?.img?.length > 0
+                  ? infoOpen?.img?.map((i: any) => i?.name)
+                  : []
+              }
+            />
           </div>
           <MainInfo infoOpen={infoOpen} />
           {/* <SectionTitle title="Зручності" />

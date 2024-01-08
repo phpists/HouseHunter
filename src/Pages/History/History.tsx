@@ -104,15 +104,13 @@ export const History = ({
   useEffect(() => {
     if (cards) {
       currentPage.current = 0;
-      setTimeout(() => {
-        handleGetHistory(true);
-      }, 300);
       window.scrollTo({
         top: 0,
         left: 0,
         behavior: "smooth",
       });
       filterLiked && setIsFiltered(true);
+      console.log(filterLiked);
     }
   }, [filterLiked]);
 
@@ -125,7 +123,7 @@ export const History = ({
   ) => {
     rate(direction === "right" ? 1 : 0, id, type).then(() => {
       const updatedData = cardsData.current.map((card: any) =>
-        card?.id_object === id
+        card?.id === id
           ? { ...card, like: direction === "right" ? 1 : 0 }
           : card
       );
@@ -138,8 +136,7 @@ export const History = ({
     scrolledTop.current = window.scrollY;
     onOpenInfo({
       ...card,
-      handleSwap: (direction) =>
-        handleSwap(i, direction, card?.id_object, card?.type),
+      handleSwap: (direction) => handleSwap(i, direction, card?.id, card?.type),
     });
   };
 
@@ -157,7 +154,7 @@ export const History = ({
     if (appendObjectToList) {
       const filteredCards = cardsData.current
         ? cardsData.current.filter(
-            (card: any) => card.id_object !== appendObjectToList.id_object
+            (card: any) => card.id !== appendObjectToList.id
           )
         : [];
       cardsData.current = [appendObjectToList, ...filteredCards];
@@ -175,22 +172,28 @@ export const History = ({
             <SelectionCard
               //   key={i}
               onOpen={() => handleOpenInfo(card, i)}
-              area={card?.total_house_area ?? "-"}
+              area={card?.area_total ?? "-"}
               currency={currency}
-              price={card?.price ? card?.price[currency] : 0}
+              price={card[`price_${currency}`] ?? 0}
               title={card?.title ?? ""}
-              location={getLocation(card?.location)}
+              location={card?.location}
               doors={card?.rooms ?? "-"}
-              stairs={`${card?.storey ?? "-"} із ${card?.storey_count ?? "-"}`}
+              stairs={`${card?.address_apartment_number ?? "-"} із ${
+                card?.address_storey ?? "-"
+              }`}
               description={card?.description ?? ""}
-              images={card?.image_url ?? []}
-              onSendRealtor={() => onSendRealtor(card?.type, card?.id_object)}
+              images={
+                cards[0]?.img?.length > 0
+                  ? cards[0]?.img?.map((i: any) => i?.name)
+                  : []
+              }
+              onSendRealtor={() => onSendRealtor(card?.type, card?.id)}
               onSwap={(direction) =>
-                handleSwap(i, direction, card?.id_object, card?.type)
+                handleSwap(i, direction, card?.id, card?.type)
               }
               noAnimation
-              like={card?.like === 1}
-              isHide={isFiltered && card?.like === 0}
+              like={card?.like}
+              isHide={filterLiked && !card?.like}
               tag={card?.tags?.length > 0 ? card?.tags : null}
             />
           ))

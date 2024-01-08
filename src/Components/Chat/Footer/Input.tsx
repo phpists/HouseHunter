@@ -47,7 +47,6 @@ export const Input = ({
       className={`flex items-center ${
         loading && "cursor-not-allowed opacity-90"
       }`}
-      selectedMessage={!!selectedMessage}
     >
       {!!selectedMessage && (
         <SelectedMessage
@@ -82,13 +81,8 @@ export const Input = ({
   );
 };
 
-interface StyledInputProps {
-  selectedMessage: boolean;
-}
-
-const StyledInput = styled.div<StyledInputProps>`
-  border-radius: ${({ selectedMessage }) =>
-    selectedMessage ? "0 0 9px 9px" : "9px"};
+const StyledInput = styled.div`
+  border-radius: 9px;
   background: #343434;
   height: 40px;
   padding: 12px 10px 10px 14px;
@@ -100,7 +94,7 @@ const StyledInput = styled.div<StyledInputProps>`
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   width: 100%;
-  position: relative;
+  z-index: 2;
   input {
     width: 100%;
     padding-right: 10px;

@@ -70,13 +70,13 @@ export const Cards = ({
       {history ? (
         <MoreInfo
           type={cards[0]?.type ?? ""}
-          price={cards[0]?.price ? cards[0]?.price[currency] : 0}
+          price={cards[0][`price_${currency}`] ?? 0}
           currency={currency}
-          location={getLocation(cards[0]?.location)}
+          location={cards[0]?.location_name}
           doors={cards[0]?.rooms ?? "-"}
-          area={cards[0]?.total_house_area ?? "-"}
-          stairs={`${cards[0]?.storey ?? "-"} із ${
-            cards[0]?.storey_count ?? "-"
+          area={cards[0]?.area_total ?? "-"}
+          stairs={`${cards[0]?.address_apartment_number ?? "-"} із ${
+            cards[0]?.address_storey ?? "-"
           }`}
           box={cards[0]?.kitchen_area ?? "-"}
           title={
@@ -90,17 +90,19 @@ export const Cards = ({
           index={10}
           onClose={() => (onClose ? onClose() : null)}
           images={
-            cards[0]?.image_url?.length > 0 ? cards[0]?.image_url : [noPhoto]
+            cards[0]?.img?.length > 0
+              ? cards[0]?.img?.map((i: any) => i?.name)
+              : [noPhoto]
           }
           onChangeStatus={(direction) =>
-            onChangeStatus(0, direction, cards[0]?.id_object, cards[0]?.type)
+            onChangeStatus(0, direction, cards[0]?.id, cards[0]?.type)
           }
-          onSendRealtor={() =>
-            onSendRealtor(cards[0]?.type, cards[0]?.id_object)
-          }
+          onSendRealtor={() => onSendRealtor(cards[0]?.type, cards[0]?.id)}
           onPhotoView={() =>
             handleOpenPhotoView(
-              cards[0]?.image_url?.length > 0 ? cards[0]?.image_url : [noPhoto]
+              cards[0]?.img?.length > 0
+                ? cards[0]?.img?.map((i: any) => i?.name)
+                : [noPhoto]
             )
           }
           cardStatusChanged={cardStatusChanged}

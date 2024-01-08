@@ -10,7 +10,7 @@ interface Props {
   className?: string;
   onCloseChat: () => void;
   rieltor: { name: string; photo: string | undefined; phones: string[] };
-  onOpenObject: (id_object_hash: string, type: string, state: string) => void;
+  onOpenObject: (id_hash: string, type: string, state: string) => void;
   loadingInfoMore: string | null;
 }
 
@@ -29,7 +29,7 @@ export const Chat = ({
     setSelectedMessage(msg === selectedMessage ? null : msg);
 
   const handleGetMessages = () => {
-    getChat().then((resp: any) => setData(resp?.data ?? []));
+    getChat().then((resp: any) => setData(resp?.data?.data ?? []));
   };
 
   useEffect(() => {

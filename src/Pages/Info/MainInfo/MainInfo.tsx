@@ -23,16 +23,16 @@ export const MainInfo = ({ infoOpen }: Props) => (
       }
     />
     <div className="flex items-center info">
-      <Location location={getLocation(infoOpen?.location)} />
+      <Location location={infoOpen?.location} />
       <div className="flex items-center info-items">
         <Divider className="location-divider" />
         <Doors doors={infoOpen?.rooms ?? "-"} />
         <Divider />
-        <Expand area={infoOpen?.total_house_area ?? "-"} />
+        <Expand area={infoOpen?.area_total ?? "-"} />
         <Divider />
         <Stairs
-          stairs={`${infoOpen?.storey ?? "-"} із ${
-            infoOpen?.storey_count ?? "-"
+          stairs={`${infoOpen?.address_apartment_number ?? "-"} із ${
+            infoOpen?.address_storey ?? "-"
           }`}
         />
       </div>

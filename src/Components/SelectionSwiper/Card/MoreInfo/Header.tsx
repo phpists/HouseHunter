@@ -15,7 +15,7 @@ export const Header = ({ onClose, price, currency, rieltor }: Props) => (
   <StyledHeader className="flex items-center justify-between select-none">
     <img src={arrowBack} alt="" onClick={onClose} />
     <span>
-      {formatNumber(price)} {getCurrencySymbol(currency)}
+      {formatNumber(Number(price))} {getCurrencySymbol(currency)}
     </span>
     <Avatar small photo={rieltor.photo} />
   </StyledHeader>

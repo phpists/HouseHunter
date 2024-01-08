@@ -58,6 +58,7 @@ export const SelectionCard = ({
     }
   };
 
+  console.log(isHide);
   useEffect(() => {
     controls.start({
       scale: isHide ? 0 : 1,
