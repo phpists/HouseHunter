@@ -62,6 +62,8 @@ export const getHistory = async (page: number, like?: number) => {
         id_request_group,
         mod: "notepad_client",
         action: "view_folder_client_choise_object",
+        item_on_page: 20,
+        current_page: page,
       }),
       { headers }
     )

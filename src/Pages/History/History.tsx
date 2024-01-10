@@ -40,7 +40,7 @@ export const History = ({
         .then((resp: any) => {
           const data = resp?.data?.data;
           const pagesCount = resp?.data?.pages_count;
-          setTotalPages(pagesCount);
+          setTotalPages(Math.ceil(Number(resp?.data?.all_item) / 20));
           currentPage.current = currentPage.current + 1;
           isFirstRender.current = false;
           if (data && cleanPrevData) {
@@ -77,16 +77,16 @@ export const History = ({
   };
 
   const handleScroll = () => {
-    // if (
-    //   window.innerHeight + document.documentElement.scrollTop <=
-    //     document.documentElement.offsetHeight - 400 ||
-    //   isLoading.current
-    // ) {
-    //   return;
-    // }
-    // setLoading(true);
-    // isLoading.current = true;
-    // handleGetHistory();
+    if (
+      window.innerHeight + document.documentElement.scrollTop <=
+        document.documentElement.offsetHeight - 400 ||
+      isLoading.current
+    ) {
+      return;
+    }
+    setLoading(true);
+    isLoading.current = true;
+    handleGetHistory();
   };
 
   useEffect(() => {
