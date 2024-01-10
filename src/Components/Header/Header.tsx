@@ -12,7 +12,8 @@ interface Props {
   infoOpen?: boolean;
   currency: string;
   onChangeCurrency: (value: string) => void;
-  rieltor: { name: string; photo: string | undefined; phones: string[] };
+  rieltor: { name: string; photo: string | undefined; phone: any };
+  phonesCodes: any;
 }
 
 export const Header = ({
@@ -26,6 +27,7 @@ export const Header = ({
   currency,
   onChangeCurrency,
   rieltor,
+  phonesCodes,
 }: Props) => (
   <StyledHeader isHide={!!chatOpen}>
     <div className="header-wrapper flex items-center justify-between select-none">
@@ -33,6 +35,7 @@ export const Header = ({
         chatOpen={chatOpen}
         onToggleChat={onToggleChat}
         rieltor={rieltor}
+        phonesCodes={phonesCodes}
       />
       <Actions
         activeTab={activeTab}

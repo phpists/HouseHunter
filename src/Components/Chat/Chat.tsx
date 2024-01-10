@@ -9,9 +9,10 @@ interface Props {
   open: boolean;
   className?: string;
   onCloseChat: () => void;
-  rieltor: { name: string; photo: string | undefined; phones: string[] };
+  rieltor: { name: string; photo: string | undefined; phone: any };
   onOpenObject: (id_hash: string, type: string, state: string) => void;
   loadingInfoMore: string | null;
+  phonesCodes: any;
 }
 
 export const Chat = ({
@@ -21,6 +22,7 @@ export const Chat = ({
   rieltor,
   onOpenObject,
   loadingInfoMore,
+  phonesCodes,
 }: Props) => {
   const [data, setData] = useState<any>([]);
   const [selectedMessage, setSelectedMessage] = useState<any>(null);
@@ -33,7 +35,7 @@ export const Chat = ({
   };
 
   useEffect(() => {
-    handleGetMessages();
+    open && handleGetMessages();
     setSelectedMessage(null);
   }, [open]);
 
@@ -43,7 +45,11 @@ export const Chat = ({
         open && "active"
       }`}
     >
-      <Header onCloseChat={onCloseChat} rieltor={rieltor} />
+      <Header
+        onCloseChat={onCloseChat}
+        rieltor={rieltor}
+        phonesCodes={phonesCodes}
+      />
       <Content
         open={open}
         data={data}

@@ -21,7 +21,7 @@ interface Props {
   loading: boolean;
   onPhotoView: (photos: string[]) => void;
   disabled?: boolean;
-  rieltor: { name: string; photo: string | undefined; phones: string[] };
+  rieltor: { name: string; photo: string | undefined; phone: any };
 }
 
 export const CardList = ({
@@ -68,7 +68,7 @@ export const CardList = ({
               currency={currency}
               onChangeCurrency={onChangeCurrency}
               price={card[`price_${currency}`] ?? 0}
-              location={card?.location}
+              location={card?.location_name}
               doors={card?.rooms ?? "-"}
               area={card?.area_total ?? "-"}
               stairs={`${card?.address_apartment_number ?? "-"} із ${

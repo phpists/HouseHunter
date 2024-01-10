@@ -39,7 +39,7 @@ export const NewSelectionDesktop = ({
           title={
             card?.title?.length > 0 ? card?.title : card?.description ?? ""
           }
-          location={card?.location}
+          location={card?.location_name}
           doors={card?.rooms ?? "-"}
           stairs={`${card?.address_apartment_number ?? "-"} із ${
             card?.address_storey ?? "-"
@@ -55,6 +55,7 @@ export const NewSelectionDesktop = ({
           }`}
           disabled={rating}
           recommended={card?.recommended}
+          category={card?.rubric_name}
         />
       ))
     ) : loadingMore ? (

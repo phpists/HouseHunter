@@ -36,8 +36,10 @@ export const Input = ({
     const file = e?.target?.files[0];
 
     if (file) {
-      sendMessage(undefined, file).then((resp) => {
-        onRefreshData();
+      sendMessage(undefined, file).then((resp: any) => {
+        if (resp === "success") {
+          onRefreshData();
+        }
       });
     }
   };

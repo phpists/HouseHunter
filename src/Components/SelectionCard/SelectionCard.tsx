@@ -26,6 +26,7 @@ interface Props {
   disabled?: boolean;
   tag?: string;
   recommended?: boolean;
+  category?: string;
 }
 
 export const SelectionCard = ({
@@ -49,6 +50,7 @@ export const SelectionCard = ({
   disabled,
   tag,
   recommended,
+  category,
 }: Props) => {
   const controls = useAnimationControls();
 
@@ -58,7 +60,6 @@ export const SelectionCard = ({
     }
   };
 
-  console.log(isHide);
   useEffect(() => {
     controls.start({
       scale: isHide ? 0 : 1,
@@ -117,6 +118,7 @@ export const SelectionCard = ({
         description={description}
         onSwap={handleSwap}
         disabled={disabled}
+        category={category}
       />
     </StyledSelectionCard>
   );

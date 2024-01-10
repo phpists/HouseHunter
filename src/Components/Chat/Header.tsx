@@ -6,10 +6,11 @@ import callIcon from "../../assets/images/call.svg";
 
 interface Props {
   onCloseChat: () => void;
-  rieltor: { name: string; photo: string | undefined; phones: string[] };
+  rieltor: { name: string; photo: string | undefined; phone: any };
+  phonesCodes: any;
 }
 
-export const Header = ({ onCloseChat, rieltor }: Props) => (
+export const Header = ({ onCloseChat, rieltor, phonesCodes }: Props) => (
   <StyledHeader className="flex items-center justify-between">
     <div className="flex items-center ">
       <img
@@ -20,7 +21,15 @@ export const Header = ({ onCloseChat, rieltor }: Props) => (
       />
       <Profile small rieltor={rieltor} />
     </div>
-    <a href={`tel:${rieltor.phones[0] ?? ""}`}>
+    <a
+      href={`tel:${
+        `${
+          phonesCodes?.find(
+            (c: any) => c?.id === rieltor.phone[0]?.id_phone_code
+          )?.code
+        }${rieltor.phone[0]?.phone}` ?? ""
+      }`}
+    >
       <img
         src={callIcon}
         alt=""

@@ -12,7 +12,7 @@ interface Props {
   onChangeCurrency: (value: string) => void;
   disabled?: boolean;
   onClose?: () => void;
-  rieltor: { name: string; photo: string | undefined; phones: string[] };
+  rieltor: { name: string; photo: string | undefined; phone: any };
 }
 
 export const SelectionSwiper = ({

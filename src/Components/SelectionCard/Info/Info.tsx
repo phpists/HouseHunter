@@ -22,6 +22,7 @@ interface Props {
   description?: string;
   onSwap?: (direction: string) => void;
   disabled?: boolean;
+  category?: string;
 }
 
 export const Info = ({
@@ -37,12 +38,14 @@ export const Info = ({
   description,
   onSwap,
   disabled,
+  category,
 }: Props) => (
   <StyledInfo>
     <div className="full-info">
       <div onClick={onOpen}>
         {isNew && <Title title={title} />}
         <Location location={location} />
+        {category ? <div className="my-2 ml-1">{category}</div> : null}
       </div>
       <div className="flex items-center" onClick={onOpen}>
         <Doors doors={doors} />

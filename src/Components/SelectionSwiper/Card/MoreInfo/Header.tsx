@@ -8,7 +8,7 @@ interface Props {
   onClose: () => void;
   price: number;
   currency: string;
-  rieltor: { name: string; photo: string | undefined; phones: string[] };
+  rieltor: { name: string; photo: string | undefined; phone: any };
 }
 
 export const Header = ({ onClose, price, currency, rieltor }: Props) => (

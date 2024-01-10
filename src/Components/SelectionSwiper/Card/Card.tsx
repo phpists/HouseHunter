@@ -32,7 +32,7 @@ interface Props {
   loading?: string;
   onPhotoView?: () => void;
   disabled?: boolean;
-  rieltor: { name: string; photo: string | undefined; phones: string[] };
+  rieltor: { name: string; photo: string | undefined; phone: any };
   recommended?: boolean;
 }
 

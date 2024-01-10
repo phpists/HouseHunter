@@ -33,7 +33,7 @@ interface Props {
   onSendRealtor: (type: string, id: string) => void;
   currency: string;
   onChangeCurrency: (value: string) => void;
-  rieltor: { name: string; photo: string | undefined; phones: string[] };
+  rieltor: { name: string; photo: string | undefined; phone: any };
 }
 
 export const Info = ({

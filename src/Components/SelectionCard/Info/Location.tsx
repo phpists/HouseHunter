@@ -7,7 +7,7 @@ interface Props {
 
 export const Location = ({ location }: Props) => (
   <StyledLocation className="flex items-center">
-    <img src={locationIcon} alt="" className="mr-2 mb-2" />
+    <img src={locationIcon} alt="" className="mr-2 mb-1" />
     <span> {location}</span>
   </StyledLocation>
 );

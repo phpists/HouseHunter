@@ -3,7 +3,7 @@ import { Avatar } from "../Avatar";
 
 interface Props {
   small?: boolean;
-  rieltor: { name: string; photo: string | undefined; phones: string[] };
+  rieltor: { name: string; photo: string | undefined; phone: any };
 }
 
 export const Profile = ({ small, rieltor }: Props) => (

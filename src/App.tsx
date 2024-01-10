@@ -4,7 +4,12 @@ import { useState, useEffect } from "react";
 import { History } from "./Pages/History/History";
 import { Chat } from "./Components/Chat/Chat";
 import { NewSelections } from "./Pages/NewSelections/NewSelections";
-import { getInfoObject, getRieltor, sendMessage } from "./api/methods";
+import {
+  getInfoObject,
+  getPhonesCodes,
+  getRieltor,
+  sendMessage,
+} from "./api/methods";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Spinner } from "./Components/Spinner";
 import { Info } from "./Pages/Info/Info";
@@ -25,13 +30,26 @@ export const App = () => {
   const [rieltor, setRieltor] = useState<{
     name: string;
     photo: string | undefined;
-    phones: string[];
+    phone: any;
   } | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingInfoMore, setLoadingInfoMore] = useState<string | null>(null);
   const [appendObjectToList, setAppendObjectToList] = useState<any | null>(
     null
   );
+  const [phonesCodes, setPhonesCodes] = useState<any>([]);
+
+  useEffect(() => {
+    getPhonesCodes().then((resp) =>
+      setPhonesCodes(
+        resp?.data
+          ? Object.entries(resp?.data)
+              ?.map((e) => e[1])
+              ?.filter((e) => e !== 0)
+          : []
+      )
+    );
+  }, []);
 
   const handleChangeCurrency = (value: string) => {
     setCurrency(value);
@@ -65,11 +83,11 @@ export const App = () => {
   const handleGetRieltor = () => {
     setLoading(true);
     getRieltor().then((resp) => {
-      resp?.data?.agency_inf &&
+      resp?.data &&
         setRieltor({
-          name: resp?.data?.agency_inf?.name,
-          photo: resp?.data?.agency_inf?.img,
-          phones: resp?.data?.agency_inf?.phones ?? [],
+          name: resp?.data?.name,
+          photo: resp?.data?.img,
+          phone: resp?.data?.phone ?? [],
         });
       setLoading(false);
     });
@@ -91,7 +109,6 @@ export const App = () => {
     type: string,
     state: string
   ) => {
-    console.log(id_hash, type, state);
     setLoadingInfoMore(id_hash);
     getInfoObject(id_hash, type).then((resp: any) => {
       setLoadingInfoMore(null);
@@ -127,6 +144,7 @@ export const App = () => {
             currency={currency}
             onChangeCurrency={handleChangeCurrency}
             rieltor={rieltor ?? null}
+            phonesCodes={phonesCodes}
           />
           <StyledApp chatOpen={!!chatOpen} infoOpen={infoOpen}>
             <Chat
@@ -135,6 +153,7 @@ export const App = () => {
               rieltor={rieltor}
               onOpenObject={handleOpenObjectFromChat}
               loadingInfoMore={loadingInfoMore}
+              phonesCodes={phonesCodes}
             />
             {infoOpen && (
               <Info

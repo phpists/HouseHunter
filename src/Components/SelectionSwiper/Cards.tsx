@@ -24,7 +24,7 @@ interface Props {
   onChangeCurrency: (value: string) => void;
   onClose?: () => void;
   disabled?: boolean;
-  rieltor: { name: string; photo: string | undefined; phones: string[] };
+  rieltor: { name: string; photo: string | undefined; phone: any };
 }
 
 export const Cards = ({

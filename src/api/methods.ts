@@ -76,8 +76,8 @@ export const getRieltor = async () => {
       `${baseUrl}`,
       handleToFormData({
         id_request_group,
-        mod: "notepad_client",
-        action: "view_folder_client",
+        mod: "system_info",
+        action: "get_info_agency",
       }),
       { headers }
     )
@@ -125,11 +125,17 @@ export const sendMessage = async (
     .then((resp) => {
       const errorCode = resp?.data.error;
       if (errorCode === 0) {
-        return resp;
+        return "success";
       } else {
         // @ts-ignore: Unreachable code error
-        cogoToast.error(errors[errorCode] ?? "Помилка");
-        return resp;
+        cogoToast.error(
+          // @ts-ignore: Unreachable code error
+          errors[errorCode]
+            ? // @ts-ignore: Unreachable code error
+              errors[errorCode]
+            : resp?.data?.messege ?? "Помилка"
+        );
+        return null;
       }
     })
     .catch((error) => console.log(error));
@@ -143,6 +149,29 @@ export const getInfoObject = async (id_hash: string, type: string) => {
         id_object: id_hash,
         mod: "notepad_client",
         action: "get_info_object",
+      }),
+      { headers }
+    )
+    .then((resp) => {
+      const errorCode = resp?.data.error;
+      if (errorCode === 0) {
+        return resp;
+      } else {
+        // @ts-ignore: Unreachable code error
+        cogoToast.error(errors[errorCode] ?? "Помилка");
+        return resp;
+      }
+    })
+    .catch((error) => console.log(error));
+};
+
+export const getPhonesCodes = async () => {
+  return axios
+    .post(
+      `${baseUrl}`,
+      handleToFormData({
+        mod: "system_info",
+        action: "get_phone_codes",
       }),
       { headers }
     )

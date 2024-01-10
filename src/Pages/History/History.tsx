@@ -77,16 +77,16 @@ export const History = ({
   };
 
   const handleScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop <=
-        document.documentElement.offsetHeight - 400 ||
-      isLoading.current
-    ) {
-      return;
-    }
-    setLoading(true);
-    isLoading.current = true;
-    handleGetHistory();
+    // if (
+    //   window.innerHeight + document.documentElement.scrollTop <=
+    //     document.documentElement.offsetHeight - 400 ||
+    //   isLoading.current
+    // ) {
+    //   return;
+    // }
+    // setLoading(true);
+    // isLoading.current = true;
+    // handleGetHistory();
   };
 
   useEffect(() => {
@@ -110,7 +110,6 @@ export const History = ({
         behavior: "smooth",
       });
       filterLiked && setIsFiltered(true);
-      console.log(filterLiked);
     }
   }, [filterLiked]);
 
@@ -121,14 +120,16 @@ export const History = ({
     type: string,
     notRemove?: boolean
   ) => {
-    rate(direction === "right" ? 1 : 0, id, type).then(() => {
-      const updatedData = cardsData.current.map((card: any) =>
-        card?.id === id
-          ? { ...card, like: direction === "right" ? 1 : 0 }
-          : card
-      );
-      setCards(updatedData);
-      cardsData.current = updatedData;
+    rate(direction === "right" ? 1 : 0, id, type).then((resp) => {
+      if (resp === 0) {
+        const updatedData = cardsData.current.map((card: any) =>
+          card?.id === id
+            ? { ...card, like: direction === "right" ? 1 : 0 }
+            : card
+        );
+        setCards(updatedData);
+        cardsData.current = updatedData;
+      }
     });
   };
 
@@ -176,7 +177,7 @@ export const History = ({
               currency={currency}
               price={card[`price_${currency}`] ?? 0}
               title={card?.title ?? ""}
-              location={card?.location}
+              location={card?.location_name}
               doors={card?.rooms ?? "-"}
               stairs={`${card?.address_apartment_number ?? "-"} із ${
                 card?.address_storey ?? "-"
@@ -195,6 +196,7 @@ export const History = ({
               like={card?.like}
               isHide={filterLiked && !card?.like}
               tag={card?.tags?.length > 0 ? card?.tags : null}
+              category={card?.rubric_name}
             />
           ))
         ) : (
