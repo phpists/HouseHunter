@@ -17,6 +17,7 @@ export const getNewSelections = async (page: number, perPage?: number) => {
         id_request_group,
         mod: "notepad_client",
         action: "view_folder_client",
+        item_on_page: 20,
       }),
       { headers }
     )

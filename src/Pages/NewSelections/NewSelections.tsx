@@ -41,11 +41,12 @@ export const NewSelections = ({
       isLoading.current = true;
       getNewSelections(0, perPage).then((resp: any) => {
         const data = resp?.data?.data;
-        const totalPage = resp?.data?.pages_count ?? 1;
+        const totalPage = Math.ceil(Number(resp?.data?.all_item) / 20) ?? 1;
         setLoading(false);
         setLoadingMore(false);
         isLoading.current = false;
         isLastPage.current = totalPage === 1;
+        console.log(totalPage);
         if (data) {
           let updatedData = removeDublicats([...cardsData.current, ...data]);
           updatedData = updatedData.filter(
