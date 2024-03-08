@@ -80,6 +80,7 @@ const StyledChat = styled.div`
   right: 3vh;
   transform: translateX(100vw);
   transition: all 0.4s;
+  overflow: hidden;
   &.active {
     transform: translateX(0);
   }

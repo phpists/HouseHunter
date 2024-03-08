@@ -56,6 +56,7 @@ export const Footer = ({
         selectedMessage={selectedMessage}
         onCloseSelectedMessage={onCloseSelectedMessage}
         rieltorName={rieltorName}
+        onSend={handleSendMessage}
       />
       <SendButton onSend={handleSendMessage} loading={loading} />
     </StyledFooter>
@@ -71,11 +72,16 @@ const StyledFooter = styled.div<StyledFooterProps>`
   position: relative;
   z-index: 400;
   transition: all 0.3s;
+  position: absolute;
+  bottom: 7px;
+  right: 0px;
+  left: 0px;
+  padding: 0 7px;
   ${({ selectedMessage }) =>
     selectedMessage &&
     `
     padding: 4px;
-    margin: 0 -7px;
+    // margin: 0 -7px;
     &:before {
         content: "";
         display: block;

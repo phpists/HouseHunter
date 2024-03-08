@@ -191,6 +191,7 @@ const StyledContent = styled.div<StyledContentProps>`
   overflow: auto;
   overflow-x: hidden;
   overflow-y: auto;
+  padding-bottom: 40px;
   margin: 13px 0;
   ${({ selected }) => selected && "padding-bottom: 61px;"}
   div {
@@ -199,7 +200,7 @@ const StyledContent = styled.div<StyledContentProps>`
     }
   }
   @media (max-width: 1000px) {
-    height: calc(100svh - 150px);
+    height: calc(100svh - 110px);
     div {
       &::after {
         background: #2c2c2c;

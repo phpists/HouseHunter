@@ -122,6 +122,7 @@ export const sendMessage = async (
         ...(messege ? { messege } : {}),
         ...(show_object ? { show_object } : {}),
         ...(file ? { img: file } : {}),
+        ...(id_parent ? { id_parent } : {}),
       }),
       { headers }
     )

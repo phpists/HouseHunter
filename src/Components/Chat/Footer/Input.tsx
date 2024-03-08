@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { styled } from "styled-components";
 // import fileIcon from "../../../assets/images/file-text.svg";
 import imageIcon from "../../../assets/images/image.svg";
@@ -13,6 +13,7 @@ interface Props {
   selectedMessage: any;
   onCloseSelectedMessage: () => void;
   rieltorName: string;
+  onSend: () => void;
 }
 
 export const Input = ({
@@ -23,8 +24,10 @@ export const Input = ({
   selectedMessage,
   onCloseSelectedMessage,
   rieltorName,
+  onSend,
 }: Props) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSelectPhoto = () => {
     if (fileInputRef.current && !loading) {
@@ -44,6 +47,28 @@ export const Input = ({
     }
   };
 
+  const handleResizeTextarea = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = `${
+        value?.length === 0
+          ? 18
+          : textareaRef.current.scrollHeight > 54
+          ? 54
+          : textareaRef.current.scrollHeight
+      }px`;
+    }
+  };
+
+  useEffect(() => {
+    handleResizeTextarea();
+  }, [value]);
+
+  const textAreaAdjust = (e: any) => {
+    e.target.style.height = "1px";
+    e.target.style.height = e.target.scrollHeight + "px";
+    onChange(e.target.value);
+  };
+
   return (
     <StyledInput
       className={`flex items-center ${
@@ -58,12 +83,13 @@ export const Input = ({
           loading={loading}
         />
       )}
-      <input
-        type="text"
+      <textarea
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={textAreaAdjust}
         placeholder="Повідомлення"
         disabled={loading}
+        ref={textareaRef}
+        onKeyDown={(e) => e?.keyCode === 13 && !e?.shiftKey && onSend()}
       />
       {!selectedMessage && (
         <>
@@ -86,7 +112,7 @@ export const Input = ({
 const StyledInput = styled.div`
   border-radius: 9px;
   background: #343434;
-  height: 40px;
+  min-height: 40px;
   padding: 12px 10px 10px 14px;
   color: #fff;
   text-overflow: ellipsis;
@@ -100,6 +126,15 @@ const StyledInput = styled.div`
   input {
     width: 100%;
     padding-right: 10px;
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+  textarea {
+    width: 100%;
+    padding-right: 10px;
+    resize: none;
+    height: 20px;
     &::placeholder {
       color: rgba(255, 255, 255, 0.5);
     }
