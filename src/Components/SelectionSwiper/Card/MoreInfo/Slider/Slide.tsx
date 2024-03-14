@@ -7,7 +7,11 @@ interface Props {
 }
 
 export const Slide = ({ image, onPhotoView, active }: Props) => (
-  <StyledSlide image={active ? image : ""} onClick={onPhotoView} />
+  <StyledSlide
+    image={active ? image : ""}
+    className="clickable"
+    onClick={onPhotoView}
+  />
 );
 
 interface StyledSlideProps {

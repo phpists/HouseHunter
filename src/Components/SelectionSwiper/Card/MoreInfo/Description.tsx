@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const Descrioption = ({ text }: Props) => {
-  const [showAll, setShowAll] = useState<boolean>(text.length < 100);
+  const [showAll, setShowAll] = useState<boolean>(true);
   return (
     <>
       <StyledDescrioption draggable={false}>

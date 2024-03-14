@@ -169,7 +169,7 @@ export const App = () => {
               className={`content main-app-content ${
                 !!chatOpen && "chat-opened"
               }`}
-              style={{ display: !!infoOpen ? "none" : "block" }}
+              //   style={{ display: !!infoOpen ? "none" : "block" }}
             >
               <Routes>
                 <Route

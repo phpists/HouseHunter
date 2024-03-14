@@ -4,19 +4,34 @@ import { Divider } from "./Divider";
 import { Doors } from "./Doors";
 import { Expand } from "./Expand";
 import { Title } from "./Title";
+import { SlideCount } from "../SlideCount";
 
 interface Props {
   location: string;
   title?: string;
   doors: number | string;
   area: number | string;
+  isScrolled: boolean;
+  currentSlide: number;
+  totalSlides: number;
 }
 
-export const MainInfo = ({ title, location, doors, area }: Props) => (
-  <StyledMainInfo className="maininfo">
+export const MainInfo = ({
+  title,
+  location,
+  doors,
+  area,
+  isScrolled,
+  currentSlide,
+  totalSlides,
+}: Props) => (
+  <StyledMainInfo className={`maininfo ${isScrolled && "scrolled"}`}>
+    {totalSlides > 0 ? (
+      <SlideCount total={totalSlides} currentSlide={currentSlide} />
+    ) : null}
     <div className="flex items-center items justify-between">
       <Location location={location} />
-      <div className="flex items-center">
+      <div className="main-tags flex items-center">
         <Divider />
         <Doors doors={doors} />
         <Divider />
@@ -35,6 +50,10 @@ const StyledMainInfo = styled.div`
   z-index: 500;
   transition: all 0.3s;
   width: 100%;
+
+  &.scrolled {
+    opacity: 0 !important;
+  }
   .items {
     font-family: Open Sans;
     font-size: 13px;
@@ -47,5 +66,8 @@ const StyledMainInfo = styled.div`
       height: 16px;
       margin-right: 6px !important;
     }
+  }
+  .main-tags {
+    flex-shrink: 0;
   }
 `;

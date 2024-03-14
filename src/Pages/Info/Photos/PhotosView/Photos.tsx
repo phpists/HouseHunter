@@ -54,6 +54,10 @@ export const PhotosView = ({ open, onClose, images, defaultPhoto }: Props) => {
             damping: 30,
           }}
           ref={photosViewRef}
+          className="overlay"
+          onClick={(e: any) =>
+            e.target.classList?.contains("overlay") && onClose()
+          }
         >
           <BackButton onClick={onClose} />
           <PhotoSlider
@@ -86,10 +90,12 @@ const StyledPhotosView = styled(motion.div)`
   left: 0;
   height: 100vh;
   width: 100vw;
-  background: #454545;
+  background: #45454587;
+  overflow: auto;
+  backdrop-filter: blur(10px);
   overflow: auto;
   img {
-    width: 80%;
     margin: 20px auto;
+    height: 90vh;
   }
 `;

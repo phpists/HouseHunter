@@ -9,6 +9,15 @@ import { MoreInfo } from "./MoreInfo/MoreInfo";
 import { Type } from "./Type";
 import { SwipeStatus } from "./SwipeStatus";
 import noPhoto from "../../../assets/images/no-photo.svg";
+import { Title } from "./MainInfo/Title";
+import { Location } from "./MainInfo/Location";
+import { Doors } from "./MainInfo/Doors";
+import { Divider } from "./MainInfo/Divider";
+import { Expand } from "./MainInfo/Expand";
+import { Box } from "./MoreInfo/Box";
+import { Stairs } from "./MoreInfo/Stairs";
+import { SectionTitle } from "./MoreInfo/SectionTitle";
+import { Descrioption } from "./MoreInfo/Description";
 interface Props {
   type: string;
   currency: string;
@@ -70,6 +79,8 @@ export const Card = ({
   const posX = useRef(0);
   const mouseX = useRef(0);
   const [direction, setDirection] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState<number>(1);
 
   const handleStartDrag = (e) => {
     if (!open && totalCards === index) {
@@ -87,18 +98,17 @@ export const Card = ({
 
   const handleCheckIsClick = (e?: any) => {
     const clickableClasses = ["slick-arrow", "clickable"];
-    if (
+    const isClickable =
       e &&
       (e.target.classList.contains(clickableClasses[0]) ||
-        e.target.classList.contains(clickableClasses[1]))
-    ) {
-      return false;
-    } else if (mouseX.current === 0) {
-      return true;
+        e.target.classList.contains(clickableClasses[1]));
+
+    if (mouseX.current === 0) {
+      return isClickable && true;
     } else if (mouseX.current <= 0) {
-      return mouseX.current >= -10;
+      return isClickable && mouseX.current >= -10;
     } else {
-      return mouseX.current <= 10;
+      return isClickable && mouseX.current <= 10;
     }
   };
 
@@ -115,16 +125,16 @@ export const Card = ({
   };
 
   const handleDrag = (e) => {
-    if (!isDrag && !handleCheckIsClick()) {
+    if (!isDrag && !handleCheckIsClick(e)) {
       setIsDraged(true);
     }
     if (isDrag && !disabled) {
       const cientX = e?.touches?.length ? e?.touches[0]?.clientX : e.clientX;
       const mouseXPos = cientX - posX.current;
-      cardRef.current.style.transform = `translateX(${mouseXPos}px)`;
+      //   cardRef.current.style.transform = `translateX(${mouseXPos}px)`;
       mouseX.current = mouseXPos;
-      const currentDirection = handleGetDirection();
-      setDirection(currentDirection);
+      //   const currentDirection = handleGetDirection();
+      //   setDirection(currentDirection);
     }
   };
 
@@ -140,46 +150,36 @@ export const Card = ({
   };
 
   const handleDragEnd = (e) => {
-    if (!isDraged && handleCheckIsClick(e) && !disabled) {
-      setOpen(true);
+    if (handleCheckIsClick(e) && !disabled) {
+      onPhotoView();
     }
     setIsDrag(false);
     setIsDraged(false);
     setDirection(null);
-    const isSwiped = handleCheckIsSwiped();
-    if (isSwiped) {
-      if (history) {
-        onChangeStatus(isSwiped);
-        cardRef.current.style.transform = `translateX(${0}px)`;
-      } else {
-        cardRef.current.style.transition = "all .4s";
-        cardRef.current.style.opacity = `0`;
-        cardRef.current.style.transform = `translateX(${
-          isSwiped === "right"
-            ? window.innerWidth * 1.5
-            : -window.innerWidth * 2
-        }px) scale(0)`;
-        setTimeout(() => {
-          onChangeStatus(isSwiped);
-          handleAnimateBackCards();
-        }, 500);
-      }
-    } else {
-      cardRef.current.style.transform = `translateX(${0}px)`;
-    }
     mouseX.current = 0;
-  };
 
-  const handleSendRealtor = () => {
-    setOpen(false);
-    onSendRealtor();
-  };
-
-  const handleCloseMoreInfo = () => {
-    setOpen(false);
-    if (history && onClose) {
-      onClose();
-    }
+    const isSwiped = handleCheckIsSwiped();
+    // if (isSwiped) {
+    //   if (history) {
+    //     onChangeStatus(isSwiped);
+    //     cardRef.current.style.transform = `translateX(${0}px)`;
+    //   } else {
+    //     cardRef.current.style.transition = "all .4s";
+    //     cardRef.current.style.opacity = `0`;
+    //     cardRef.current.style.transform = `translateX(${
+    //       isSwiped === "right"
+    //         ? window.innerWidth * 1.5
+    //         : -window.innerWidth * 2
+    //     }px) scale(0)`;
+    //     setTimeout(() => {
+    //       onChangeStatus(isSwiped);
+    //       handleAnimateBackCards();
+    //     }, 500);
+    //   }
+    // } else {
+    //   cardRef.current.style.transform = `translateX(${0}px)`;
+    // }
+    mouseX.current = 0;
   };
 
   const handleSwipeAnimation = () => {
@@ -197,9 +197,18 @@ export const Card = ({
     }
   }, [cardStatusChanged]);
 
+  const handleScrollCard = (e) => {
+    const scrolledHeight = e?.target?.scrollTop;
+    if (isScrolled && scrolledHeight <= 50) {
+      setIsScrolled(false);
+    } else if (!isScrolled && scrolledHeight > 50) {
+      setIsScrolled(true);
+    }
+  };
+
   return (
     <>
-      {open && (
+      {/* {false && (
         <MoreInfo
           type={type}
           price={price}
@@ -219,7 +228,7 @@ export const Card = ({
           onPhotoView={onPhotoView}
           rieltor={rieltor}
         />
-      )}
+      )} */}
       {direction === "right" && <SwipeStatus status={direction === "right"} />}
       {direction === "left" && <SwipeStatus status={direction === "right"} />}
 
@@ -228,6 +237,7 @@ export const Card = ({
         index={index}
         onMouseDown={handleStartDrag}
         onMouseMove={handleDrag}
+        onMouseUp={handleDragEnd}
         onClick={handleDragEnd}
         onTouchStart={handleStartDrag}
         onTouchMove={handleDrag}
@@ -235,6 +245,7 @@ export const Card = ({
         totalCards={totalCards}
         draggable={false}
         className={`swapper-card${index}`}
+        onScroll={handleScrollCard}
       >
         <Price
           currency={currency}
@@ -245,11 +256,40 @@ export const Card = ({
           type={recommended ? "Рекомендація" : type ? type : null}
           className="maininfo"
         />
-        <MainInfo title={title} location={location} doors={doors} area={area} />
+        <MainInfo
+          title={title}
+          location={location}
+          doors={doors}
+          area={area}
+          isScrolled={isScrolled}
+          totalSlides={images?.length}
+          currentSlide={currentSlide}
+        />
         <Slider
           images={images?.length === 0 ? [noPhoto] : images}
           index={index}
+          onPhotoView={() => null}
+          onChangeSlide={(num: number) => setCurrentSlide(num)}
         />
+        <div className="more-info-wrapper">
+          <div className="content-info">
+            <Title title={title} />
+            <div className="info-items">
+              <Location location={location} />
+            </div>
+            <div className="flex items-center info-items ">
+              <Doors doors={doors} />
+              <Divider />
+              <Expand area={area} />
+              <Divider />
+              <Box box={box} />
+              <Divider />
+              <Stairs stairs={stairs} />
+            </div>
+            <SectionTitle title="Опис" />
+            <Descrioption text={description} />
+          </div>
+        </div>
       </StyledCard>
     </>
   );
@@ -266,6 +306,7 @@ const StyledCard = styled.div<StyledCardProps>`
   /* overflow: auto; */
   font-size: 80px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  overflow: auto;
   width: 100%;
   z-index: ${({ index }) => index};
   background: #2c2c2c;
@@ -280,25 +321,37 @@ const StyledCard = styled.div<StyledCardProps>`
   .maininfo,
   .slick-arrow {
     transition: all 0.3s;
-    opacity: ${({ index, totalCards }) =>
-      totalCards === index ? 1 : 0} !important;
+    opacity: ${({ index, totalCards }) => (totalCards === index ? 1 : 0)};
   }
-  &::before {
-    content: "";
-    transition: all 0.3s;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      11deg,
-      #2c2c2c 7.62%,
-      rgba(44, 44, 44, 0) 47.6%
-    );
-    opacity: 1;
-    z-index: ${({ index }) => index};
-    opacity: ${({ index, totalCards }) =>
-      totalCards === index ? 1 : 0} !important;
+
+  .more-info-wrapper {
+    padding: 13px 15px;
+    .info-items {
+      font-family: "Open Sans", sans-serif;
+      font-size: 13px !important;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: 0.26px;
+    }
+    img {
+      height: 16px;
+      margin-right: 6px;
+    }
+    .back-btn {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+    }
+    .content-wrapper {
+      border-radius: 13px;
+      background: #464646;
+      height: calc(100vh - 220px);
+      overflow: auto;
+      margin-bottom: 15px;
+      position: relative;
+      .content-info {
+        padding: 14px;
+      }
+    }
   }
 `;

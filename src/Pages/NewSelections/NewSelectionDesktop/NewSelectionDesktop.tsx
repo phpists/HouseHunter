@@ -56,6 +56,7 @@ export const NewSelectionDesktop = ({
           disabled={rating}
           recommended={card?.recommended}
           category={card?.rubric_name}
+          expand={card?.area_total ? `${card?.area_total}м²` : "-"}
         />
       ))
     ) : loadingMore ? (

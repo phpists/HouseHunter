@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { rate } from "../../api/methods";
 import { SelectionSwiper } from "../../Components/SelectionSwiper/SelectionSwiper";
 import { useState } from "react";
+import { PhotosView } from "./Photos/PhotosView/Photos";
 // const AMENITIES_DATA = [
 //   { icon: dogIcon, title: "Можна з тваринами" },
 //   { icon: washingMachineIcon, title: "Пральна машина є" },
@@ -75,7 +76,18 @@ export const Info = ({
 
   return (
     <>
-      <StyledInfo>
+      <PhotosView
+        open={infoOpen}
+        onClose={onClose}
+        images={
+          infoOpen?.img?.length > 0
+            ? infoOpen?.img?.map((i: any) => i?.name)
+            : []
+        }
+        defaultPhoto={1}
+      />
+
+      {/* <StyledInfo>
         <div className="desktop">
           <div>
             <Photos
@@ -88,8 +100,8 @@ export const Info = ({
             />
           </div>
           <MainInfo infoOpen={infoOpen} />
-          {/* <SectionTitle title="Зручності" />
-          <AmenitiesList data={AMENITIES_DATA} /> */}
+          <SectionTitle title="Зручності" />
+          <AmenitiesList data={AMENITIES_DATA} />
           {infoOpen?.description?.length > 0 && (
             <>
               <SectionTitle title="Опис" />
@@ -108,7 +120,7 @@ export const Info = ({
         onClose={onClose}
         rieltor={rieltor}
         disabled={loading}
-      />
+      /> */}
     </>
   );
 };

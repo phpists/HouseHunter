@@ -6,6 +6,7 @@ import { Slide } from "./Slide";
 import prevIcon from "../../../../assets/images/slider-prev.svg";
 import nextIcon from "../../../../assets/images/slider-next.svg";
 import { useState } from "react";
+import { SlideCount } from "../SlideCount";
 
 const settings = {
   dots: false,
@@ -13,44 +14,48 @@ const settings = {
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
-  swipeToSlide: false,
-  touchMove: false,
 };
 
 interface Props {
   images: string[];
   index: number;
+  onPhotoView: () => void;
+  onChangeSlide: (num: number) => void;
 }
 
-export const Slider = ({ images, index }: Props) => {
-  const [currentSlide, setCurrentSlide] = useState(1);
-
+export const Slider = ({
+  images,
+  index,
+  onPhotoView,
+  onChangeSlide,
+}: Props) => {
   return (
     <>
-      <StyledSlider
-        prevIcon={prevIcon}
-        nextIcon={nextIcon}
-        draggable="false"
-        index={index}
-      >
+      <StyledSlider prevIcon={prevIcon} nextIcon={nextIcon} index={index}>
+        <div className="shadow"></div>
         <SlickSlider
           {...settings}
-          beforeChange={(currentSlide, nextSlide) =>
-            setCurrentSlide(1 + nextSlide)
-          }
+          beforeChange={(nextSlide) => onChangeSlide(1 + nextSlide)}
           prevArrow={
-            <button className="clickable maininfo">
-              <img src={prevIcon} alt="" className="clickable" />
+            <button className=" maininfo">
+              <img src={prevIcon} alt="" className="" />
             </button>
           }
           nextArrow={
-            <button className="clickable maininfo">
-              <img src={nextIcon} alt="" className="clickable" />
+            <button className=" maininfo">
+              <img src={nextIcon} alt="" className="" />
             </button>
           }
         >
           {images.map((image, i) => (
-            <Slide key={i} image={image} active={currentSlide === 1 + i} />
+            <Slide
+              key={i}
+              image={image}
+              //   active={currentSlide === 1 + i}
+              active={true}
+              onPhotoView={onPhotoView}
+              index={index}
+            />
           ))}
         </SlickSlider>
       </StyledSlider>
@@ -67,7 +72,7 @@ interface StyledSliderProps {
 const StyledSlider = styled.div<StyledSliderProps>`
   overflow: hidden;
   position: relative;
-  border-radius: 13px;
+  border-radius: 13px 13px 0 0;
 
   .slick-next,
   .slick-prev {

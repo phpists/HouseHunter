@@ -5,13 +5,7 @@ interface Props {
 }
 
 export const Descrioption = ({ description }: Props) => (
-  <StyledDescrioption>
-    {description
-      ? `${description.substring(0, 70)}${
-          description?.length > 70 ? "..." : ""
-        }`
-      : ""}
-  </StyledDescrioption>
+  <StyledDescrioption>{description ?? ""}</StyledDescrioption>
 );
 const StyledDescrioption = styled.div`
   font-size: 15px;

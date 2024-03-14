@@ -8,6 +8,7 @@ import { Title } from "./Title";
 import { Footer } from "./Footer/Footer";
 import { getCurrencySymbol } from "../../../helpers";
 import { formatNumber } from "../../../helpers/numbers";
+import { Expand } from "./Stairs copy";
 
 interface Props {
   onOpen: () => void;
@@ -23,6 +24,7 @@ interface Props {
   onSwap?: (direction: string) => void;
   disabled?: boolean;
   category?: string;
+  expand: string;
 }
 
 export const Info = ({
@@ -39,20 +41,25 @@ export const Info = ({
   onSwap,
   disabled,
   category,
+  expand,
 }: Props) => (
   <StyledInfo>
     <div className="full-info">
-      <div onClick={onOpen}>
-        {isNew && <Title title={title} />}
-        <Location location={location} />
-        {category ? <div className="my-2 ml-1">{category}</div> : null}
+      <div className="main-info hide-scroll">
+        <div onClick={onOpen}>
+          {isNew && <Title title={title} />}
+          <Location location={location} />
+          {category ? <div className="my-2 ml-1">{category}</div> : null}
+        </div>
+        <div className="flex items-center" onClick={onOpen}>
+          <Doors doors={doors} />
+          <Divider />
+          <Expand expand={expand} />
+          <Divider />
+          <Stairs stairs={stairs} />
+        </div>
+        {isNew && <Descrioption description={description} />}
       </div>
-      <div className="flex items-center" onClick={onOpen}>
-        <Doors doors={doors} />
-        <Divider />
-        <Stairs stairs={stairs} />
-      </div>
-      {isNew && <Descrioption description={description} />}
       <Footer
         onSendRealtor={onSendRealtor}
         onSwap={onSwap}
@@ -83,6 +90,10 @@ const StyledInfo = styled.div`
   line-height: 118%; /* 17.7px */
   letter-spacing: 0.3px;
   margin-top: 24px;
+  .main-info {
+    max-height: 30vh;
+    overflow: auto;
+  }
   .mobile-info {
     display: none;
     margin-top: 12px;
@@ -94,6 +105,10 @@ const StyledInfo = styled.div`
     }
     .mobile-info {
       display: flex;
+    }
+    .main-info {
+      max-height: 10vh;
+      overflow: auto;
     }
   }
 `;
