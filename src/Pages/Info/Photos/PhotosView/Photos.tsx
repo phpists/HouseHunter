@@ -43,7 +43,8 @@ export const PhotosView = ({ open, onClose, images, defaultPhoto }: Props) => {
   };
 
   return (
-    <>
+    <div>
+      <BackButton onClick={onClose} />
       {open && (
         <StyledPhotosView
           initial={{ opacity: 0, scale: 0 }}
@@ -59,7 +60,6 @@ export const PhotosView = ({ open, onClose, images, defaultPhoto }: Props) => {
             e.target.classList?.contains("overlay") && onClose()
           }
         >
-          <BackButton onClick={onClose} />
           <PhotoSlider
             images={images.map((item) => ({ src: item, key: item }))}
             visible={openView}
@@ -77,7 +77,7 @@ export const PhotosView = ({ open, onClose, images, defaultPhoto }: Props) => {
           ))}
         </StyledPhotosView>
       )}
-    </>
+    </div>
   );
 };
 

@@ -10,7 +10,9 @@ export const Profile = ({ small, rieltor }: Props) => (
   <StyledProfile small={small} className="flex items-center">
     <Avatar small={small} photo={rieltor?.photo} />
     <div className="profile-info">
-      <div className="name">{rieltor.name}</div>
+      <div className="name" title={rieltor.name}>
+        {rieltor.name}
+      </div>
       <div className="role">Рієлтор</div>
     </div>
   </StyledProfile>
@@ -29,6 +31,10 @@ const StyledProfile = styled.div<StyledProfileProps>`
     font-size: ${({ small }) => (small ? 16 : 18)}px;
     line-height: 118%;
     letter-spacing: 0.36px;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .role {
     font-size: ${({ small }) => (small ? 12 : 14)}px;

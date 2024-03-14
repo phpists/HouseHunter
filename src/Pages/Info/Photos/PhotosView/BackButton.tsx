@@ -25,6 +25,7 @@ const StyledBackButton = styled.button`
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(18.5px);
   transition: all 0.3s;
+  z-index: 10000;
   &:hover {
     background: #fff;
     path {

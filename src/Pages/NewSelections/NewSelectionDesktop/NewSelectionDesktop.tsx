@@ -3,6 +3,7 @@ import { SelectionCard } from "../../../Components/SelectionCard/SelectionCard";
 import { getLocation } from "../../../helpers";
 import { Empty } from "./Empty";
 import { Spinner } from "../../../Components/Spinner";
+import { Card } from "./Card/Card";
 
 interface Props {
   cards: any;
@@ -27,38 +28,11 @@ export const NewSelectionDesktop = ({
 }: Props) => (
   <StyledNewSelectionDesktop>
     {cards?.length > 0 ? (
-      cards.map((card: any, i: number) => (
-        <SelectionCard
-          key={i}
-          onOpen={() => onOpenInfo(card)}
-          isNew
-          onSendRealtor={() => onSendRealtor(card?.type, card?.id)}
-          area={card?.area_total ?? "-"}
-          currency={currency}
-          price={card[`price_${currency}`] ?? 0}
-          title={
-            card?.title?.length > 0 ? card?.title : card?.description ?? ""
-          }
-          location={card?.location_name}
-          doors={card?.rooms ?? "-"}
-          stairs={`${card?.address_apartment_number ?? "-"} із ${
-            card?.address_storey ?? "-"
-          }`}
-          description={card?.description ?? ""}
-          images={
-            card?.img?.length > 0 ? card?.img?.map((i: any) => i.name) : []
-          }
-          onSwap={(direction) => onSwap(i, direction, card?.id, card?.type)}
-          className={`selection-card-desctop ${
-            !!removed.find((id: any) => id === card?.id) &&
-            "selection-card-desctop-hide"
-          }`}
-          disabled={rating}
-          recommended={card?.recommended}
-          category={card?.rubric_name}
-          expand={card?.area_total ? `${card?.area_total}м²` : "-"}
-        />
-      ))
+      <Card
+        data={cards[0] ?? null}
+        onSendRealtor={onSendRealtor}
+        onSwap={onSwap}
+      />
     ) : loadingMore ? (
       <Spinner className="loading-more-desktop" />
     ) : (
@@ -70,7 +44,7 @@ export const NewSelectionDesktop = ({
 const StyledNewSelectionDesktop = styled.div`
   display: flex;
   margin: 30px 0 0;
-  height: calc(100vh - 138px);
+  height: calc(100vh - 105px);
   overflow: hidden;
   position: relative;
   @media (max-width: 1000px) {

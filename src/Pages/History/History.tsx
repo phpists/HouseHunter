@@ -184,9 +184,7 @@ export const History = ({
               }`}
               description={card?.description ?? ""}
               images={
-                cards[0]?.img?.length > 0
-                  ? cards[0]?.img?.map((i: any) => i?.name)
-                  : []
+                card?.img?.length > 0 ? card?.img?.map((i: any) => i?.name) : []
               }
               onSendRealtor={() => onSendRealtor(card?.type, card?.id)}
               onSwap={(direction) =>

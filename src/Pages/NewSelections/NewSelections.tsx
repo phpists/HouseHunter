@@ -143,7 +143,9 @@ export const NewSelections = ({
       ) : (
         <>
           <NewSelectionDesktop
-            cards={cards}
+            cards={cards.filter(
+              (c: any) => !removed?.find((r: any) => r === c?.id)
+            )}
             onOpenInfo={onOpenInfo}
             onSendRealtor={onSendRealtor}
             currency={currency}
