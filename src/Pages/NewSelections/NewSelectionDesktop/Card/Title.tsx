@@ -16,4 +16,6 @@ const StyledTitle = styled.div`
   color: #ffffff;
   margin-bottom: 14px;
   text-transform: uppercase;
+  word-break: break-all;
+  white-space: pre-wrap;
 `;

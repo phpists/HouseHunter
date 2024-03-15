@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface Props {
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export const SendButton = ({ onClick }: Props) => (
@@ -17,6 +17,7 @@ const StyledSendButton = styled.div`
   background: #5d63ffb2;
   height: 54px;
   border-radius: 9px;
+  width: 100%;
   cursor: pointer;
   transition: all 0.3s;
   &:hover {

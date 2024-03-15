@@ -18,6 +18,6 @@ const StyledDescription = styled.div`
   color: #ffffff;
   opacity: 0.4;
   min-height: 200px;
-  max-height: 40vh;
+  white-space: pre-wrap;
   overflow: auto;
 `;

@@ -17,10 +17,12 @@ export const Photos = ({ images, onChangeSlide }: Props) => (
 const StyledPhotos = styled.div`
   margin-left: 8px;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 100px;
   grid-auto-rows: max-content;
   gap: 8px;
   min-height: 400px;
-  height: 81vh;
+  height: calc(80vh - 40px);
   overflow: auto;
+  flex-shrink: 0;
+  width: 100px;
 `;
