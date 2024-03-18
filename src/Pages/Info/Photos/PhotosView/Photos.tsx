@@ -9,9 +9,16 @@ interface Props {
   onClose: () => void;
   images: string[];
   defaultPhoto: number | null;
+  preview?: boolean;
 }
 
-export const PhotosView = ({ open, onClose, images, defaultPhoto }: Props) => {
+export const PhotosView = ({
+  open,
+  onClose,
+  images,
+  defaultPhoto,
+  preview,
+}: Props) => {
   const [openView, setOpenView] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
   const photosViewRef = useRef<HTMLDivElement>(null);
@@ -44,7 +51,7 @@ export const PhotosView = ({ open, onClose, images, defaultPhoto }: Props) => {
 
   return (
     <div>
-      <BackButton onClick={onClose} />
+      {preview && <BackButton onClick={onClose} />}
       {open && (
         <StyledPhotosView
           initial={{ opacity: 0, scale: 0 }}

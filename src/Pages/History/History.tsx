@@ -137,6 +137,7 @@ export const History = ({
     scrolledTop.current = window.scrollY;
     onOpenInfo({
       ...card,
+      history: true,
       handleSwap: (direction) => handleSwap(i, direction, card?.id, card?.type),
     });
   };

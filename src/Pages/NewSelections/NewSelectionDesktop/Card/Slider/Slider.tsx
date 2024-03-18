@@ -149,4 +149,13 @@ const StyledSlider = styled.div<StyledSliderProps>`
     background: url(${({ noPhoto }) => noPhoto}) center/cover no-repeat;
     width: 100%;
   }
+  @media (max-width: 1220px) {
+    width: 500px;
+  }
+  @media (max-width: 1120px) {
+    width: 450px;
+  }
+  @media (max-width: 1080px) {
+    width: 400px;
+  }
 `;

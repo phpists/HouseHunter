@@ -2,14 +2,6 @@ import { styled } from "styled-components";
 import { MainInfo } from "./MainInfo/MainInfo";
 import { SectionTitle } from "./SectionTitle";
 import { AmenitiesList } from "./AmenitiesList";
-// import dogIcon from "../../../assets/images/dog.svg";
-// import washingMachineIcon from "../../../assets/images/washing machine.svg";
-// import wifiIcon from "../../../assets/images/wifi.svg";
-// import tvIcon from "../../../assets/images/tv.svg";
-// import refrigeratorIcon from "../../../assets/images/refrigerator.svg";
-// import airVentIcon from "../../../assets/images/air-vent.svg";
-// import sofaIcon from "../../assets/images/sofa.svg";
-// import dishwasherIcon from "../../assets/images/dishwasher.svg";
 import { Descrioption } from "./Description";
 import { Photos } from "./Photos/Photos";
 import { useEffect } from "react";
@@ -17,16 +9,6 @@ import { rate } from "../../api/methods";
 import { SelectionSwiper } from "../../Components/SelectionSwiper/SelectionSwiper";
 import { useState } from "react";
 import { PhotosView } from "./Photos/PhotosView/Photos";
-// const AMENITIES_DATA = [
-//   { icon: dogIcon, title: "Можна з тваринами" },
-//   { icon: washingMachineIcon, title: "Пральна машина є" },
-//   { icon: wifiIcon, title: "Інтернет є" },
-//   { icon: tvIcon, title: "Телевізор є" },
-//   { icon: refrigeratorIcon, title: "Холодильник є" },
-//   { icon: airVentIcon, title: "Кондиціонер є" },
-//   { icon: sofaIcon, title: "Меблі є" },
-//   { icon: dishwasherIcon, title: "Посудомийка є" },
-// ];
 
 interface Props {
   infoOpen: any;
@@ -46,6 +28,7 @@ export const Info = ({
   rieltor,
 }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [openPhoto, setOpenPhoto] = useState(false);
 
   useEffect(() => {
     window.scrollTo({
@@ -76,51 +59,56 @@ export const Info = ({
 
   return (
     <>
-      <PhotosView
-        open={infoOpen}
-        onClose={onClose}
-        images={
-          infoOpen?.img?.length > 0
-            ? infoOpen?.img?.map((i: any) => i?.name)
-            : []
-        }
-        defaultPhoto={1}
-      />
-
-      {/* <StyledInfo>
-        <div className="desktop">
-          <div>
-            <Photos
-              onClose={onClose}
-              photos={
-                infoOpen?.img?.length > 0
-                  ? infoOpen?.img?.map((i: any) => i?.name)
-                  : []
-              }
-            />
-          </div>
-          <MainInfo infoOpen={infoOpen} />
-          <SectionTitle title="Зручності" />
-          <AmenitiesList data={AMENITIES_DATA} />
-          {infoOpen?.description?.length > 0 && (
-            <>
-              <SectionTitle title="Опис" />
-              <Descrioption description={infoOpen?.description ?? ""} />
-            </>
-          )}
-        </div>
-      </StyledInfo>
-      <SelectionSwiper
-        cards={infoOpen ? [infoOpen] : []}
-        onSwap={handleSwap}
-        history
-        onSendRealtor={onSendRealtor}
-        currency={currency}
-        onChangeCurrency={onChangeCurrency}
-        onClose={onClose}
-        rieltor={rieltor}
-        disabled={loading}
-      /> */}
+      {infoOpen?.history ? (
+        <>
+          <StyledInfo>
+            <div className="desktop">
+              <div>
+                <Photos
+                  onClose={onClose}
+                  photos={
+                    infoOpen?.img?.length > 0
+                      ? infoOpen?.img?.map((i: any) => i?.name)
+                      : []
+                  }
+                />
+              </div>
+              <MainInfo infoOpen={infoOpen} />
+              {/* <SectionTitle title="Зручності" /> */}
+              {/* <AmenitiesList data={AMENITIES_DATA} /> */}
+              {infoOpen?.description?.length > 0 && (
+                <>
+                  <SectionTitle title="Опис" />
+                  <Descrioption description={infoOpen?.description ?? ""} />
+                </>
+              )}
+            </div>
+          </StyledInfo>
+          <SelectionSwiper
+            cards={infoOpen ? [infoOpen] : []}
+            onSwap={handleSwap}
+            history
+            onSendRealtor={onSendRealtor}
+            currency={currency}
+            onChangeCurrency={onChangeCurrency}
+            onClose={onClose}
+            rieltor={rieltor}
+            disabled={loading}
+          />
+        </>
+      ) : (
+        <PhotosView
+          open={infoOpen}
+          onClose={onClose}
+          images={
+            infoOpen?.img?.length > 0
+              ? infoOpen?.img?.map((i: any) => i?.name)
+              : []
+          }
+          defaultPhoto={1}
+          preview
+        />
+      )}
     </>
   );
 };
