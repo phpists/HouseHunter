@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { useState } from "react";
 import { CurrencyList } from "./CurrencyList";
 import { Button } from "./Button";
-import { currencies } from "../../../../constants/currency";
+import { currencies } from "../../../../../constants/currency";
 
 interface Props {
   currency: string;
@@ -42,8 +42,8 @@ export const Price = ({ currency, onChangeCurrency, price }: Props) => {
 
 const StyledPrice = styled.div`
   position: absolute;
-  top: 15px;
-  left: 15px;
+  top: 20px;
+  left: 20px;
   color: #81fb21;
   font-size: 18px;
   font-style: normal;

@@ -16,6 +16,8 @@ interface Props {
   hide?: boolean;
   swipeAnimation?: string | null;
   isReload?: boolean;
+  currency: string;
+  onChangeCurrency: (value: string) => void;
 }
 
 export const Card = ({
@@ -25,6 +27,8 @@ export const Card = ({
   hide,
   swipeAnimation,
   isReload,
+  currency,
+  onChangeCurrency,
 }: Props) => {
   const cardRef = useRef<any>(null);
   const handleAnimateBackCards = () => {
@@ -44,7 +48,7 @@ export const Card = ({
     cardRef.current.style.transform = `translateX(${
       swipeAnimation === "right" ? windowWidth : -windowWidth
     }px)`;
-    setTimeout(handleAnimateBackCards, 300);
+    setTimeout(handleAnimateBackCards, 400);
   };
 
   useEffect(() => {
@@ -76,6 +80,9 @@ export const Card = ({
         onOpen={() => null}
         images={data?.img?.length > 0 ? data?.img?.map((i: any) => i.name) : []}
         category={data?.rubric_name}
+        currency={currency}
+        onChangeCurrency={onChangeCurrency}
+        price={data?.[`price_per_object_${currency?.toLowerCase()}`] ?? 0}
       />
       <div className="flex flex-col justify-between card-content">
         <div className="card-text">

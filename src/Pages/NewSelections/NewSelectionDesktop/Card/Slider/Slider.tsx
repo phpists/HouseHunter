@@ -10,6 +10,7 @@ import { useRef, useState } from "react";
 import noPhoto from "../../../../../assets/images/no-photo.svg";
 import { Tag } from "./Tag";
 import { Photos } from "./Photos/Photos";
+import { Price } from "../Price/Price";
 
 const settings = {
   dots: false,
@@ -25,9 +26,19 @@ interface Props {
   onOpen: () => void;
   images: string[];
   category?: string;
+  currency: string;
+  onChangeCurrency: (value: string) => void;
+  price: number;
 }
 
-export const Slider = ({ onOpen, images, category }: Props) => {
+export const Slider = ({
+  onOpen,
+  images,
+  category,
+  currency,
+  onChangeCurrency,
+  price,
+}: Props) => {
   const sliderRef = useRef<any>(null);
   const [currentSlide, setCurrentSlide] = useState<number>(1);
 
@@ -73,6 +84,11 @@ export const Slider = ({ onOpen, images, category }: Props) => {
           </>
         )}
         {category && <Tag category={category} />}
+        <Price
+          currency={currency}
+          onChangeCurrency={onChangeCurrency}
+          price={price}
+        />
       </StyledSlider>
       {images?.length >= 2 && (
         <Photos images={images} onChangeSlide={handleChangeActiveSlide} />

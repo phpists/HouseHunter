@@ -60,6 +60,7 @@ export const Cards = ({
     setTimeout(() => setLoading(false), 100);
   }, [cards]);
 
+  console.log(currency);
   return (
     <>
       <PhotosView
@@ -70,7 +71,7 @@ export const Cards = ({
       {history ? (
         <MoreInfo
           type={cards[0]?.type ?? ""}
-          price={cards[0][`price_${currency}`] ?? 0}
+          price={cards[0][`price_per_object_${currency?.toLowerCase()}`] ?? 0}
           currency={currency}
           location={cards[0]?.location_name}
           doors={cards[0]?.rooms ?? "-"}

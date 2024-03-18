@@ -15,7 +15,7 @@ export const SlideCount = ({ currentSlide, total }: Props) => (
 const StyledSlideCount = styled.div`
   position: absolute;
   left: 20px;
-  top: 20px;
+  bottom: 20px;
   font-family: Overpass;
   font-size: 15px;
   font-weight: 300;

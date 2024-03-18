@@ -175,7 +175,7 @@ export const History = ({
               onOpen={() => handleOpenInfo(card, i)}
               area={card?.area_total ?? "-"}
               currency={currency}
-              price={card[`price_${currency}`] ?? 0}
+              price={card?.[`price_per_object_${currency?.toLowerCase()}`] ?? 0}
               title={card?.title ?? ""}
               location={card?.location_name}
               doors={card?.rooms ?? "-"}

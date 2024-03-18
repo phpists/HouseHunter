@@ -148,13 +148,14 @@ export const NewSelections = ({
             )}
             onOpenInfo={onOpenInfo}
             onSendRealtor={onSendRealtor}
-            currency={currency}
             onSwap={(index, direction, id, type) =>
               handleSwap(index, direction, id, type, true)
             }
             removed={removed}
             rating={false}
             loadingMore={loadingMore}
+            currency={currency}
+            onChangeCurrency={onChangeCurrency}
           />
           <SelectionSwiper
             cards={cards}

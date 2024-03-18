@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
-import arrrowIcon from "../../../../assets/images/arrow.svg";
-import closeIcon from "../../../../assets/images/close.svg";
+import arrrowIcon from "../../../../../assets/images/arrow.svg";
+import closeIcon from "../../../../../assets/images/close.svg";
 
 interface Props {
   open: boolean;

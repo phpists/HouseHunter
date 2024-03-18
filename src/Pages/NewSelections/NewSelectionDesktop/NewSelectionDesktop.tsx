@@ -15,6 +15,7 @@ interface Props {
   removed: any[];
   rating: boolean;
   loadingMore: boolean;
+  onChangeCurrency: (value: string) => void;
 }
 
 export const NewSelectionDesktop = ({
@@ -26,6 +27,7 @@ export const NewSelectionDesktop = ({
   removed,
   rating,
   loadingMore,
+  onChangeCurrency,
 }: Props) => {
   const [swipeAnimation, setSwipeAnimation] = useState<string | null>(null);
   const [animationProgress, setAnimationProgress] = useState<any>(false);
@@ -55,7 +57,7 @@ export const NewSelectionDesktop = ({
       setTimeout(() => {
         setAnimationProgress(null);
         setSwipeAnimation(null);
-      }, 100);
+      }, 200);
     }
   }, [cards]);
 
@@ -69,6 +71,8 @@ export const NewSelectionDesktop = ({
             onSwap={handleChangeCardStatus}
             swipeAnimation={swipeAnimation}
             isReload={animationProgress === "reload"}
+            currency={currency}
+            onChangeCurrency={onChangeCurrency}
           />
           {cards?.[1] && (
             <Card
@@ -76,6 +80,8 @@ export const NewSelectionDesktop = ({
               swipeAnimation={swipeAnimation}
               hide
               isReload={animationProgress === "reload"}
+              currency={currency}
+              onChangeCurrency={onChangeCurrency}
             />
           )}
         </div>

@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { Arrow } from "./Arrow";
-import { formatNumber } from "../../../../helpers/numbers";
+import { formatNumber } from "../../../../../helpers/numbers";
 
 interface Props {
   open: boolean;

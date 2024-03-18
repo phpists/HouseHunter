@@ -29,6 +29,7 @@ const StyledCurrency = styled.div<StyledCurrencyProps>`
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(4px);
   flex-shrink: 0;
+  cursor: pointer;
   div {
     height: 13px;
   }
