@@ -117,12 +117,13 @@ export const App = () => {
         setChatOpen(false);
         setInfoOpen({
           ...objectInfo,
+          history: true,
           onChangeStatus: (like: number) =>
             handleChangeOpenObjectStatus(objectInfo, like),
         });
-        navigate(state === "new" ? "/" : "/history");
-        setActiveTab(state === "new" ? 1 : 0);
-        setAppendObjectToList({ ...objectInfo, id: id_hash });
+        // navigate(state === "new" ? "/" : "/history");
+        // setActiveTab(state === "new" ? 1 : 0);
+        // setAppendObjectToList({ ...objectInfo, id: id_hash });
       }
     });
   };
