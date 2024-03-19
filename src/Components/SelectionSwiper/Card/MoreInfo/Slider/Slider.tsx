@@ -32,7 +32,7 @@ export const Slider = ({ type, images, onPhotoView }: Props) => {
     <StyledSlider prevIcon={prevIcon} nextIcon={nextIcon}>
       <div className="header flex items-center justify-between">
         <SlideCount currentSlide={currentSlide} total={images.length} />
-        <Type className="tag" type={type} />
+        {type?.length > 0 ? <Type className="tag" type={type} /> : null}
       </div>
       <SlickSlider
         {...settings}
