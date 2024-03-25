@@ -11,6 +11,7 @@ import noPhoto from "../../../../../assets/images/no-photo.svg";
 import { Tag } from "./Tag";
 import { Photos } from "./Photos/Photos";
 import { Price } from "../Price/Price";
+import { Status } from "./Status";
 
 const settings = {
   dots: false,
@@ -29,6 +30,8 @@ interface Props {
   currency: string;
   onChangeCurrency: (value: string) => void;
   price: number;
+  showLike?: boolean;
+  status?: boolean;
 }
 
 export const Slider = ({
@@ -38,6 +41,8 @@ export const Slider = ({
   currency,
   onChangeCurrency,
   price,
+  showLike,
+  status,
 }: Props) => {
   const sliderRef = useRef<any>(null);
   const [currentSlide, setCurrentSlide] = useState<number>(1);
@@ -84,6 +89,7 @@ export const Slider = ({
           </>
         )}
         {category && <Tag category={category} />}
+        {showLike && <Status status={status ?? false} />}
         <Price
           currency={currency}
           onChangeCurrency={onChangeCurrency}

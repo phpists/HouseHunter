@@ -66,7 +66,8 @@ export const App = () => {
     setChatOpen(!chatOpen);
     setInfoOpen(null);
   };
-  const handleOpenInfo = (card: any) => setInfoOpen(card);
+  const handleOpenInfo = (card: any) =>
+    setInfoOpen({ ...card, id: card?.id_hash });
   const handleCloseInfo = () => {
     setInfoOpen(null);
     setAppendObjectToList(null);
@@ -118,6 +119,7 @@ export const App = () => {
         setInfoOpen({
           ...objectInfo,
           history: true,
+          id: id_hash,
           onChangeStatus: (like: number) =>
             handleChangeOpenObjectStatus(objectInfo, like),
         });

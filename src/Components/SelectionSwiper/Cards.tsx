@@ -60,7 +60,6 @@ export const Cards = ({
     setTimeout(() => setLoading(false), 100);
   }, [cards]);
 
-  console.log(currency);
   return (
     <>
       <PhotosView

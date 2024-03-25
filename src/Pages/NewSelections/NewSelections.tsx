@@ -46,7 +46,6 @@ export const NewSelections = ({
         setLoadingMore(false);
         isLoading.current = false;
         isLastPage.current = totalPage === 1;
-        console.log(totalPage);
         if (data) {
           let updatedData = removeDublicats([...cardsData.current, ...data]);
           updatedData = updatedData.filter(

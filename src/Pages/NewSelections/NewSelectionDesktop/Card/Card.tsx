@@ -18,6 +18,8 @@ interface Props {
   isReload?: boolean;
   currency: string;
   onChangeCurrency: (value: string) => void;
+  showLike?: boolean;
+  status?: boolean;
 }
 
 export const Card = ({
@@ -29,6 +31,8 @@ export const Card = ({
   isReload,
   currency,
   onChangeCurrency,
+  showLike,
+  status,
 }: Props) => {
   const cardRef = useRef<any>(null);
   const handleAnimateBackCards = () => {
@@ -83,6 +87,8 @@ export const Card = ({
         currency={currency}
         onChangeCurrency={onChangeCurrency}
         price={data?.[`price_per_object_${currency?.toLowerCase()}`] ?? 0}
+        showLike={showLike}
+        status={status}
       />
       <div className="flex flex-col justify-between card-content">
         <div className="card-text">

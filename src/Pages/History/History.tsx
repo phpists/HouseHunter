@@ -118,7 +118,8 @@ export const History = ({
     direction: string,
     id: string,
     type: string,
-    notRemove?: boolean
+    notRemove?: boolean,
+    onSuccess?: () => void
   ) => {
     rate(direction === "right" ? 1 : 0, id, type).then((resp) => {
       if (resp === 0) {
@@ -129,6 +130,7 @@ export const History = ({
         );
         setCards(updatedData);
         cardsData.current = updatedData;
+        onSuccess && onSuccess();
       }
     });
   };
@@ -138,7 +140,8 @@ export const History = ({
     onOpenInfo({
       ...card,
       history: true,
-      handleSwap: (direction) => handleSwap(i, direction, card?.id, card?.type),
+      handleSwap: (direction, onSuccess) =>
+        handleSwap(i, direction, card?.id, card?.type, undefined, onSuccess),
     });
   };
 

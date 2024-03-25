@@ -9,6 +9,8 @@ import { rate } from "../../api/methods";
 import { SelectionSwiper } from "../../Components/SelectionSwiper/SelectionSwiper";
 import { useState } from "react";
 import { PhotosView } from "./Photos/PhotosView/Photos";
+import { Card } from "../NewSelections/NewSelectionDesktop/Card/Card";
+import { BackButton } from "../../Components/BackButton";
 
 interface Props {
   infoOpen: any;
@@ -29,6 +31,11 @@ export const Info = ({
 }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [openPhoto, setOpenPhoto] = useState(false);
+  const [status, setStatus] = useState<any>(undefined);
+
+  useEffect(() => {
+    setStatus(infoOpen?.status);
+  }, [infoOpen]);
 
   useEffect(() => {
     window.scrollTo({
@@ -45,11 +52,12 @@ export const Info = ({
     type: string
   ) => {
     if (infoOpen?.handleSwap) {
-      infoOpen?.handleSwap(direction);
+      infoOpen?.handleSwap(direction, () => setStatus(direction === "right"));
     } else {
       setLoading(true);
       rate(direction === "right" ? 1 : 0, id, type).then((code) => {
         setLoading(false);
+        setStatus(direction === "right");
         if (code === 0 && infoOpen.onChangeStatus) {
           infoOpen.onChangeStatus(direction === "right" ? 1 : 0);
         }
@@ -63,25 +71,16 @@ export const Info = ({
         <>
           <StyledInfo>
             <div className="desktop">
-              <div>
-                <Photos
-                  onClose={onClose}
-                  photos={
-                    infoOpen?.img?.length > 0
-                      ? infoOpen?.img?.map((i: any) => i?.name)
-                      : []
-                  }
-                />
-              </div>
-              <MainInfo infoOpen={infoOpen} />
-              {/* <SectionTitle title="Зручності" /> */}
-              {/* <AmenitiesList data={AMENITIES_DATA} /> */}
-              {infoOpen?.description?.length > 0 && (
-                <>
-                  <SectionTitle title="Опис" />
-                  <Descrioption description={infoOpen?.description ?? ""} />
-                </>
-              )}
+              <BackButton onClick={onClose} classes="back-btn" />
+              <Card
+                data={infoOpen}
+                onSendRealtor={onSendRealtor}
+                currency={currency}
+                onChangeCurrency={onChangeCurrency}
+                onSwap={handleSwap}
+                showLike={status !== undefined}
+                status={status}
+              />
             </div>
           </StyledInfo>
           <SelectionSwiper
@@ -115,6 +114,7 @@ export const Info = ({
 
 const StyledInfo = styled.div`
   display: none;
+  position: relative;
   @media (min-width: 1000px) {
     max-width: 1400px;
     width: calc(100% - 13px);
@@ -122,5 +122,11 @@ const StyledInfo = styled.div`
     display: block;
     z-index: 1000;
     padding-top: 50px;
+  }
+  .back-btn {
+    position: absolute;
+    top: 79px;
+    left: 10px;
+    z-index: 100;
   }
 `;
