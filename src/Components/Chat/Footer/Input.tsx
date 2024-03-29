@@ -14,6 +14,7 @@ interface Props {
   onCloseSelectedMessage: () => void;
   rieltorName: string;
   onSend: () => void;
+  open: boolean;
 }
 
 export const Input = ({
@@ -25,6 +26,7 @@ export const Input = ({
   onCloseSelectedMessage,
   rieltorName,
   onSend,
+  open,
 }: Props) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -68,6 +70,12 @@ export const Input = ({
     e.target.style.height = e.target.scrollHeight + "px";
     onChange(e.target.value);
   };
+
+  useEffect(() => {
+    if (open && textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, [open]);
 
   return (
     <StyledInput

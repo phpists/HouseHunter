@@ -64,6 +64,7 @@ export const Chat = ({
         selectedMessage={selectedMessage}
         onCloseSelectedMessage={() => setSelectedMessage(null)}
         rieltorName={rieltor?.name ?? "Рієлтор"}
+        open={open}
       />
     </StyledChat>
   );

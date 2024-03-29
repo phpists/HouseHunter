@@ -9,6 +9,7 @@ interface Props {
   selectedMessage: any;
   onCloseSelectedMessage: () => void;
   rieltorName: string;
+  open: boolean;
 }
 
 export const Footer = ({
@@ -16,6 +17,7 @@ export const Footer = ({
   selectedMessage,
   onCloseSelectedMessage,
   rieltorName,
+  open,
 }: Props) => {
   const [value, setValue] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -57,6 +59,7 @@ export const Footer = ({
         onCloseSelectedMessage={onCloseSelectedMessage}
         rieltorName={rieltorName}
         onSend={handleSendMessage}
+        open={open}
       />
       <SendButton onSend={handleSendMessage} loading={loading} />
     </StyledFooter>
