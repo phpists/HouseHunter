@@ -95,9 +95,10 @@ export const Input = ({
         value={value}
         onChange={textAreaAdjust}
         placeholder="Повідомлення"
-        disabled={loading}
+        disabled={!open}
         ref={textareaRef}
         onKeyDown={(e) => e?.keyCode === 13 && !e?.shiftKey && onSend()}
+        onBlur={(e) => e.target.focus()}
       />
       {!selectedMessage && (
         <>
