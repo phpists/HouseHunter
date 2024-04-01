@@ -7,9 +7,6 @@ interface Props {
 export const Tag = ({ category }: Props) => <StyledTag>{category} </StyledTag>;
 
 const StyledTag = styled.div`
-  position: absolute;
-  right: 20px;
-  top: 20px;
   font-family: Overpass;
   font-size: 15px;
   font-weight: 300;
@@ -23,4 +20,5 @@ const StyledTag = styled.div`
   border-radius: 5px;
   border: solid 1px #ffffff26;
   backdrop-filter: blur(18px);
+  width: max-content;
 `;

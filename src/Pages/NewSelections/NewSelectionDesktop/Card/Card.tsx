@@ -89,6 +89,7 @@ export const Card = ({
         price={data?.[`price_per_object_${currency?.toLowerCase()}`] ?? 0}
         showLike={showLike}
         status={status}
+        tags={data?.tags_folder}
       />
       <div className="flex flex-col justify-between card-content">
         <div className="card-text">

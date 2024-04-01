@@ -103,6 +103,7 @@ export const CardList = ({
               disabled={disabled}
               rieltor={rieltor}
               recommended={card?.recommended}
+              tags={card?.tags_folder}
             />
           ))
         ) : (

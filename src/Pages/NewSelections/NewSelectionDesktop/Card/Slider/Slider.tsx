@@ -32,6 +32,7 @@ interface Props {
   price: number;
   showLike?: boolean;
   status?: boolean;
+  tags?: any;
 }
 
 export const Slider = ({
@@ -43,6 +44,7 @@ export const Slider = ({
   price,
   showLike,
   status,
+  tags,
 }: Props) => {
   const sliderRef = useRef<any>(null);
   const [currentSlide, setCurrentSlide] = useState<number>(1);
@@ -88,7 +90,15 @@ export const Slider = ({
             />
           </>
         )}
-        {category && <Tag category={category} />}
+        <div className="tags">
+          {tags?.label_recomendation ? (
+            <Tag category={"Рекомендовано"} />
+          ) : null}
+          {tags?.label_showing ? <Tag category={"Показ"} /> : null}
+          {tags?.label_top ? <Tag category={"Топ"} /> : null}
+
+          {category && <Tag category={category} />}
+        </div>
         {showLike && <Status status={status ?? false} />}
         <Price
           currency={currency}
@@ -155,11 +165,23 @@ const StyledSlider = styled.div<StyledSliderProps>`
     background: url(${({ noPhoto }) => noPhoto}) center/cover no-repeat;
     width: 100%;
   }
+  .tags {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    display: flex;
+    gap: 5px;
+  }
   @media (max-width: 1220px) {
     width: 500px;
   }
   @media (max-width: 1120px) {
     width: 450px;
+    .tags {
+      flex-wrap: wrap;
+      width: 140px;
+      justify-content: end;
+    }
   }
   @media (max-width: 1080px) {
     width: 400px;

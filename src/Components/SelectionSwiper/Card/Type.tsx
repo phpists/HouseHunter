@@ -10,9 +10,6 @@ export const Type = ({ type, className }: Props) => (
 );
 
 const StyledType = styled.div`
-  position: absolute;
-  top: 18px;
-  right: 18px;
   border-radius: 22px;
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(12.5px);

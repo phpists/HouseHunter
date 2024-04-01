@@ -43,6 +43,7 @@ interface Props {
   disabled?: boolean;
   rieltor: { name: string; photo: string | undefined; phone: any };
   recommended?: boolean;
+  tags?: any;
 }
 
 export const Card = ({
@@ -71,6 +72,7 @@ export const Card = ({
   disabled,
   rieltor,
   recommended,
+  tags,
 }: Props) => {
   const [open, setOpen] = useState<boolean>(history);
   const cardRef = useRef(null);
@@ -252,10 +254,19 @@ export const Card = ({
           onChangeCurrency={onChangeCurrency}
           price={price}
         />
-        <Type
-          type={recommended ? "Рекомендація" : type ? type : null}
-          className="maininfo"
-        />
+        <div className="tags">
+          {tags?.label_recomendation ? (
+            <Type type={"Рекомендовано"} className="maininfo" />
+          ) : null}
+          {tags?.label_showing ? (
+            <Type type={"Показ"} className="maininfo" />
+          ) : null}
+          {tags?.label_top ? <Type type={"Топ"} className="maininfo" /> : null}
+          <Type
+            type={recommended ? "Рекомендація" : type ? type : ""}
+            className="maininfo"
+          />
+        </div>
         <MainInfo
           title={title}
           location={location}
@@ -264,6 +275,7 @@ export const Card = ({
           isScrolled={isScrolled}
           totalSlides={images?.length}
           currentSlide={currentSlide}
+          tags={tags}
         />
         <Slider
           images={images?.length === 0 ? [noPhoto] : images}
@@ -352,6 +364,19 @@ const StyledCard = styled.div<StyledCardProps>`
       .content-info {
         padding: 14px;
       }
+    }
+  }
+  .tags {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    @media (max-width: 600px) {
+      width: 200px;
+      flex-wrap: wrap;
+      justify-content: end;
     }
   }
 `;
