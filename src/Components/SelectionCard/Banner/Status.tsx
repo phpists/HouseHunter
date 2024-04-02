@@ -22,17 +22,12 @@ interface StyledStatusProps {
 }
 
 const StyledStatus = styled.div<StyledStatusProps>`
-  position: absolute;
-  top: 10px;
-  right: 10px;
   height: 40px;
   width: 40px;
   border-radius: 8px;
   background: ${({ status }) => (status ? "#5A9E49" : "#D15B5B")};
   z-index: 4;
   @media (max-width: 1000px) {
-    right: 6px;
-    top: 6px;
     width: 26px;
     height: 26px;
     border-radius: 6px;

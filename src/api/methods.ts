@@ -41,11 +41,13 @@ export const rate = async (like: number, id: string, type: string) => {
     )
     .then((resp) => {
       const errorCode = resp?.data?.error;
+      const errorMessege = resp?.data.messege;
+
       if (errorCode === 0) {
         return errorCode;
       } else {
         // @ts-ignore: Unreachable code error
-        cogoToast.error(errors[errorCode] ?? "Помилка");
+        cogoToast.error(errorMessege ?? errors[errorCode] ?? "Помилка");
         return errorCode;
       }
     })
@@ -146,6 +148,8 @@ export const sendMessage = async (
 };
 
 export const getInfoObject = async (id_hash: string, type: string) => {
+  const id_request_group = getIdFromUrl();
+
   return axios
     .post(
       `${baseUrl}`,
@@ -153,16 +157,19 @@ export const getInfoObject = async (id_hash: string, type: string) => {
         id_object: id_hash,
         mod: "notepad_client",
         action: "get_info_object",
+        id_request_group,
       }),
       { headers }
     )
     .then((resp) => {
       const errorCode = resp?.data.error;
+      const errorMessege = resp?.data.messege;
+
       if (errorCode === 0) {
         return resp;
       } else {
         // @ts-ignore: Unreachable code error
-        cogoToast.error(errors[errorCode] ?? "Помилка");
+        cogoToast.error(errorMessege ?? errors[errorCode] ?? "Помилка");
         return resp;
       }
     })
@@ -181,11 +188,13 @@ export const getPhonesCodes = async () => {
     )
     .then((resp) => {
       const errorCode = resp?.data.error;
+      const errorMessege = resp?.data.messege;
+
       if (errorCode === 0) {
         return resp;
       } else {
         // @ts-ignore: Unreachable code error
-        cogoToast.error(errors[errorCode] ?? "Помилка");
+        cogoToast.error(errorMessege ?? errors[errorCode] ?? "Помилка");
         return resp;
       }
     })

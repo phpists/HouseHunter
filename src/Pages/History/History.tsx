@@ -199,6 +199,7 @@ export const History = ({
               isHide={filterLiked && !card?.like}
               tag={card?.tags?.length > 0 ? card?.tags : null}
               category={card?.rubric_name}
+              tags={card?.tags_folder}
             />
           ))
         ) : (
