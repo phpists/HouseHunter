@@ -41,7 +41,7 @@ export const rate = async (like: number, id: string, type: string) => {
     )
     .then((resp) => {
       const errorCode = resp?.data?.error;
-      const errorMessege = resp?.data.messege;
+      const errorMessege = resp?.data?.messege;
 
       if (errorCode === 0) {
         return errorCode;
@@ -163,7 +163,7 @@ export const getInfoObject = async (id_hash: string, type: string) => {
     )
     .then((resp) => {
       const errorCode = resp?.data.error;
-      const errorMessege = resp?.data.messege;
+      const errorMessege = resp?.data?.messege;
 
       if (errorCode === 0) {
         return resp;
@@ -188,7 +188,7 @@ export const getPhonesCodes = async () => {
     )
     .then((resp) => {
       const errorCode = resp?.data.error;
-      const errorMessege = resp?.data.messege;
+      const errorMessege = resp?.data?.messege;
 
       if (errorCode === 0) {
         return resp;

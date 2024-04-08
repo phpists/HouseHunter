@@ -31,7 +31,7 @@ const StyledProfile = styled.div<StyledProfileProps>`
     font-size: ${({ small }) => (small ? 16 : 18)}px;
     line-height: 118%;
     letter-spacing: 0.36px;
-    max-width: 120px;
+    max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

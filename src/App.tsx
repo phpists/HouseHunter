@@ -87,7 +87,10 @@ export const App = () => {
       resp?.data &&
         setRieltor({
           name: resp?.data?.name,
-          photo: resp?.data?.img,
+          photo:
+            resp?.data?.img?.length > 0
+              ? resp?.data?.img
+              : resp?.data?.company_img,
           phone: resp?.data?.phone ?? [],
         });
       setLoading(false);
