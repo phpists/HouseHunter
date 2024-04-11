@@ -14,6 +14,7 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Spinner } from "./Components/Spinner";
 import { Info } from "./Pages/Info/Info";
 import { checkIsBrowserSupportTouch } from "./helpers";
+import logo from "./assets/images/logo-hh.svg";
 
 export const App = () => {
   const navigate = useNavigate();
@@ -90,7 +91,9 @@ export const App = () => {
           photo:
             resp?.data?.img?.length > 0
               ? resp?.data?.img
-              : resp?.data?.company_img,
+              : resp?.data?.company_img?.length > 0
+              ? resp?.data?.company_img
+              : logo,
           phone: resp?.data?.phone ?? [],
         });
       setLoading(false);
@@ -132,6 +135,12 @@ export const App = () => {
       }
     });
   };
+
+  useEffect(() => {
+    document.addEventListener("gesturestart", function (e) {
+      e.preventDefault();
+    });
+  }, []);
 
   return (
     <>

@@ -11,16 +11,16 @@ interface Props {
 
 export const MessageFooter = ({ date, isOwner, isSelected }: Props) => (
   <StyledMessageFooter
-    className="flex items-center justify-end message"
+    className="flex items-center justify-end message chat"
     isOwner={isOwner}
   >
     {getHours(date)}
     {isSelected ? (
-      <img src={replyIcon} alt="" className="message" />
+      <img src={replyIcon} alt="" className="message chat" />
     ) : (
       <>
-        <CheckIcon className="message" />
-        <img src={replyIcon} alt="" className="reply-icon message" />
+        <CheckIcon className="message chat" />
+        <img src={replyIcon} alt="" className="reply-icon message chat" />
       </>
     )}
   </StyledMessageFooter>

@@ -79,7 +79,7 @@ export const PhotosView = ({
               key={i}
               src={image}
               alt=""
-              onClick={() => handleOpenPhoto(i)}
+              //   onClick={() => handleOpenPhoto(i)}
             />
           ))}
         </StyledPhotosView>

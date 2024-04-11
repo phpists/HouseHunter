@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const Tag = () => <StyledTag>Об'єкт</StyledTag>;
+export const Tag = () => <StyledTag className="chat">Об'єкт</StyledTag>;
 
 const StyledTag = styled.div`
   position: absolute;

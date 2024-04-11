@@ -8,10 +8,10 @@ interface Props {
 
 export const Download = ({ photo }: Props) => (
   <StyledDownload
-    className="flex items-center justify-center"
+    className="flex items-center justify-center chat"
     onClick={() => handleDownload(photo)}
   >
-    <img src={downloadIcon} alt="" />
+    <img src={downloadIcon} alt="" className="chat" />
   </StyledDownload>
 );
 

@@ -8,12 +8,12 @@ interface Props {
 
 export const SendButton = ({ onSend, loading }: Props) => (
   <StyledSendButton
-    className={`flex items-center justify-center ${
+    className={`flex items-center justify-center chat ${
       loading && "cursor-not-allowed opacity-90"
     }`}
     onClick={onSend}
   >
-    <img src={sendIcon} alt="" />
+    <img src={sendIcon} alt="" className="chat" />
   </StyledSendButton>
 );
 

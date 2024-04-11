@@ -7,13 +7,13 @@ interface Props {
 }
 
 export const Profile = ({ small, rieltor }: Props) => (
-  <StyledProfile small={small} className="flex items-center">
-    <Avatar small={small} photo={rieltor?.photo} />
-    <div className="profile-info">
-      <div className="name" title={rieltor.name}>
+  <StyledProfile small={small} className="flex items-center chat">
+    <Avatar small={small} photo={rieltor?.photo} className="chat" />
+    <div className="profile-info chat">
+      <div className="name chat" title={rieltor.name}>
         {rieltor.name}
       </div>
-      <div className="role">Рієлтор</div>
+      <div className="role chat">Рієлтор</div>
     </div>
   </StyledProfile>
 );

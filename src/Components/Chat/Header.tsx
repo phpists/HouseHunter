@@ -11,12 +11,12 @@ interface Props {
 }
 
 export const Header = ({ onCloseChat, rieltor, phonesCodes }: Props) => (
-  <StyledHeader className="flex items-center justify-between">
-    <div className="flex items-center ">
+  <StyledHeader className="flex items-center justify-between chat">
+    <div className="flex items-center chat">
       <img
         src={closeMobileIcon}
         alt=""
-        className="cursor-pointer mobile-close"
+        className="cursor-pointer mobile-close chat" 
         onClick={onCloseChat}
       />
       <Profile small rieltor={rieltor} />

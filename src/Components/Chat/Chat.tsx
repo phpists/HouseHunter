@@ -40,33 +40,36 @@ export const Chat = ({
   }, [open]);
 
   return (
-    <StyledChat
-      className={`flex flex-col justify-between ${className} ${
-        open && "active"
-      }`}
-    >
-      <Header
-        onCloseChat={onCloseChat}
-        rieltor={rieltor}
-        phonesCodes={phonesCodes}
-      />
-      <Content
-        open={open}
-        data={data}
-        onOpenObject={onOpenObject}
-        loadingInfoMore={loadingInfoMore}
-        selected={selectedMessage}
-        onSelect={handleSelectMessage}
-        rieltorName={rieltor?.name ?? "Рієлтор"}
-      />
-      <Footer
-        onRefreshData={handleGetMessages}
-        selectedMessage={selectedMessage}
-        onCloseSelectedMessage={() => setSelectedMessage(null)}
-        rieltorName={rieltor?.name ?? "Рієлтор"}
-        open={open}
-      />
-    </StyledChat>
+    <>
+      <StyledChat
+        className={`flex flex-col justify-between chat ${className} ${
+          open && "active"
+        }`}
+      >
+        <Header
+          onCloseChat={onCloseChat}
+          rieltor={rieltor}
+          phonesCodes={phonesCodes}
+        />
+        <Content
+          open={open}
+          data={data}
+          onOpenObject={onOpenObject}
+          loadingInfoMore={loadingInfoMore}
+          selected={selectedMessage}
+          onSelect={handleSelectMessage}
+          rieltorName={rieltor?.name ?? "Рієлтор"}
+        />
+        <Footer
+          onRefreshData={handleGetMessages}
+          selectedMessage={selectedMessage}
+          onCloseSelectedMessage={() => setSelectedMessage(null)}
+          rieltorName={rieltor?.name ?? "Рієлтор"}
+          open={open}
+        />
+      </StyledChat>
+      {open && <div className="chat-overlay" onClick={onCloseChat} />}
+    </>
   );
 };
 

@@ -129,3 +129,19 @@ textarea {
 .hide-scroll::-webkit-scrollbar {
   display: none;
 }
+
+.chat-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: transparent;
+  z-index: 100;
+}
+
+@media (max-width: 1000px) {
+  .chat-overlay {
+    display: none;
+  }
+}

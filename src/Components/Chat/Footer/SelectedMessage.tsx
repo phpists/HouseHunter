@@ -48,15 +48,17 @@ export const SelectedMessage = ({
           ? selectedMessage?.messege?.img
           : noPhoto
       }
-      className="flex items-center"
+      className="flex items-center chat"
     >
-      <img src={replyIcon} alt="" className="reply-icon" />
-      <div className="selected-msg-content flex items-center justify-between">
-        <div className="flex items-center">
-          {isPhoto && <div className="photo" />}
-          <div>
-            <div className="name">{isOwner ? "Ви" : rieltorName}</div>
-            <span>{isPhoto ? "Фотографія" : selectedMessage?.messege}</span>
+      <img src={replyIcon} alt="" className="reply-icon chat" />
+      <div className="selected-msg-content flex items-center justify-between chat">
+        <div className="flex items-center chat">
+          {isPhoto && <div className="photo chat" />}
+          <div className="chat">
+            <div className="name chat">{isOwner ? "Ви" : rieltorName}</div>
+            <span className="chat">
+              {isPhoto ? "Фотографія" : selectedMessage?.messege}
+            </span>
           </div>
         </div>
       </div>
@@ -64,7 +66,7 @@ export const SelectedMessage = ({
         src={closeIcon}
         alt=""
         onClick={() => (loading ? null : handleClose())}
-        className="close"
+        className="close chat"
       />
     </StyledSelectedMessage>
   );

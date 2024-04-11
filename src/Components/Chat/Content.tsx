@@ -69,7 +69,7 @@ export const Content = ({
   return (
     <StyledContent
       ref={contentRef}
-      className="content-wrapper"
+      className="content-wrapper chat"
       onClick={handleClickOnContent}
       selected={!!selected}
     >

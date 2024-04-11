@@ -46,7 +46,7 @@ export const Photo = ({
       photo={photo ?? noPhoto}
       text={text}
       isOwner={isOwner}
-      className={`${!!isObject && "cursor-pointer"}`}
+      className={`${!!isObject && "cursor-pointer"} chat`}
       loading={loading}
       onClick={handleOpen}
       onTouchEnd={handleOpen}
@@ -54,9 +54,9 @@ export const Photo = ({
       data-id={id}
     >
       {isObject && <Tag />}
-      {loading && <Spinner className="loading-spinner" />}
+      {loading && <Spinner className="loading-spinner chat" />}
       {photo && <Download photo={photo} />}
-      <div className="image" onClick={isObject ? onOpenObject : null} />
+      <div className="image chat" onClick={isObject ? onOpenObject : null} />
       {text && (
         <Text
           text={text}

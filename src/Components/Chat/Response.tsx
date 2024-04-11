@@ -19,12 +19,14 @@ export const Response = ({ onClick, parentMsg, rieltorName }: Props) => {
       photo={
         parentMsg?.messege?.img?.length > 0 ? parentMsg?.messege?.img : noPhoto
       }
-      className="flex items-center"
+      className="flex items-center chat"
     >
-      {isPhoto && <div className="photo" />}
-      <div>
-        <div className="name">{isOwner ? "Ви" : rieltorName}</div>
-        <span>{isPhoto ? "Фотографія" : parentMsg?.messege}</span>
+      {isPhoto && <div className="photo chat" />}
+      <div className="chat">
+        <div className="name chat">{isOwner ? "Ви" : rieltorName}</div>
+        <span className="chat">
+          {isPhoto ? "Фотографія" : parentMsg?.messege}
+        </span>
       </div>
     </StyledResponse>
   );

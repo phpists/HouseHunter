@@ -69,7 +69,7 @@ export const Message = ({
       onClick={handleSelectMessage}
       onTouchEnd={handleSelectTouchMessage}
       isSelected={isSelected}
-      className="message"
+      className="message chat"
       data-id={id}
     >
       {idParent && parentMsg && (
@@ -79,9 +79,11 @@ export const Message = ({
           rieltorName={rieltorName}
         />
       )}
-      <div className="message">
+      <div className="message chat">
         {text?.split("\r\n")?.map((t, i) => (
-          <div key={i}>{t}</div>
+          <div key={i} className="chat">
+            {t}
+          </div>
         ))}
         {/* {first && "first"} {last && "last"} {between && "between"} */}
       </div>

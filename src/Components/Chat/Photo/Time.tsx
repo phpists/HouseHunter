@@ -6,8 +6,9 @@ interface Props {
 }
 
 export const Time = ({ time }: Props) => (
-  <StyledTime className="flex items-center justify-center">
-    <div className="time">{time}</div> <img src={checkIcon} alt="" />
+  <StyledTime className="flex items-center justify-center chat">
+    <div className="time chat">{time}</div>{" "}
+    <img src={checkIcon} alt="" className="chat" />
   </StyledTime>
 );
 

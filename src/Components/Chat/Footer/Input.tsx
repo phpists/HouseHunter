@@ -79,7 +79,7 @@ export const Input = ({
 
   return (
     <StyledInput
-      className={`flex items-center ${
+      className={`flex items-center chat ${
         loading && "cursor-not-allowed opacity-90"
       }`}
     >
@@ -99,6 +99,7 @@ export const Input = ({
         ref={textareaRef}
         onKeyDown={(e) => e?.keyCode === 13 && !e?.shiftKey && onSend()}
         onBlur={(e) => e.target.focus()}
+        className="chat"
       />
       {!selectedMessage && (
         <>
@@ -106,11 +107,16 @@ export const Input = ({
             type="file"
             ref={fileInputRef}
             value=""
-            className="file-input"
+            className="file-input chat"
             onChange={handleUploadPhoto}
             accept="image/png, image/jpg, image/jpeg"
           />
-          <img src={imageIcon} alt="" onClick={handleSelectPhoto} />
+          <img
+            src={imageIcon}
+            alt=""
+            onClick={handleSelectPhoto}
+            className="chat"
+          />
         </>
       )}
       {/* <img src={fileIcon} alt="" className="file-btn" /> */}

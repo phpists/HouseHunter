@@ -47,7 +47,7 @@ export const Footer = ({
 
   return (
     <StyledFooter
-      className="flex items-center"
+      className="flex items-center chat"
       selectedMessage={!!selectedMessage}
     >
       <Input

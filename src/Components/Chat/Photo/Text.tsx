@@ -9,8 +9,8 @@ interface Props {
 }
 
 export const Text = ({ text, isOwner, date, isSelected }: Props) => (
-  <StyledText isOwner={isOwner}>
-    <div>{text}</div>
+  <StyledText isOwner={isOwner} className="chat">
+    <div className="chat">{text}</div>
     <MessageFooter date={date} isOwner={!!isOwner} isSelected={isSelected} />
   </StyledText>
 );
