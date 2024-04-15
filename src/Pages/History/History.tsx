@@ -5,6 +5,7 @@ import { SelectionCard } from "../../Components/SelectionCard/SelectionCard";
 import { getHistory, rate } from "../../api/methods";
 import { getLocation, removeDublicats } from "../../helpers";
 import { Spinner } from "../../Components/Spinner";
+import { useLocation } from "react-router-dom";
 
 interface Props {
   onOpenInfo: (card: any) => void;
@@ -23,6 +24,7 @@ export const History = ({
   infoOpen,
   appendObjectToList,
 }: Props) => {
+  const { pathname } = useLocation();
   const currentPage = useRef<number>(0);
   const [cards, setCards] = useState<any>(null);
   const cardsData = useRef<any>(null);
@@ -34,9 +36,16 @@ export const History = ({
   const historyRef = useRef<HTMLDivElement>(null);
   const scrolledTop = useRef<null | number>(null);
 
-  const handleGetHistory = (cleanPrevData?: boolean) => {
-    if (!loading && totalPages >= currentPage.current) {
-      getHistory(currentPage.current, filterLiked ? 1 : undefined)
+  const handleGetHistory = (cleanPrevData?: boolean, isReset?: boolean) => {
+    if ((!loading && totalPages >= currentPage.current) || isReset) {
+      if (isReset) {
+        currentPage.current = 0;
+      }
+      getHistory(
+        currentPage.current,
+        filterLiked ? 1 : undefined,
+        pathname === "/likes" ? "likes" : "dislikes"
+      )
         .then((resp: any) => {
           const data = resp?.data?.data;
           const pagesCount = resp?.data?.pages_count;
@@ -123,11 +132,19 @@ export const History = ({
   ) => {
     rate(direction === "right" ? 1 : 0, id, type).then((resp) => {
       if (resp === 0) {
-        const updatedData = cardsData.current.map((card: any) =>
-          card?.id === id
-            ? { ...card, like: direction === "right" ? 1 : 0 }
-            : card
-        );
+        const updatedData = cardsData.current
+          .map((card: any) =>
+            card?.id === id
+              ? { ...card, like: direction === "right" ? 1 : 0 }
+              : card
+          )
+          ?.filter((c) =>
+            c?.id === id
+              ? direction === "right" && pathname === "/likes"
+                ? true
+                : false
+              : true
+          );
         setCards(updatedData);
         cardsData.current = updatedData;
         onSuccess && onSuccess();
@@ -154,6 +171,10 @@ export const History = ({
       scrolledTop.current = null;
     }
   }, [infoOpen]);
+
+  useEffect(() => {
+    handleGetHistory(true, true);
+  }, [pathname]);
 
   useEffect(() => {
     if (appendObjectToList) {

@@ -56,7 +56,11 @@ export const rate = async (like: number, id: string, type: string) => {
     });
 };
 
-export const getHistory = async (page: number, like?: number) => {
+export const getHistory = async (
+  page: number,
+  like?: number,
+  type?: string
+) => {
   const id_request_group = getIdFromUrl();
   return axios
     .post(
@@ -67,6 +71,8 @@ export const getHistory = async (page: number, like?: number) => {
         action: "view_folder_client_choise_object",
         item_on_page: 20,
         current_page: page,
+        ...(type === "likes" ? { only_like: "1" } : {}),
+        ...(type === "dislikes" ? { only_dislike: "1" } : {}),
       }),
       { headers }
     )

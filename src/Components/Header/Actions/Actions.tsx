@@ -26,7 +26,7 @@ export const Actions = ({
   onChangeCurrency,
 }: Props) => (
   <StyledActions className="flex items-center" chatOpen={chatOpen}>
-    {activeTab === 0 && !infoOpen && (
+    {/* {activeTab === 0 && !infoOpen && (
       <>
         <div className="mobile-footer">
           <LikedFilter
@@ -36,7 +36,7 @@ export const Actions = ({
         </div>
         <Divider />
       </>
-    )}
+    )} */}
     <Currency currency={currency} onChangeCurrency={onChangeCurrency} />
     <Tabs activeTab={activeTab} onChangeTab={onChangeTab} />
   </StyledActions>

@@ -20,7 +20,7 @@ export const App = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [activeTab, setActiveTab] = useState<number>(
-    pathname === "/history" ? 0 : 1
+    pathname === "/likes" ? 0 : pathname === "/dislikes" ? 1 : 0
   );
   const [filterLiked, setFilterLiked] = useState<boolean>(false);
   const [chatOpen, setChatOpen] = useState<boolean>(false);
@@ -99,15 +99,23 @@ export const App = () => {
       setLoading(false);
     });
   };
+  const handleClearCacheData = () => {
+    caches.keys().then((names: any) => {
+      names.forEach((name: any) => {
+        caches.delete(name);
+      });
+    });
+  };
 
   useEffect(() => {
     handleGetRieltor();
     checkIsBrowserSupportTouch();
+    handleClearCacheData();
   }, []);
 
   const handleChangeOpenObjectStatus = (objectInfo: any, like: number) => {
     setAppendObjectToList({ ...objectInfo, like });
-    navigate("/history");
+    navigate(like === 1 ? "/likes" : "/dislikes");
     setActiveTab(0);
   };
 
@@ -190,7 +198,20 @@ export const App = () => {
             >
               <Routes>
                 <Route
-                  path="/history"
+                  path="/likes"
+                  element={
+                    <History
+                      onOpenInfo={handleOpenInfo}
+                      currency={currency}
+                      onSendRealtor={handleSendSelection}
+                      filterLiked={filterLiked}
+                      infoOpen={!!infoOpen}
+                      appendObjectToList={appendObjectToList}
+                    />
+                  }
+                />
+                <Route
+                  path="/dislikes"
                   element={
                     <History
                       onOpenInfo={handleOpenInfo}
