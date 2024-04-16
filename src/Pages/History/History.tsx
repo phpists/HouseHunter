@@ -174,6 +174,7 @@ export const History = ({
 
   useEffect(() => {
     currentPage.current = 0;
+    setCards(null);
     window.scrollTo({
       top: 0,
       left: 0,
