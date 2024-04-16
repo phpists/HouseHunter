@@ -20,6 +20,7 @@ interface Props {
   onChangeCurrency: (value: string) => void;
   showLike?: boolean;
   status?: boolean;
+  disabled?: boolean;
 }
 
 export const Card = ({
@@ -33,26 +34,32 @@ export const Card = ({
   onChangeCurrency,
   showLike,
   status,
+  disabled,
 }: Props) => {
   const cardRef = useRef<any>(null);
-  const handleAnimateBackCards = () => {
+
+  const handleAnimateBackCards = (isDefault?: boolean) => {
     const backCard: any = document.querySelector(`.hide-card`);
 
     if (backCard) {
       backCard.style.cssText = `
-        transition: all .2s;
-        transform: translateY(-100% );
+        transition: all .5s;
+        transform: ${
+          isDefault
+            ? `translateY(calc(-100% - 8px)) scale(0.98))`
+            : "translateY(-100%)"
+        };
       `;
     }
   };
 
   const handleSwipeAnimation = () => {
     const windowWidth = window.innerWidth;
-    cardRef.current.style.transition = "all .4s";
+    cardRef.current.style.transition = "all .6s";
     cardRef.current.style.transform = `translateX(${
       swipeAnimation === "right" ? windowWidth : -windowWidth
     }px)`;
-    setTimeout(handleAnimateBackCards, 400);
+    setTimeout(handleAnimateBackCards, 600);
   };
 
   useEffect(() => {
@@ -63,14 +70,13 @@ export const Card = ({
 
   const handleReload = () => {
     if (hide) {
-      cardRef.current.style.transition = "all .3s";
-      cardRef.current.style.transform = `translateY(calc(-100% - 8px)) scale(0.98))`;
+      setTimeout(() => handleAnimateBackCards(true), 400);
     } else {
       cardRef.current.style.transition = "all 0s";
       cardRef.current.style.transform = `translateY(10px)`;
       setTimeout(() => {
         cardRef.current.style.transition = "all .4s";
-      }, 100);
+      }, 300);
     }
   };
 
@@ -112,6 +118,7 @@ export const Card = ({
           <Description description={data?.description ?? ""} />
         </div>
         <Footer
+          disabled={disabled}
           onSendRealtor={() =>
             !onSendRealtor ? null : onSendRealtor(data?.type, data?.id)
           }
@@ -144,6 +151,8 @@ const StyledCard = styled.div<StyledCardProps>`
   z-index: ${({ hide }) => (hide ? 0 : 10)};
   filter: blur(${({ hide }) => (hide ? 10 : 0)}px);
   position: relative;
+  max-width: 1400px;
+  width: calc(100vw - 16px);
   /* transition: all 0.3s; */
 
   .card-text {

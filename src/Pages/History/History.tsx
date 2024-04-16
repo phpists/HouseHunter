@@ -101,7 +101,7 @@ export const History = ({
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading, filterLiked]);
+  }, [loading, filterLiked, pathname]);
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -173,6 +173,11 @@ export const History = ({
   }, [infoOpen]);
 
   useEffect(() => {
+    currentPage.current = 0;
+    window.scrollTo({
+      top: 0,
+      left: 0,
+    });
     handleGetHistory(true, true);
   }, [pathname]);
 

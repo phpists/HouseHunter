@@ -5,6 +5,7 @@ import dislike from "../../../../../assets/images/thumbs-down.svg";
 interface Props {
   type: "like" | "dislike";
   onClick: () => void;
+  disabled?: boolean;
 }
 
 const TYPES = {
@@ -18,11 +19,12 @@ const TYPES = {
   },
 };
 
-export const ActionButton = ({ type, onClick }: Props) => (
+export const ActionButton = ({ type, onClick, disabled }: Props) => (
   <StyledActionButton
     className="flex items-center justify-center"
     color={TYPES[type]?.color}
     onClick={onClick}
+    disabled={disabled}
   >
     <img src={TYPES[type]?.icon} alt="" />
   </StyledActionButton>
@@ -32,7 +34,7 @@ interface StyledActionButtonProps {
   color: string;
 }
 
-const StyledActionButton = styled.div<StyledActionButtonProps>`
+const StyledActionButton = styled.button<StyledActionButtonProps>`
   padding: 15px 47px;
   border-radius: 8px;
   height: 54px;
@@ -40,6 +42,10 @@ const StyledActionButton = styled.div<StyledActionButtonProps>`
   width: max-content;
   cursor: pointer;
   transition: all 0.3s;
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
   &:hover {
     opacity: 0.8;
   }

@@ -5,17 +5,20 @@ import { SendButton } from "./SendButton";
 interface Props {
   onSendRealtor?: () => void;
   onSwap?: (direction: string) => void;
+  disabled?: boolean;
 }
 
-export const Footer = ({ onSendRealtor, onSwap }: Props) => (
+export const Footer = ({ onSendRealtor, onSwap, disabled }: Props) => (
   <StyledFooter>
     <ActionButton
       type="dislike"
       onClick={() => (onSwap ? onSwap("left") : null)}
+      disabled={disabled}
     />
     <ActionButton
       type="like"
       onClick={() => (onSwap ? onSwap("right") : null)}
+      disabled={disabled}
     />
     <SendButton onClick={onSendRealtor} />
   </StyledFooter>

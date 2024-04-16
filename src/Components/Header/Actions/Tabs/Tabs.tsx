@@ -42,8 +42,8 @@ const StyledTabs = styled.div`
   position: relative;
   /* @media (max-width: 1200px) {
     width: 180px;
-  }
+  }*/
   @media (max-width: 1000px) {
     width: 100%;
-  } */
+  }
 `;

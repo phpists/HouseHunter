@@ -46,7 +46,7 @@ export const NewSelectionDesktop = ({
         setTimeout(() => {
           setAnimationProgress("ended");
           onSwap(index, value, id, type);
-        }, 200);
+        }, 1000);
       }
     }
   };
@@ -57,7 +57,7 @@ export const NewSelectionDesktop = ({
       setTimeout(() => {
         setAnimationProgress(null);
         setSwipeAnimation(null);
-      }, 200);
+      }, 700);
     }
   }, [cards]);
 
@@ -73,6 +73,7 @@ export const NewSelectionDesktop = ({
             isReload={animationProgress === "reload"}
             currency={currency}
             onChangeCurrency={onChangeCurrency}
+            disabled={!!swipeAnimation}
           />
           {cards?.[1] && (
             <Card
@@ -82,6 +83,7 @@ export const NewSelectionDesktop = ({
               isReload={animationProgress === "reload"}
               currency={currency}
               onChangeCurrency={onChangeCurrency}
+              disabled={!!swipeAnimation}
             />
           )}
         </div>
