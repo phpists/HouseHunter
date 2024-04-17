@@ -10,8 +10,8 @@ interface Props {
 export const Tabs = ({ onChangeTab }: Props) => {
   const handleChangeTab = (tabIndex: number) => onChangeTab(tabIndex);
   const TABS = [
-    { title: "Лайки", link: "/likes" },
     { title: "Дизлайки", link: "/dislikes" },
+    { title: "Лайки", link: "/likes" },
     { title: "Нові", link: "/" },
   ];
   const { pathname } = useLocation();

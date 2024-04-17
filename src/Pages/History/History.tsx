@@ -38,6 +38,7 @@ export const History = ({
 
   const handleGetHistory = (cleanPrevData?: boolean, isReset?: boolean) => {
     if ((!loading && totalPages >= currentPage.current) || isReset) {
+      isLoading.current = true;
       if (isReset) {
         currentPage.current = 0;
       }
@@ -52,6 +53,7 @@ export const History = ({
           setTotalPages(Math.ceil(Number(resp?.data?.all_item) / 20));
           currentPage.current = currentPage.current + 1;
           isFirstRender.current = false;
+          isLoading.current = false;
           if (data && cleanPrevData) {
             setCards(data);
             cardsData.current = data;
@@ -76,6 +78,7 @@ export const History = ({
           }
         })
         .catch(() => {
+          isLoading.current = false;
           cardsData.current = [];
           setCards([]);
         });
@@ -173,13 +176,16 @@ export const History = ({
   }, [infoOpen]);
 
   useEffect(() => {
-    currentPage.current = 0;
-    setCards(null);
-    window.scrollTo({
-      top: 0,
-      left: 0,
-    });
-    handleGetHistory(true, true);
+    if (!isFirstRender.current && !isLoading.current) {
+      currentPage.current = 0;
+      setCards(null);
+      cardsData.current = [];
+      window.scrollTo({
+        top: 0,
+        left: 0,
+      });
+      handleGetHistory(true, true);
+    }
   }, [pathname]);
 
   useEffect(() => {
