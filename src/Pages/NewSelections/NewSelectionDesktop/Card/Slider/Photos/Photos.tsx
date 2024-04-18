@@ -1,18 +1,29 @@
 import styled from "styled-components";
 import { Photo } from "./Photo";
+import { useEffect, useRef } from "react";
 
 interface Props {
   images: string[];
   onChangeSlide: (num: number) => void;
 }
 
-export const Photos = ({ images, onChangeSlide }: Props) => (
-  <StyledPhotos className="hide-scroll">
-    {images?.map((photo, i) => (
-      <Photo key={i} photo={photo} onClick={() => onChangeSlide(1 + i)} />
-    ))}
-  </StyledPhotos>
-);
+export const Photos = ({ images, onChangeSlide }: Props) => {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (wrapperRef.current) {
+      wrapperRef.current.scrollTo({ top: 0 });
+    }
+  }, [images]);
+
+  return (
+    <StyledPhotos className="hide-scroll" ref={wrapperRef}>
+      {images?.map((photo, i) => (
+        <Photo key={i} photo={photo} onClick={() => onChangeSlide(1 + i)} />
+      ))}
+    </StyledPhotos>
+  );
+};
 
 const StyledPhotos = styled.div`
   margin-left: 8px;

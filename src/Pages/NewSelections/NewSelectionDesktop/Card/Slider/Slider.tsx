@@ -6,7 +6,7 @@ import { Slide } from "./Slide";
 import prevIcon from "../../../../../assets/images/slider-prev.svg";
 import nextIcon from "../../../../../assets/images/slider-next.svg";
 import { SlideCount } from "./SlideCount";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import noPhoto from "../../../../../assets/images/no-photo.svg";
 import { Tag } from "./Tag";
 import { Photos } from "./Photos/Photos";
@@ -53,6 +53,11 @@ export const Slider = ({
     setCurrentSlide(index);
     sliderRef.current && sliderRef.current.slickGoTo(index - 1);
   };
+
+  useEffect(() => {
+    setCurrentSlide(1);
+    handleChangeActiveSlide(0);
+  }, [images]);
 
   return (
     <>

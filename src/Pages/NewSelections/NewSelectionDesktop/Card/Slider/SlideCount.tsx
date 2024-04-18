@@ -8,7 +8,8 @@ interface Props {
 
 export const SlideCount = ({ currentSlide, total }: Props) => (
   <StyledSlideCount className="flex items-center">
-    <div>{addZero(currentSlide)}</div> /<div>{addZero(total)}</div>
+    <div>{addZero(currentSlide === 0 ? 1 : currentSlide)}</div> /
+    <div>{addZero(total)}</div>
   </StyledSlideCount>
 );
 
