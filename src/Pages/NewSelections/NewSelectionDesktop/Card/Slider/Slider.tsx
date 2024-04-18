@@ -12,10 +12,12 @@ import { Tag } from "./Tag";
 import { Photos } from "./Photos/Photos";
 import { Price } from "../Price/Price";
 import { Status } from "./Status";
+import { PhotoSlider } from "react-photo-view";
+import "react-photo-view/dist/react-photo-view.css";
 
 const settings = {
   dots: false,
-  infinite: false,
+  infinite: true,
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
@@ -48,6 +50,8 @@ export const Slider = ({
 }: Props) => {
   const sliderRef = useRef<any>(null);
   const [currentSlide, setCurrentSlide] = useState<number>(1);
+  const [sortPhotos, setSortPhotos] = useState<any>(null);
+  const [openView, setOpenView] = useState(false);
 
   const handleChangeActiveSlide = (index: number) => {
     setCurrentSlide(index);
@@ -56,11 +60,37 @@ export const Slider = ({
 
   useEffect(() => {
     setCurrentSlide(1);
-    handleChangeActiveSlide(0);
+    handleChangeActiveSlide(1);
   }, [images]);
+
+  const handleOpen = () => {
+    setSortPhotos(
+      images.map((image, key) => ({
+        src: image,
+        key: key,
+      }))
+      // ?.sort((a, b) => b?.key - a?.key)
+    );
+    setOpenView(true);
+  };
 
   return (
     <>
+      {openView && sortPhotos && (
+        <PhotoSlider
+          images={sortPhotos}
+          visible={openView}
+          onClose={() => setOpenView(false)}
+          index={currentSlide - 1}
+          onIndexChange={(index) => handleChangeActiveSlide(1 + index)}
+          speed={() => 0}
+          easing={(type) =>
+            type === 2
+              ? "cubic-bezier(0.36, 0, 0.66, -0.56)"
+              : "cubic-bezier(0.34, 1.56, 0.64, 1)"
+          }
+        />
+      )}
       <StyledSlider prevIcon={prevIcon} nextIcon={nextIcon} noPhoto={noPhoto}>
         {images?.length === 0 ? (
           <div className="empty-slider" />
@@ -83,7 +113,7 @@ export const Slider = ({
             }
           >
             {images.map((image, i: number) => (
-              <Slide key={i} image={image} onOpen={onOpen} />
+              <Slide key={i} image={image} onOpen={handleOpen} />
             ))}
           </SlickSlider>
         )}
