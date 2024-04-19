@@ -14,7 +14,7 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Spinner } from "./Components/Spinner";
 import { Info } from "./Pages/Info/Info";
 import { checkIsBrowserSupportTouch } from "./helpers";
-import logo from "./assets/images/logo-hh.svg";
+import logo from "./assets/images/logo.png";
 
 export const App = () => {
   const navigate = useNavigate();
