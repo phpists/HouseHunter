@@ -136,16 +136,16 @@ export const sendMessage = async (
     )
     .then((resp) => {
       const errorCode = resp?.data.error;
+      console.log(resp);
       if (errorCode === 0) {
         return "success";
       } else {
         // @ts-ignore: Unreachable code error
         cogoToast.error(
-          // @ts-ignore: Unreachable code error
-          errors[errorCode]
-            ? // @ts-ignore: Unreachable code error
-              errors[errorCode]
-            : resp?.data?.messege ?? "Помилка"
+          resp?.data?.messege ??
+            // @ts-ignore: Unreachable code error
+            errors[errorCode] ??
+            "Помилка"
         );
         return null;
       }

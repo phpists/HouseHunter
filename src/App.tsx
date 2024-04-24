@@ -68,7 +68,7 @@ export const App = () => {
     setInfoOpen(null);
   };
   const handleOpenInfo = (card: any) =>
-    setInfoOpen({ ...card, id: card?.id_hash });
+    setInfoOpen({ ...card, id: card?.id ?? card?.id_hash });
   const handleCloseInfo = () => {
     setInfoOpen(null);
     setAppendObjectToList(null);
