@@ -1,15 +1,29 @@
 import styled from "styled-components";
 import doorsIcon from "../../../../assets/images/door-closed.svg";
 import stairsIcon from "../../../../assets/images/stairs.svg";
+import expandIcon from "../../../../assets/images/expand.svg";
+import boxIcon from "../../../../assets/images/box-select.svg";
 
 interface Props {
   doors: string;
   stairs: string;
+  areaTotal: string;
+  areaKitchen: string;
 }
 
-export const Tags = ({ doors, stairs }: Props) => (
+export const Tags = ({ doors, stairs, areaTotal, areaKitchen }: Props) => (
   <StyledTags className="flex items-center">
     <img src={doorsIcon} alt="" /> {doors} <div className="divider" />
+    <img src={expandIcon} alt="" />
+    {areaTotal}
+    {Number(areaKitchen) > 0 ? (
+      <>
+        <div className="divider" />
+        <img src={boxIcon} alt="" />
+        {areaKitchen}{" "}
+      </>
+    ) : null}
+    <div className="divider" />
     <img src={stairsIcon} alt="" />
     {stairs}
   </StyledTags>

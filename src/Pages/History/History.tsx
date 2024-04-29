@@ -216,8 +216,8 @@ export const History = ({
               title={card?.title ?? ""}
               location={card?.location_name}
               doors={card?.rooms ?? "-"}
-              stairs={`${card?.address_apartment_number ?? "-"} із ${
-                card?.address_storey ?? "-"
+              stairs={`${card?.address_storey ?? "-"} із ${
+                card?.storey_count ?? "-"
               }`}
               description={card?.description ?? ""}
               images={

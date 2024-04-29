@@ -31,8 +31,8 @@ export const MainInfo = ({ infoOpen }: Props) => (
         <Expand area={infoOpen?.area_total ?? "-"} />
         <Divider />
         <Stairs
-          stairs={`${infoOpen?.address_apartment_number ?? "-"} із ${
-            infoOpen?.address_storey ?? "-"
+          stairs={`${infoOpen?.address_storey ?? "-"} із ${
+            infoOpen?.storey_count ?? "-"
           }`}
         />
       </div>

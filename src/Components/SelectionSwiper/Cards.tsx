@@ -75,10 +75,10 @@ export const Cards = ({
           location={cards[0]?.location_name}
           doors={cards[0]?.rooms ?? "-"}
           area={cards[0]?.area_total ?? "-"}
-          stairs={`${cards[0]?.address_apartment_number ?? "-"} із ${
-            cards[0]?.address_storey ?? "-"
+          stairs={`${cards[0]?.address_storey ?? "-"} із ${
+            cards[0]?.storey_count ?? "-"
           }`}
-          box={cards[0]?.kitchen_area ?? "-"}
+          box={cards[0]?.area_kitchen ?? "-"}
           title={
             cards[0]?.title?.length > 0
               ? cards[0]?.title

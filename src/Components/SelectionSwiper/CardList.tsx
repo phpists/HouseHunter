@@ -71,10 +71,10 @@ export const CardList = ({
               location={card?.location_name}
               doors={card?.rooms ?? "-"}
               area={card?.area_total ?? "-"}
-              stairs={`${card?.address_apartment_number ?? "-"} із ${
-                card?.address_storey ?? "-"
+              stairs={`${card?.address_storey ?? "-"} із ${
+                card?.storey_count ?? "-"
               }`}
-              box={card?.kitchen_area ?? ""}
+              box={card?.area_kitchen ?? ""}
               title={
                 card?.title?.length > 0 ? card?.title : card?.description ?? ""
               }
