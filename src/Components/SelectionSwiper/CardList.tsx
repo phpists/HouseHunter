@@ -74,7 +74,7 @@ export const CardList = ({
               stairs={`${card?.address_apartment_number ?? "-"} із ${
                 card?.address_storey ?? "-"
               }`}
-              box={card?.kitchen_area ?? "-"}
+              box={card?.kitchen_area ?? ""}
               title={
                 card?.title?.length > 0 ? card?.title : card?.description ?? ""
               }

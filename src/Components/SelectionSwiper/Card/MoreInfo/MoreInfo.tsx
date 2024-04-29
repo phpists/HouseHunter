@@ -113,8 +113,14 @@ export const MoreInfo = ({
             <Doors doors={doors} />
             <Divider />
             <Expand area={area} />
-            <Divider />
-            <Box box={box} />
+
+            {box?.toString()?.length > 0 ? (
+              <>
+                {" "}
+                <Divider />
+                <Box box={box} />
+              </>
+            ) : null}
             <Divider />
             <Stairs stairs={stairs} />
           </div>
