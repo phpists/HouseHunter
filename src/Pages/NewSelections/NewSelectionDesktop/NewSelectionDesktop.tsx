@@ -40,13 +40,13 @@ export const NewSelectionDesktop = ({
     type: string
   ) => {
     if (!swipeAnimation) {
-      setLastCard(cards?.[1]);
+      //   setLastCard(cards?.[1]);
       setSwipeAnimation(value);
       if (value) {
         setTimeout(() => {
           setAnimationProgress("ended");
           onSwap(index, value, id, type);
-        }, 1000);
+        }, 800);
       }
     }
   };
@@ -57,7 +57,7 @@ export const NewSelectionDesktop = ({
       setTimeout(() => {
         setAnimationProgress(null);
         setSwipeAnimation(null);
-      }, 700);
+      }, 300);
     }
   }, [cards]);
 

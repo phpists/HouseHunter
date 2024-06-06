@@ -59,7 +59,7 @@ export const Card = ({
     cardRef.current.style.transform = `translateX(${
       swipeAnimation === "right" ? windowWidth : -windowWidth
     }px)`;
-    setTimeout(handleAnimateBackCards, 600);
+    setTimeout(handleAnimateBackCards, 500);
   };
 
   useEffect(() => {
@@ -76,7 +76,7 @@ export const Card = ({
       cardRef.current.style.transform = `translateY(10px)`;
       setTimeout(() => {
         cardRef.current.style.transition = "all .4s";
-      }, 300);
+      }, 200);
     }
   };
 
