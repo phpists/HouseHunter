@@ -144,7 +144,7 @@ const StyledCard = styled.div<StyledCardProps>`
   position: relative;
   max-width: 1400px;
   width: calc(100vw - 16px);
-  height: calc(100svh - 100px);
+  height: calc(100svh - 68px);
   /* transition: all 0.3s; */
   .card-text {
     max-height: calc(82vh - 48px);

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { baseUrl } from "./baseUrl";
-import { getIdFromUrl, handleToFormData } from "../helpers";
+import { getIdFromUrl, getParams, handleToFormData } from "../helpers";
 import { errors } from "../constants/errors";
 import cogoToast from "cogo-toast";
 
@@ -208,12 +208,12 @@ export const getPhonesCodes = async () => {
 };
 
 export const getObject = async () => {
-  const id = getIdFromUrl();
   return axios
     .post(
       `${baseUrl}`,
       handleToFormData({
-        id,
+        id: getParams("id"),
+        us: getParams("us"),
         mod: "fast_notepad",
         action: "show_fast_folder",
       }),

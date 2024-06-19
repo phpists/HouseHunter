@@ -19,6 +19,12 @@ export const getLocation = ({
 
 export const getIdFromUrl = () => window.location.search?.split("=")[1] ?? null;
 
+export const getParams = (name: string) => {
+  const params = window.location.search?.replace("?", "").split("&");
+  const param = params?.find((p) => p.includes(`${name}=`))?.split("=")?.[1];
+  return param;
+};
+
 export const getCurrencySymbol = (currencyTitle: string): string =>
   currencies.find((c) => c.title === currencyTitle)?.symbol ?? "";
 
