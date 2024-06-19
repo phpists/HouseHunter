@@ -52,6 +52,7 @@ export const Slider = ({
   const [currentSlide, setCurrentSlide] = useState<number>(1);
   const [sortPhotos, setSortPhotos] = useState<any>(null);
   const [openView, setOpenView] = useState(false);
+  const [sliderIndex, setSliderIndex] = useState(0);
 
   const handleChangeActiveSlide = (index: number) => {
     setCurrentSlide(index);
@@ -64,6 +65,7 @@ export const Slider = ({
   }, [images]);
 
   const handleOpen = () => {
+    setSliderIndex(currentSlide - 1);
     setSortPhotos(
       images.map((image, key) => ({
         src: image,
@@ -81,8 +83,8 @@ export const Slider = ({
           images={sortPhotos}
           visible={openView}
           onClose={() => setOpenView(false)}
-          index={currentSlide - 1}
-          onIndexChange={(index) => handleChangeActiveSlide(1 + index)}
+          index={sliderIndex}
+          onIndexChange={(index) => setSliderIndex(index)}
           speed={() => 0}
           easing={(type) =>
             type === 2
