@@ -18,6 +18,8 @@ import { Box } from "./MoreInfo/Box";
 import { Stairs } from "./MoreInfo/Stairs";
 import { SectionTitle } from "./MoreInfo/SectionTitle";
 import { Descrioption } from "./MoreInfo/Description";
+import { Realtor } from "../../Header/Realtor/Realtor";
+
 interface Props {
   type: string;
   currency: string;
@@ -41,9 +43,10 @@ interface Props {
   loading?: string;
   onPhotoView?: () => void;
   disabled?: boolean;
-  rieltor: { name: string; photo: string | undefined; phone: any };
   recommended?: boolean;
   tags?: any;
+  data?: any;
+  phonesCodes?: any;
 }
 
 export const Card = ({
@@ -70,9 +73,10 @@ export const Card = ({
   loading,
   onPhotoView,
   disabled,
-  rieltor,
   recommended,
   tags,
+  data,
+  phonesCodes,
 }: Props) => {
   const [open, setOpen] = useState<boolean>(history);
   const cardRef = useRef(null);
@@ -91,11 +95,6 @@ export const Card = ({
       const offSetLeft = cardRef.current.offsetLeft;
       posX.current = cientX - offSetLeft;
     }
-  };
-
-  const handleGetDirection = (): string => {
-    const xValue = mouseX.current;
-    return xValue < 0 ? "left" : "right";
   };
 
   const handleCheckIsClick = (e?: any) => {
@@ -133,21 +132,7 @@ export const Card = ({
     if (isDrag && !disabled) {
       const cientX = e?.touches?.length ? e?.touches[0]?.clientX : e.clientX;
       const mouseXPos = cientX - posX.current;
-      //   cardRef.current.style.transform = `translateX(${mouseXPos}px)`;
       mouseX.current = mouseXPos;
-      //   const currentDirection = handleGetDirection();
-      //   setDirection(currentDirection);
-    }
-  };
-
-  const handleCheckIsSwiped = () => {
-    const xValue = mouseX.current;
-    const cardWidth = cardRef.current.offsetWidth;
-
-    if (xValue < 0) {
-      return cardWidth + xValue <= cardWidth / 2 ? "left" : false;
-    } else {
-      return cardWidth - xValue <= cardWidth / 2 ? "right" : false;
     }
   };
 
@@ -159,28 +144,6 @@ export const Card = ({
     setIsDraged(false);
     setDirection(null);
     mouseX.current = 0;
-
-    const isSwiped = handleCheckIsSwiped();
-    // if (isSwiped) {
-    //   if (history) {
-    //     onChangeStatus(isSwiped);
-    //     cardRef.current.style.transform = `translateX(${0}px)`;
-    //   } else {
-    //     cardRef.current.style.transition = "all .4s";
-    //     cardRef.current.style.opacity = `0`;
-    //     cardRef.current.style.transform = `translateX(${
-    //       isSwiped === "right"
-    //         ? window.innerWidth * 1.5
-    //         : -window.innerWidth * 2
-    //     }px) scale(0)`;
-    //     setTimeout(() => {
-    //       onChangeStatus(isSwiped);
-    //       handleAnimateBackCards();
-    //     }, 500);
-    //   }
-    // } else {
-    //   cardRef.current.style.transform = `translateX(${0}px)`;
-    // }
     mouseX.current = 0;
   };
 
@@ -208,33 +171,8 @@ export const Card = ({
     }
   };
 
-
   return (
     <>
-      {/* {false && (
-        <MoreInfo
-          type={type}
-          price={price}
-          currency={currency}
-          location={location}
-          doors={doors}
-          area={area}
-          stairs={stairs}
-          box={box}
-          title={title.substring(0, 30)}
-          description={description}
-          index={index}
-          onClose={handleCloseMoreInfo}
-          images={images}
-          onChangeStatus={onChangeStatus}
-          onSendRealtor={handleSendRealtor}
-          onPhotoView={onPhotoView}
-          rieltor={rieltor}
-        />
-      )} */}
-      {direction === "right" && <SwipeStatus status={direction === "right"} />}
-      {direction === "left" && <SwipeStatus status={direction === "right"} />}
-
       <StyledCard
         ref={cardRef}
         index={index}
@@ -305,6 +243,7 @@ export const Card = ({
             </div>
             <SectionTitle title="Опис" />
             <Descrioption text={description} />
+            <Realtor data={data} phonesCodes={phonesCodes} />
           </div>
         </div>
       </StyledCard>
@@ -319,7 +258,7 @@ interface StyledCardProps {
 
 const StyledCard = styled.div<StyledCardProps>`
   position: absolute;
-  height: calc(100svh - 240px);
+  height: calc(100svh - 80px);
   /* overflow: auto; */
   font-size: 80px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);

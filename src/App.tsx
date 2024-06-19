@@ -6,6 +6,7 @@ import { Chat } from "./Components/Chat/Chat";
 import { NewSelections } from "./Pages/NewSelections/NewSelections";
 import {
   getInfoObject,
+  getObject,
   getPhonesCodes,
   getRieltor,
   sendMessage,
@@ -28,11 +29,7 @@ export const App = () => {
   const [currency, setCurrency] = useState<string>(
     localStorage.getItem("currency") ?? "UAH"
   );
-  const [rieltor, setRieltor] = useState<{
-    name: string;
-    photo: string | undefined;
-    phone: any;
-  } | null>(null);
+  const [object, setObject] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingInfoMore, setLoadingInfoMore] = useState<string | null>(null);
   const [appendObjectToList, setAppendObjectToList] = useState<any | null>(
@@ -57,22 +54,8 @@ export const App = () => {
     localStorage.setItem("currency", value);
   };
 
-  const handleChangeTab = (tabIndex: number) => {
-    setActiveTab(tabIndex);
-    setInfoOpen(false);
-    setFilterLiked(false);
-  };
-  const handleToggleFilterLiked = () => setFilterLiked(!filterLiked);
-  const handleToggleChat = () => {
-    setChatOpen(!chatOpen);
-    setInfoOpen(null);
-  };
   const handleOpenInfo = (card: any) =>
     setInfoOpen({ ...card, id: card?.id ?? card?.id_hash });
-  const handleCloseInfo = () => {
-    setInfoOpen(null);
-    setAppendObjectToList(null);
-  };
 
   const handleSendSelection = (type: string, id: string) => {
     setChatOpen(false);
@@ -82,20 +65,14 @@ export const App = () => {
     });
   };
 
-  const handleGetRieltor = () => {
+  const handleGetObject = () => {
     setLoading(true);
-    getRieltor().then((resp) => {
-      resp?.data &&
-        setRieltor({
-          name: resp?.data?.name,
-          photo:
-            resp?.data?.img?.length > 0
-              ? resp?.data?.img
-              : resp?.data?.company_img?.length > 0
-              ? resp?.data?.company_img
-              : logo,
-          phone: resp?.data?.phone ?? [],
-        });
+    getObject().then((resp) => {
+      setObject(
+        resp?.data?.data
+          ? { ...resp?.data?.data, img: resp?.data?.data?.photos }
+          : resp?.data?.data
+      );
       setLoading(false);
     });
   };
@@ -108,41 +85,10 @@ export const App = () => {
   };
 
   useEffect(() => {
-    handleGetRieltor();
     checkIsBrowserSupportTouch();
     handleClearCacheData();
+    handleGetObject();
   }, []);
-
-  const handleChangeOpenObjectStatus = (objectInfo: any, like: number) => {
-    setAppendObjectToList({ ...objectInfo, like });
-    navigate(like === 1 ? "/likes" : "/dislikes");
-    setActiveTab(0);
-  };
-
-  const handleOpenObjectFromChat = (
-    id_hash: string,
-    type: string,
-    state: string
-  ) => {
-    setLoadingInfoMore(id_hash);
-    getInfoObject(id_hash, type).then((resp: any) => {
-      setLoadingInfoMore(null);
-      const objectInfo = resp?.data?.data ?? null;
-      if (objectInfo) {
-        setChatOpen(false);
-        setInfoOpen({
-          ...objectInfo,
-          history: true,
-          id: id_hash,
-          onChangeStatus: (like: number) =>
-            handleChangeOpenObjectStatus(objectInfo, like),
-        });
-        // navigate(state === "new" ? "/" : "/history");
-        // setActiveTab(state === "new" ? 1 : 0);
-        // setAppendObjectToList({ ...objectInfo, id: id_hash });
-      }
-    });
-  };
 
   useEffect(() => {
     document.addEventListener("gesturestart", function (e) {
@@ -154,40 +100,9 @@ export const App = () => {
     <>
       {loading ? (
         <Spinner className="app-spinner" />
-      ) : rieltor ? (
+      ) : object ? (
         <>
-          <Header
-            activeTab={activeTab}
-            onChangeTab={handleChangeTab}
-            filterLiked={filterLiked}
-            onToggleFilterLiked={handleToggleFilterLiked}
-            chatOpen={chatOpen}
-            onToggleChat={handleToggleChat}
-            infoOpen={infoOpen}
-            currency={currency}
-            onChangeCurrency={handleChangeCurrency}
-            rieltor={rieltor ?? null}
-            phonesCodes={phonesCodes}
-          />
           <StyledApp chatOpen={!!chatOpen} infoOpen={infoOpen}>
-            <Chat
-              open={chatOpen}
-              onCloseChat={() => setChatOpen(false)}
-              rieltor={rieltor}
-              onOpenObject={handleOpenObjectFromChat}
-              loadingInfoMore={loadingInfoMore}
-              phonesCodes={phonesCodes}
-            />
-            {infoOpen && (
-              <Info
-                infoOpen={infoOpen}
-                onClose={handleCloseInfo}
-                onSendRealtor={handleSendSelection}
-                currency={currency}
-                onChangeCurrency={handleChangeCurrency}
-                rieltor={rieltor}
-              />
-            )}
             <div
               className={`content main-app-content ${
                 !!chatOpen && "chat-opened"
@@ -196,47 +111,15 @@ export const App = () => {
                 display: !!infoOpen && infoOpen?.history ? "none" : "block",
               }}
             >
-              <Routes>
-                <Route
-                  path="/likes"
-                  element={
-                    <History
-                      onOpenInfo={handleOpenInfo}
-                      currency={currency}
-                      onSendRealtor={handleSendSelection}
-                      filterLiked={filterLiked}
-                      infoOpen={!!infoOpen}
-                      appendObjectToList={appendObjectToList}
-                    />
-                  }
-                />
-                <Route
-                  path="/dislikes"
-                  element={
-                    <History
-                      onOpenInfo={handleOpenInfo}
-                      currency={currency}
-                      onSendRealtor={handleSendSelection}
-                      filterLiked={filterLiked}
-                      infoOpen={!!infoOpen}
-                      appendObjectToList={appendObjectToList}
-                    />
-                  }
-                />
-                <Route
-                  path="*"
-                  element={
-                    <NewSelections
-                      onOpenInfo={handleOpenInfo}
-                      onSendRealtor={handleSendSelection}
-                      currency={currency}
-                      onChangeCurrency={handleChangeCurrency}
-                      rieltor={rieltor}
-                      appendObjectToList={appendObjectToList}
-                    />
-                  }
-                />
-              </Routes>
+              <NewSelections
+                onOpenInfo={handleOpenInfo}
+                onSendRealtor={handleSendSelection}
+                currency={currency}
+                onChangeCurrency={handleChangeCurrency}
+                appendObjectToList={appendObjectToList}
+                object={object}
+                phonesCodes={phonesCodes}
+              />
             </div>
           </StyledApp>
         </>
@@ -257,14 +140,13 @@ const StyledApp = styled.div<StyledAppProps>`
   width: calc(100% - 16px);
   margin: 0 auto;
   .main-app-content {
-    padding-top: 73px;
   }
   @media (max-width: 1000px) {
     .chat-opened {
       display: none !important;
     }
     .main-app-content {
-      padding-top: 140px;
+      /* padding-top: 140px; */
     }
   }
 `;

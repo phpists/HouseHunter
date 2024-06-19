@@ -160,6 +160,7 @@ const StyledSlider = styled.div<StyledSliderProps>`
   position: relative;
   width: 570px;
   flex-shrink: 0;
+  height: max-content;
   .slick-next,
   .slick-prev {
     width: 44px;
@@ -198,7 +199,7 @@ const StyledSlider = styled.div<StyledSliderProps>`
   }
   .empty-slider {
     min-height: 400px;
-    height: calc(80vh - 40px);
+    height: calc(85vh - 40px);
     background: url(${({ noPhoto }) => noPhoto}) center/cover no-repeat;
     width: 100%;
   }

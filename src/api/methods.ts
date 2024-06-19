@@ -206,3 +206,19 @@ export const getPhonesCodes = async () => {
     })
     .catch((error) => console.log(error));
 };
+
+export const getObject = async () => {
+  const id = getIdFromUrl();
+  return axios
+    .post(
+      `${baseUrl}`,
+      handleToFormData({
+        id,
+        mod: "fast_notepad",
+        action: "show_fast_folder",
+      }),
+      { headers }
+    )
+    .then((resp) => resp)
+    .catch((error) => console.log(error));
+};

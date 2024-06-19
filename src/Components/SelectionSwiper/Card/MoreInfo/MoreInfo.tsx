@@ -50,7 +50,6 @@ interface Props {
   onSendRealtor: () => void;
   onPhotoView: () => void;
   cardStatusChanged: string | null;
-  rieltor: { name: string; photo: string | undefined; phone: any };
 }
 
 export const MoreInfo = ({
@@ -71,7 +70,6 @@ export const MoreInfo = ({
   onSendRealtor,
   onPhotoView,
   cardStatusChanged,
-  rieltor,
 }: Props) => {
   const controls = useAnimationControls();
 
@@ -95,12 +93,7 @@ export const MoreInfo = ({
         damping: 30,
       }}
     >
-      <Header
-        onClose={handleClose}
-        price={price}
-        currency={currency}
-        rieltor={rieltor}
-      />
+      <Header onClose={handleClose} price={price} currency={currency} />
       <div className="content-wrapper">
         {cardStatusChanged && <Animation status={cardStatusChanged} />}
         <Slider images={images} type={type} onPhotoView={onPhotoView} />
@@ -130,6 +123,7 @@ export const MoreInfo = ({
           <Descrioption text={description} />
           {/* <SectionTitle title="Зручності" />
           <List data={AMENITIES_DATA} moreTitle="зручності" /> */}
+          {/* <Realtor data={data} phonesCodes={phonesCodes} /> */}
         </div>
       </div>
       <Footer onChangeStatus={onChangeStatus} onSendRealtor={onSendRealtor} />

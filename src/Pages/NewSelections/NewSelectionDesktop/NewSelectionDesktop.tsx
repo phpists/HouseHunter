@@ -16,6 +16,7 @@ interface Props {
   rating: boolean;
   loadingMore: boolean;
   onChangeCurrency: (value: string) => void;
+  phonesCodes: any;
 }
 
 export const NewSelectionDesktop = ({
@@ -28,6 +29,7 @@ export const NewSelectionDesktop = ({
   rating,
   loadingMore,
   onChangeCurrency,
+  phonesCodes,
 }: Props) => {
   const [swipeAnimation, setSwipeAnimation] = useState<string | null>(null);
   const [animationProgress, setAnimationProgress] = useState<any>(false);
@@ -67,25 +69,13 @@ export const NewSelectionDesktop = ({
         <div className="cards-list">
           <Card
             data={swipeAnimation && lastCard ? lastCard : cards?.[0] ?? null}
-            onSendRealtor={onSendRealtor}
-            onSwap={handleChangeCardStatus}
             swipeAnimation={swipeAnimation}
             isReload={animationProgress === "reload"}
             currency={currency}
             onChangeCurrency={onChangeCurrency}
             disabled={!!swipeAnimation}
+            phonesCodes={phonesCodes}
           />
-          {cards?.[1] && (
-            <Card
-              data={swipeAnimation && lastCard ? lastCard : cards?.[1] ?? null}
-              swipeAnimation={swipeAnimation}
-              hide
-              isReload={animationProgress === "reload"}
-              currency={currency}
-              onChangeCurrency={onChangeCurrency}
-              disabled={!!swipeAnimation}
-            />
-          )}
         </div>
       ) : loadingMore ? (
         <Spinner className="loading-more-desktop" />
@@ -99,7 +89,6 @@ export const NewSelectionDesktop = ({
 const StyledNewSelectionDesktop = styled.div`
   display: flex;
   margin: 30px 0 0;
-  height: calc(100vh - 105px);
   overflow: hidden;
   position: relative;
   @media (max-width: 1000px) {

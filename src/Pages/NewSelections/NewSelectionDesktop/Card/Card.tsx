@@ -11,8 +11,6 @@ import { useEffect, useRef, useState } from "react";
 
 interface Props {
   data: any;
-  onSendRealtor?: (type: string, id: string) => void;
-  onSwap?: (index: number, direction: string, id: string, type: string) => void;
   hide?: boolean;
   swipeAnimation?: string | null;
   isReload?: boolean;
@@ -21,12 +19,11 @@ interface Props {
   showLike?: boolean;
   status?: boolean;
   disabled?: boolean;
+  phonesCodes?: any;
 }
 
 export const Card = ({
   data,
-  onSendRealtor,
-  onSwap,
   hide,
   swipeAnimation,
   isReload,
@@ -35,6 +32,7 @@ export const Card = ({
   showLike,
   status,
   disabled,
+  phonesCodes,
 }: Props) => {
   const cardRef = useRef<any>(null);
 
@@ -119,15 +117,7 @@ export const Card = ({
           />
           <Description description={data?.description ?? ""} />
         </div>
-        <Footer
-          disabled={disabled}
-          onSendRealtor={() =>
-            !onSendRealtor ? null : onSendRealtor(data?.type, data?.id)
-          }
-          onSwap={(direction) =>
-            !onSwap ? null : onSwap(0, direction, data?.id, data?.type)
-          }
-        />
+        <Footer data={data} phonesCodes={phonesCodes} />
       </div>
     </StyledCard>
   );
@@ -143,7 +133,6 @@ const StyledCard = styled.div<StyledCardProps>`
   grid-template-columns: 570px max-content 1fr; */
   overflow: auto;
   min-height: 400px;
-  height: calc(88vh - 48px);
   padding: 24px;
   border-radius: 20px;
   background: #313131;
@@ -155,10 +144,10 @@ const StyledCard = styled.div<StyledCardProps>`
   position: relative;
   max-width: 1400px;
   width: calc(100vw - 16px);
+  height: calc(100svh - 100px);
   /* transition: all 0.3s; */
-
   .card-text {
-    max-height: calc(70vh - 48px);
+    max-height: calc(82vh - 48px);
     overflow: auto;
   }
   .card-content {

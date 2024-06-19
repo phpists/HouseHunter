@@ -12,7 +12,7 @@ interface Props {
   onChangeCurrency: (value: string) => void;
   disabled?: boolean;
   onClose?: () => void;
-  rieltor: { name: string; photo: string | undefined; phone: any };
+  phonesCodes?: any;
 }
 
 export const SelectionSwiper = ({
@@ -24,7 +24,7 @@ export const SelectionSwiper = ({
   onChangeCurrency,
   disabled,
   onClose,
-  rieltor,
+  phonesCodes,
 }: Props) => {
   const [cardStatusChanged, setCardStatusChanged] = useState<null | string>(
     null
@@ -54,24 +54,6 @@ export const SelectionSwiper = ({
     }
   };
 
-  const handleSendRealtor = () => {
-    if (cards.length > 0) {
-      const type = cards[0]?.type ?? "";
-      const id = cards[0]?.id ?? "";
-
-      onSendRealtor(type, id);
-    }
-  };
-
-  const handleChangeStatusFooter = (direction: string | null) => {
-    if (cards.length > 0) {
-      const type = cards[0]?.type ?? "";
-      const id = cards[0]?.id ?? "";
-
-      handleChangeCardStatus(0, direction, id, type);
-    }
-  };
-
   return (
     <StyledSelectionSwiper
       className="flex flex-col justify-between"
@@ -87,15 +69,8 @@ export const SelectionSwiper = ({
         onChangeCurrency={onChangeCurrency}
         onClose={onClose}
         disabled={disabled}
-        rieltor={rieltor}
+        phonesCodes={phonesCodes}
       />
-      {!history && (
-        <Footer
-          onChangeStatus={handleChangeStatusFooter}
-          onSendRealtor={handleSendRealtor}
-          disabled={disabled || !!cardStatusChanged}
-        />
-      )}
     </StyledSelectionSwiper>
   );
 };

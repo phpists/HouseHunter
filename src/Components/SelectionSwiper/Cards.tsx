@@ -24,7 +24,7 @@ interface Props {
   onChangeCurrency: (value: string) => void;
   onClose?: () => void;
   disabled?: boolean;
-  rieltor: { name: string; photo: string | undefined; phone: any };
+  phonesCodes?: any;
 }
 
 export const Cards = ({
@@ -37,7 +37,7 @@ export const Cards = ({
   onChangeCurrency,
   onClose,
   disabled,
-  rieltor,
+  phonesCodes,
 }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>([]);
@@ -67,71 +67,28 @@ export const Cards = ({
         onClose={handleClosePhotoView}
         images={photosView}
       />
-      {history ? (
-        <MoreInfo
-          type={cards[0]?.type ?? ""}
-          price={cards[0][`price_per_object_${currency?.toLowerCase()}`] ?? 0}
-          currency={currency}
-          location={cards[0]?.location_name}
-          doors={cards[0]?.rooms ?? "-"}
-          area={cards[0]?.area_total ?? "-"}
-          stairs={`${cards[0]?.address_storey ?? "-"} із ${
-            cards[0]?.storey_count ?? "-"
-          }`}
-          box={cards[0]?.area_kitchen ?? "-"}
-          title={
-            cards[0]?.title?.length > 0
-              ? cards[0]?.title
-              : cards[0]?.description
-              ? cards[0]?.description.substring(0, 30)
-              : ""
-          }
-          description={cards[0]?.description}
-          index={10}
-          onClose={() => (onClose ? onClose() : null)}
-          images={
-            cards[0]?.img?.length > 0
-              ? cards[0]?.img?.map((i: any) => i?.name)
-              : [noPhoto]
-          }
-          onChangeStatus={(direction) =>
-            onChangeStatus(0, direction, cards[0]?.id, cards[0]?.type)
-          }
-          onSendRealtor={() => onSendRealtor(cards[0]?.type, cards[0]?.id)}
-          onPhotoView={() =>
-            handleOpenPhotoView(
-              cards[0]?.img?.length > 0
-                ? cards[0]?.img?.map((i: any) => i?.name)
-                : [noPhoto]
-            )
-          }
+      <StyledCards
+        className={`flex items-center justify-center `}
+        isEmpty={cards.length === 0}
+      >
+        {cardStatusChanged && history && (
+          <Animation status={cardStatusChanged} />
+        )}
+        <CardList
+          cards={data}
+          history={history}
           cardStatusChanged={cardStatusChanged}
-          rieltor={rieltor}
+          onChangeStatus={onChangeStatus}
+          onSendRealtor={onSendRealtor}
+          currency={currency}
+          onChangeCurrency={onChangeCurrency}
+          onClose={onClose}
+          loading={loading}
+          onPhotoView={handleOpenPhotoView}
+          disabled={disabled}
+          phonesCodes={phonesCodes}
         />
-      ) : (
-        <StyledCards
-          className={`flex items-center justify-center `}
-          isEmpty={cards.length === 0}
-        >
-          {cardStatusChanged && history && (
-            <Animation status={cardStatusChanged} />
-          )}
-          <CardList
-            cards={data}
-            history={history}
-            cardStatusChanged={cardStatusChanged}
-            onChangeStatus={onChangeStatus}
-            onSendRealtor={onSendRealtor}
-            currency={currency}
-            onChangeCurrency={onChangeCurrency}
-            onClose={onClose}
-            loading={loading}
-            onPhotoView={handleOpenPhotoView}
-            disabled={disabled}
-            rieltor={rieltor}
-          />
-        </StyledCards>
-      )}
+      </StyledCards>
     </>
   );
 };
@@ -141,7 +98,7 @@ interface StyledCardsProps {
 }
 
 const StyledCards = styled.div<StyledCardsProps>`
-  height: calc(100svh - 230px);
+  height: calc(100svh - 80px);
   width: 100%;
   margin-bottom: 15px;
   border-radius: 13px;

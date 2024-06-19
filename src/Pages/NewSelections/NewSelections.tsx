@@ -10,8 +10,9 @@ interface Props {
   onSendRealtor: (type: string, id: string) => void;
   currency: string;
   onChangeCurrency: (value: string) => void;
-  rieltor: { name: string; photo: string | undefined; phone: any };
   appendObjectToList: any;
+  object?: any;
+  phonesCodes: any;
 }
 
 export const NewSelections = ({
@@ -19,8 +20,9 @@ export const NewSelections = ({
   onSendRealtor,
   currency,
   onChangeCurrency,
-  rieltor,
   appendObjectToList,
+  object,
+  phonesCodes,
 }: Props) => {
   const isLastPage = useRef<boolean>(false);
   const [cards, setCards] = useState<any[]>([]);
@@ -142,9 +144,7 @@ export const NewSelections = ({
       ) : (
         <>
           <NewSelectionDesktop
-            cards={cards.filter(
-              (c: any) => !removed?.find((r: any) => r === c?.id)
-            )}
+            cards={[object]}
             onOpenInfo={onOpenInfo}
             onSendRealtor={onSendRealtor}
             onSwap={(index, direction, id, type) =>
@@ -155,15 +155,16 @@ export const NewSelections = ({
             loadingMore={loadingMore}
             currency={currency}
             onChangeCurrency={onChangeCurrency}
+            phonesCodes={phonesCodes}
           />
           <SelectionSwiper
-            cards={cards}
+            cards={[object]}
             onSwap={handleSwap}
             onSendRealtor={onSendRealtor}
             currency={currency}
             onChangeCurrency={onChangeCurrency}
             disabled={loading || rating}
-            rieltor={rieltor}
+            phonesCodes={phonesCodes}
           />
         </>
       )}

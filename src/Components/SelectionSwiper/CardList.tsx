@@ -21,7 +21,7 @@ interface Props {
   loading: boolean;
   onPhotoView: (photos: string[]) => void;
   disabled?: boolean;
-  rieltor: { name: string; photo: string | undefined; phone: any };
+  phonesCodes?: any;
 }
 
 export const CardList = ({
@@ -36,7 +36,7 @@ export const CardList = ({
   loading,
   onPhotoView,
   disabled,
-  rieltor,
+  phonesCodes,
 }: Props) => (
   <>
     {loading ? (
@@ -90,6 +90,7 @@ export const CardList = ({
               }
               history={history}
               totalCards={cards?.length ?? 0}
+              data={card}
               onSendRealtor={() => onSendRealtor(card?.type, card?.id)}
               onClose={onClose}
               cardStatusChanged={cardStatusChanged}
@@ -101,9 +102,9 @@ export const CardList = ({
                 )
               }
               disabled={disabled}
-              rieltor={rieltor}
               recommended={card?.recommended}
               tags={card?.tags_folder}
+              phonesCodes={phonesCodes}
             />
           ))
         ) : (

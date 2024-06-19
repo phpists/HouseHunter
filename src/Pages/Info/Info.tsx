@@ -74,10 +74,8 @@ export const Info = ({
               <BackButton onClick={onClose} classes="back-btn" />
               <Card
                 data={infoOpen}
-                onSendRealtor={onSendRealtor}
                 currency={currency}
                 onChangeCurrency={onChangeCurrency}
-                onSwap={handleSwap}
                 showLike={status !== undefined}
                 status={status}
               />
@@ -91,7 +89,6 @@ export const Info = ({
             currency={currency}
             onChangeCurrency={onChangeCurrency}
             onClose={onClose}
-            rieltor={rieltor}
             disabled={loading}
           />
         </>

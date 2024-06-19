@@ -8,16 +8,14 @@ interface Props {
   onClose: () => void;
   price: number;
   currency: string;
-  rieltor: { name: string; photo: string | undefined; phone: any };
 }
 
-export const Header = ({ onClose, price, currency, rieltor }: Props) => (
+export const Header = ({ onClose, price, currency }: Props) => (
   <StyledHeader className="flex items-center justify-between select-none">
     <img src={arrowBack} alt="" onClick={onClose} />
     <span>
       {formatNumber(Number(price))} {getCurrencySymbol(currency)}
     </span>
-    <Avatar small photo={rieltor.photo} />
   </StyledHeader>
 );
 

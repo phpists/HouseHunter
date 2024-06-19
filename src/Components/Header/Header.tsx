@@ -31,12 +31,7 @@ export const Header = ({
 }: Props) => (
   <StyledHeader isHide={!!chatOpen}>
     <div className="header-wrapper flex items-center justify-between select-none">
-      <Realtor
-        chatOpen={chatOpen}
-        onToggleChat={onToggleChat}
-        rieltor={rieltor}
-        phonesCodes={phonesCodes}
-      />
+      <Realtor data={rieltor} phonesCodes={phonesCodes} />
       <Actions
         activeTab={activeTab}
         onChangeTab={onChangeTab}

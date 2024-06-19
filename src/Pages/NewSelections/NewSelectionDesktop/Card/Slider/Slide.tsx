@@ -16,7 +16,7 @@ interface StyledSlideProps {
 
 const StyledSlide = styled.div<StyledSlideProps>`
   min-height: 400px;
-  height: calc(80vh - 40px);
+  height: calc(85vh - 40px);
   background: url(${({ image }) => image}) center/cover no-repeat;
   width: 570px;
   flex-shrink: 0;

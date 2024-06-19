@@ -1,47 +1,39 @@
 import { styled } from "styled-components";
 import { Profile } from "../../Profile/Profile";
 import { CallButton } from "./CallButton";
-import { ChatButton } from "./ChatButton";
 import { Socmedia } from "./Socmedia";
 
 interface Props {
-  chatOpen: boolean;
-  onToggleChat: () => void;
-  rieltor: { name: string; photo: string | undefined; phone: any };
+  data: any;
   phonesCodes: any;
 }
 
-export const Realtor = ({
-  chatOpen,
-  onToggleChat,
-  rieltor,
-  phonesCodes,
-}: Props) => (
+export const Realtor = ({ data, phonesCodes }: Props) => (
   <StyledRealtor className="flex items-center">
-    <Profile rieltor={rieltor} />
+    <Profile rieltor={data?.owner} />
     <div className="btns flex items-center">
       <div className="flex items-center">
-        {rieltor.phone[0]?.viber === "1" && (
+        {data?.owner?.phone[0]?.viber === "1" && (
           <Socmedia
             type="viber"
             phone={
               `${
                 phonesCodes?.find(
-                  (c: any) => c?.id === rieltor.phone[0]?.id_phone_code
+                  (c: any) => c?.id === data?.owner?.phone[0]?.id_phone_code
                 )?.code
-              }${rieltor.phone[0]?.phone}` ?? ""
+              }${data?.owner?.phone[0]?.phone}` ?? ""
             }
           />
         )}
-        {rieltor.phone[0]?.telegram === "1" && (
+        {data?.owner?.phone[0]?.telegram === "1" && (
           <Socmedia
             type="telegram"
             phone={
               `${
                 phonesCodes?.find(
-                  (c: any) => c?.id === rieltor.phone[0]?.id_phone_code
+                  (c: any) => c?.id === data?.owner?.phone[0]?.id_phone_code
                 )?.code
-              }${rieltor.phone[0]?.phone}` ?? ""
+              }${data?.owner?.phone[0]?.phone}` ?? ""
             }
           />
         )}
@@ -49,18 +41,18 @@ export const Realtor = ({
           phone={
             `${
               phonesCodes?.find(
-                (c: any) => c?.id === rieltor.phone[0]?.id_phone_code
+                (c: any) => c?.id === data?.owner?.phone[0]?.id_phone_code
               )?.code
-            }${rieltor.phone[0]?.phone}` ?? ""
+            }${data?.owner?.phone[0]?.phone}` ?? ""
           }
         />
       </div>
-      <ChatButton chatOpen={chatOpen} onToggleChat={onToggleChat} />
     </div>
   </StyledRealtor>
 );
 
 const StyledRealtor = styled.div`
+  /* justify-content: center; */
   .btns {
     width: max-content;
     margin-left: 20px;
@@ -75,9 +67,8 @@ const StyledRealtor = styled.div`
   }
 
   @media (max-width: 1000px) {
-    width: 100%;
     margin-bottom: 14px;
-    justify-content: space-between;
+    justify-content: start;
     .btns {
       flex-direction: row-reverse;
       button {

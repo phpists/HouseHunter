@@ -3,17 +3,17 @@ import { Avatar } from "../Avatar";
 
 interface Props {
   small?: boolean;
-  rieltor: { name: string; photo: string | undefined; phone: any };
+  rieltor: any;
 }
 
 export const Profile = ({ small, rieltor }: Props) => (
   <StyledProfile small={small} className="flex items-center chat">
-    <Avatar small={small} photo={rieltor?.photo} className="chat" />
+    <Avatar small={small} photo={rieltor?.img} className="chat" />
     <div className="profile-info chat">
-      <div className="name chat" title={rieltor.name}>
-        {rieltor.name}
+      <div className="name chat" title={rieltor?.full_name}>
+        {rieltor?.full_name}
       </div>
-      <div className="role chat">Рієлтор</div>
+      {/* <div className="role chat">Рієлтор</div> */}
     </div>
   </StyledProfile>
 );
@@ -24,6 +24,7 @@ interface StyledProfileProps {
 
 const StyledProfile = styled.div<StyledProfileProps>`
   color: #fff;
+  justify-content: center;
   .profile-info {
     margin-left: ${({ small }) => (small ? 7 : 12)}px;
   }

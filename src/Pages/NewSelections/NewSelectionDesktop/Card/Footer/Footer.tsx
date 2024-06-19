@@ -1,32 +1,20 @@
 import styled from "styled-components";
 import { ActionButton } from "./ActionButton";
 import { SendButton } from "./SendButton";
+import { Realtor } from "../../../../../Components/Header/Realtor/Realtor";
 
 interface Props {
-  onSendRealtor?: () => void;
-  onSwap?: (direction: string) => void;
-  disabled?: boolean;
+  data: any;
+  phonesCodes: any;
 }
 
-export const Footer = ({ onSendRealtor, onSwap, disabled }: Props) => (
+export const Footer = ({ data, phonesCodes }: Props) => (
   <StyledFooter>
-    <ActionButton
-      type="dislike"
-      onClick={() => (onSwap ? onSwap("left") : null)}
-      disabled={disabled}
-    />
-    <ActionButton
-      type="like"
-      onClick={() => (onSwap ? onSwap("right") : null)}
-      disabled={disabled}
-    />
-    <SendButton onClick={onSendRealtor} />
+    <Realtor data={data} phonesCodes={phonesCodes} />
   </StyledFooter>
 );
 
 const StyledFooter = styled.div`
-  display: grid;
-  grid-template-columns: max-content max-content 1fr;
-  gap: 10px;
   width: 100%;
+  margin-top: 20px;
 `;
