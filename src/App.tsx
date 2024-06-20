@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { Header } from "./Components/Header/Header";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { History } from "./Pages/History/History";
 import { Chat } from "./Components/Chat/Chat";
 import { NewSelections } from "./Pages/NewSelections/NewSelections";
@@ -18,12 +18,7 @@ import { checkIsBrowserSupportTouch } from "./helpers";
 import logo from "./assets/images/logo.png";
 
 export const App = () => {
-  const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [activeTab, setActiveTab] = useState<number>(
-    pathname === "/likes" ? 0 : pathname === "/dislikes" ? 1 : 0
-  );
-  const [filterLiked, setFilterLiked] = useState<boolean>(false);
   const [chatOpen, setChatOpen] = useState<boolean>(false);
   const [infoOpen, setInfoOpen] = useState<null | any>(null);
   const [currency, setCurrency] = useState<string>(
@@ -36,17 +31,22 @@ export const App = () => {
     null
   );
   const [phonesCodes, setPhonesCodes] = useState<any>([]);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    getPhonesCodes().then((resp) =>
-      setPhonesCodes(
-        resp?.data
-          ? Object.entries(resp?.data)
-              ?.map((e) => e[1])
-              ?.filter((e) => e !== 0)
-          : []
-      )
-    );
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      getPhonesCodes().then((resp) =>
+        setPhonesCodes(
+          resp?.data
+            ? Object.entries(resp?.data)
+                ?.map((e) => e[1])
+                ?.filter((e) => e !== 0)
+            : []
+        )
+      );
+      handleGetObject();
+    }
   }, []);
 
   const handleChangeCurrency = (value: string) => {
@@ -67,14 +67,16 @@ export const App = () => {
 
   const handleGetObject = () => {
     setLoading(true);
-    getObject().then((resp) => {
-      setObject(
-        resp?.data?.data
-          ? { ...resp?.data?.data, img: resp?.data?.data?.photos }
-          : resp?.data?.data
-      );
-      setLoading(false);
-    });
+    if (!loading) {
+      getObject().then((resp) => {
+        setObject(
+          resp?.data?.data
+            ? { ...resp?.data?.data, img: resp?.data?.data?.photos }
+            : resp?.data?.data
+        );
+        setLoading(false);
+      });
+    }
   };
   const handleClearCacheData = () => {
     caches.keys().then((names: any) => {
@@ -87,7 +89,6 @@ export const App = () => {
   useEffect(() => {
     checkIsBrowserSupportTouch();
     handleClearCacheData();
-    handleGetObject();
   }, []);
 
   useEffect(() => {

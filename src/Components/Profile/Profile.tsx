@@ -8,7 +8,11 @@ interface Props {
 
 export const Profile = ({ small, rieltor }: Props) => (
   <StyledProfile small={small} className="flex items-center chat">
-    <Avatar small={small} photo={rieltor?.img} className="chat" />
+    <Avatar
+      small={small}
+      photo={rieltor?.img?.length > 0 ? rieltor?.img : rieltor?.company_img}
+      className="chat"
+    />
     <div className="profile-info chat">
       <div className="name chat" title={rieltor?.full_name}>
         {rieltor?.full_name}

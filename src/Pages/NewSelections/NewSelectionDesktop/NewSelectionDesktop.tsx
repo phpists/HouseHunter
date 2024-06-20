@@ -35,23 +35,6 @@ export const NewSelectionDesktop = ({
   const [animationProgress, setAnimationProgress] = useState<any>(false);
   const [lastCard, setLastCard] = useState<any>();
 
-  const handleChangeCardStatus = (
-    index: number,
-    value: string | null,
-    id: string,
-    type: string
-  ) => {
-    if (!swipeAnimation) {
-      //   setLastCard(cards?.[1]);
-      setSwipeAnimation(value);
-      if (value) {
-        setTimeout(() => {
-          setAnimationProgress("ended");
-          onSwap(index, value, id, type);
-        }, 800);
-      }
-    }
-  };
 
   useEffect(() => {
     if (animationProgress === "ended") {
