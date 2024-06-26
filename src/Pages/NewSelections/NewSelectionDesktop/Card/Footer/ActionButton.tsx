@@ -1,55 +1,41 @@
-import styled from "styled-components";
-import like from "../../../../../assets/images/thumbs-up.svg";
-import dislike from "../../../../../assets/images/thumbs-down.svg";
+import { styled } from "styled-components";
 
 interface Props {
-  type: "like" | "dislike";
+  icon: string;
   onClick: () => void;
+  status: boolean;
   disabled?: boolean;
 }
 
-const TYPES = {
-  like: {
-    color: "#5A9E49",
-    icon: like,
-  },
-  dislike: {
-    color: "#D15B5B",
-    icon: dislike,
-  },
-};
-
-export const ActionButton = ({ type, onClick, disabled }: Props) => (
+export const ActionButton = ({ icon, onClick, status, disabled }: Props) => (
   <StyledActionButton
     className="flex items-center justify-center"
-    color={TYPES[type]?.color}
     onClick={onClick}
+    status={status}
     disabled={disabled}
   >
-    <img src={TYPES[type]?.icon} alt="" />
+    <img src={icon} alt="" />
   </StyledActionButton>
 );
 
 interface StyledActionButtonProps {
-  color: string;
+  status: boolean;
+  disabled?: boolean;
 }
 
-const StyledActionButton = styled.button<StyledActionButtonProps>`
-  padding: 15px 47px;
-  border-radius: 8px;
-  height: 54px;
-  background: ${({ color }) => color};
-  width: max-content;
-  cursor: pointer;
+const StyledActionButton = styled.div<StyledActionButtonProps>`
+  width: 44px;
+  height: 44px;
+  border-radius: 9px;
+  background: rgba(93, 99, 255, 0.7);
   transition: all 0.3s;
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  &:hover {
-    opacity: 0.8;
-  }
+  flex-shrink: 0;
+  background: ${({ status }) => (status ? "#5A9E49" : "#D15B5B")};
+  cursor: pointer;
+  ${({ disabled }) => disabled && `opacity: 0.5; cursor: no-allowed;`}
   img {
-    height: 27px;
+    height: 22px;
+    margin: 0 !important;
+    margin-right: 0 !important;
   }
 `;

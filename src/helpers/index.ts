@@ -92,7 +92,13 @@ export const handleToFormData = (data: any): any => {
   const formData = new FormData();
 
   Object.entries(data).forEach((field) => {
-    formData.append(field[0], field[1]);
+    if (Array.isArray(field[1])) {
+      field[1]?.forEach((f) => {
+        formData.append(`${field[0]}[]`, f);
+      });
+    } else {
+      formData.append(field[0], field[1]);
+    }
   });
 
   return formData;

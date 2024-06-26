@@ -1,20 +1,12 @@
-import styled from "styled-components";
-import { ActionButton } from "./ActionButton";
-import { SendButton } from "./SendButton";
-import { Realtor } from "../../../../../Components/Header/Realtor/Realtor";
+import { Button } from "./Button";
 
 interface Props {
-  data: any;
-  phonesCodes: any;
+  onNavigate: (prev?: boolean) => void;
 }
 
-export const Footer = ({ data, phonesCodes }: Props) => (
-  <StyledFooter>
-    <Realtor data={data} phonesCodes={phonesCodes} />
-  </StyledFooter>
+export const Footer = ({ onNavigate }: Props) => (
+  <div className="flex items-center">
+    <Button onClick={() => onNavigate(true)} prev />
+    <Button onClick={() => onNavigate()} />
+  </div>
 );
-
-const StyledFooter = styled.div`
-  width: 100%;
-  margin-top: 20px;
-`;

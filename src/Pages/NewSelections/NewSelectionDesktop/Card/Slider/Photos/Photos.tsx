@@ -32,7 +32,7 @@ const StyledPhotos = styled.div`
   grid-auto-rows: max-content;
   gap: 8px;
   min-height: 400px;
-  height: calc(85vh - 40px);
+  height: calc(85vh - 46px);
   overflow: auto;
   flex-shrink: 0;
   width: 100px;

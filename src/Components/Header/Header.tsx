@@ -3,45 +3,14 @@ import { Realtor } from "./Realtor/Realtor";
 import { Actions } from "./Actions/Actions";
 
 interface Props {
-  activeTab: number;
-  onChangeTab: (index: number) => void;
-  filterLiked: boolean;
-  onToggleFilterLiked: () => void;
-  chatOpen: boolean;
-  onToggleChat: () => void;
-  infoOpen?: boolean;
-  currency: string;
-  onChangeCurrency: (value: string) => void;
-  rieltor: { name: string; photo: string | undefined; phone: any };
+  rieltor: any;
   phonesCodes: any;
 }
 
-export const Header = ({
-  activeTab,
-  onChangeTab,
-  filterLiked,
-  onToggleFilterLiked,
-  chatOpen,
-  onToggleChat,
-  infoOpen,
-  currency,
-  onChangeCurrency,
-  rieltor,
-  phonesCodes,
-}: Props) => (
-  <StyledHeader isHide={!!chatOpen}>
+export const Header = ({ rieltor, phonesCodes }: Props) => (
+  <StyledHeader isHide={false}>
     <div className="header-wrapper flex items-center justify-between select-none">
       <Realtor data={rieltor} phonesCodes={phonesCodes} />
-      <Actions
-        activeTab={activeTab}
-        onChangeTab={onChangeTab}
-        filterLiked={filterLiked}
-        onToggleFilterLiked={onToggleFilterLiked}
-        chatOpen={chatOpen}
-        infoOpen={infoOpen}
-        currency={currency}
-        onChangeCurrency={onChangeCurrency}
-      />
     </div>
   </StyledHeader>
 );
@@ -66,8 +35,6 @@ const StyledHeader = styled.div<StyledHeaderProps>`
     width: calc(100% - 16px);
     margin: 10px auto;
     @media (max-width: 1000px) {
-      flex-direction: column;
-      height: auto;
       ${({ isHide }) => isHide && "display: none;"}
     }
   }

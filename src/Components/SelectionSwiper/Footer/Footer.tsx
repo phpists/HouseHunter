@@ -1,28 +1,12 @@
-import { SendButton } from "./SendButton";
-import likeIcon from "../../../assets/images/thumbs-up.svg";
-import dislikeIcon from "../../../assets/images/thumbs-down.svg";
-import { ActionButton } from "./ActionButton";
+import { Button } from "./Button";
 
 interface Props {
-  onChangeStatus: (value: string | null) => void;
-  onSendRealtor: () => void;
-  disabled?: boolean;
+  onNavigate: (prev?: boolean) => void;
 }
 
-export const Footer = ({ onChangeStatus, onSendRealtor, disabled }: Props) => (
+export const Footer = ({ onNavigate }: Props) => (
   <div className="flex items-center">
-    <ActionButton
-      icon={dislikeIcon}
-      onClick={() => (disabled ? null : onChangeStatus("left"))}
-      status={false}
-      disabled={disabled}
-    />
-    <SendButton onClick={onSendRealtor} />
-    <ActionButton
-      icon={likeIcon}
-      onClick={() => (disabled ? null : onChangeStatus("right"))}
-      status={true}
-      disabled={disabled}
-    />
+    <Button onClick={() => onNavigate(true)} prev />
+    <Button onClick={() => onNavigate()} />
   </div>
 );

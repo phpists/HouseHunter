@@ -55,7 +55,6 @@ const StyledRealtor = styled.div`
   /* justify-content: center; */
   .btns {
     width: max-content;
-    margin-left: 20px;
   }
   a {
     display: block;
@@ -67,7 +66,6 @@ const StyledRealtor = styled.div`
   }
 
   @media (max-width: 1000px) {
-    margin-bottom: 14px;
     justify-content: start;
     .btns {
       flex-direction: row-reverse;

@@ -13,6 +13,7 @@ interface Props {
   disabled?: boolean;
   onClose?: () => void;
   phonesCodes?: any;
+  onNavigate?: (prev?: boolean) => void;
 }
 
 export const SelectionSwiper = ({
@@ -25,6 +26,7 @@ export const SelectionSwiper = ({
   disabled,
   onClose,
   phonesCodes,
+  onNavigate,
 }: Props) => {
   const [cardStatusChanged, setCardStatusChanged] = useState<null | string>(
     null
@@ -71,6 +73,7 @@ export const SelectionSwiper = ({
         disabled={disabled}
         phonesCodes={phonesCodes}
       />
+      {onNavigate ? <Footer onNavigate={onNavigate} /> : null}
     </StyledSelectionSwiper>
   );
 };

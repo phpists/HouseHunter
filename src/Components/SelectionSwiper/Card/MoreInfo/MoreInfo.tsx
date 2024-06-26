@@ -126,7 +126,7 @@ export const MoreInfo = ({
           {/* <Realtor data={data} phonesCodes={phonesCodes} /> */}
         </div>
       </div>
-      <Footer onChangeStatus={onChangeStatus} onSendRealtor={onSendRealtor} />
+      {/* <Footer onChangeStatus={onChangeStatus} onSendRealtor={onSendRealtor} /> */}
     </StyledMoreInfo>
   );
 };

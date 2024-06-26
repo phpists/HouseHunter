@@ -199,7 +199,7 @@ const StyledSlider = styled.div<StyledSliderProps>`
   }
   .empty-slider {
     min-height: 400px;
-    height: calc(85vh - 40px);
+    height: calc(85vh - 140px);
     background: url(${({ noPhoto }) => noPhoto}) center/cover no-repeat;
     width: 100%;
   }

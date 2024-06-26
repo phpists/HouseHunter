@@ -47,8 +47,8 @@ export const CardList = ({
               key={i}
               index={1 + i}
               images={
-                card?.img?.length > 0
-                  ? card?.img?.map((i: any) => i?.name)
+                card?.photos?.length > 0
+                  ? card?.photos?.map((i: any) => i?.name)
                   : [noPhoto]
               }
               totalCards={cards?.length ?? 0}
@@ -81,8 +81,8 @@ export const CardList = ({
               description={card?.description ?? ""}
               index={1 + i}
               images={
-                card?.img?.length > 0
-                  ? card?.img?.map((i: any) => i?.name)
+                card?.photos?.length > 0
+                  ? card?.photos?.map((i: any) => i?.name)
                   : [noPhoto]
               }
               onChangeStatus={(direction) =>
@@ -96,8 +96,8 @@ export const CardList = ({
               cardStatusChanged={cardStatusChanged}
               onPhotoView={() =>
                 onPhotoView(
-                  card?.img?.length > 0
-                    ? card?.img?.map((i: any) => i?.name)
+                  card?.photos?.length > 0
+                    ? card?.photos?.map((i: any) => i?.name)
                     : [noPhoto]
                 )
               }

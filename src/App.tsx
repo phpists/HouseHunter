@@ -24,7 +24,7 @@ export const App = () => {
   const [currency, setCurrency] = useState<string>(
     localStorage.getItem("currency") ?? "UAH"
   );
-  const [object, setObject] = useState<any>(null);
+  const [objects, setObjects] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingInfoMore, setLoadingInfoMore] = useState<string | null>(null);
   const [appendObjectToList, setAppendObjectToList] = useState<any | null>(
@@ -69,7 +69,7 @@ export const App = () => {
     setLoading(true);
     if (!loading) {
       getObject().then((resp) => {
-        setObject(
+        setObjects(
           resp?.data?.data
             ? { ...resp?.data?.data, img: resp?.data?.data?.photos }
             : resp?.data?.data
@@ -101,8 +101,9 @@ export const App = () => {
     <>
       {loading ? (
         <Spinner className="app-spinner" />
-      ) : object ? (
+      ) : objects ? (
         <>
+          <Header rieltor={objects} phonesCodes={phonesCodes} />
           <StyledApp chatOpen={!!chatOpen} infoOpen={infoOpen}>
             <div
               className={`content main-app-content ${
@@ -118,7 +119,15 @@ export const App = () => {
                 currency={currency}
                 onChangeCurrency={handleChangeCurrency}
                 appendObjectToList={appendObjectToList}
-                object={object}
+                objects={
+                  objects
+                    ? Object.entries(objects)
+                        ?.filter((f) => f[0] !== "owner")
+                        ?.filter((f) => f[0] !== "error")
+                        ?.map((f) => f[1])
+                        ?.filter((f) => f)
+                    : []
+                }
                 phonesCodes={phonesCodes}
               />
             </div>
@@ -141,13 +150,14 @@ const StyledApp = styled.div<StyledAppProps>`
   width: calc(100% - 16px);
   margin: 0 auto;
   .main-app-content {
+    padding-top: 50px;
   }
   @media (max-width: 1000px) {
     .chat-opened {
       display: none !important;
     }
     .main-app-content {
-      /* padding-top: 140px; */
+      padding-top: 20px;
     }
   }
 `;

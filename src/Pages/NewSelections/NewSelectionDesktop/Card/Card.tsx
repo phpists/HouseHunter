@@ -20,6 +20,7 @@ interface Props {
   status?: boolean;
   disabled?: boolean;
   phonesCodes?: any;
+  onNavigate?: (prev?: boolean) => void;
 }
 
 export const Card = ({
@@ -33,6 +34,7 @@ export const Card = ({
   status,
   disabled,
   phonesCodes,
+  onNavigate,
 }: Props) => {
   const cardRef = useRef<any>(null);
 
@@ -86,7 +88,9 @@ export const Card = ({
     <StyledCard hide={hide} ref={cardRef} className={`${hide && "hide-card"}`}>
       <Slider
         onOpen={() => null}
-        images={data?.img?.length > 0 ? data?.img?.map((i: any) => i.name) : []}
+        images={
+          data?.photos?.length > 0 ? data?.photos?.map((i: any) => i.name) : []
+        }
         category={data?.rubric_name}
         currency={currency}
         onChangeCurrency={onChangeCurrency}
@@ -117,7 +121,7 @@ export const Card = ({
           />
           <Description description={data?.description ?? ""} />
         </div>
-        <Footer data={data} phonesCodes={phonesCodes} />
+        {onNavigate ? <Footer onNavigate={onNavigate} /> : null}
       </div>
     </StyledCard>
   );
@@ -144,10 +148,10 @@ const StyledCard = styled.div<StyledCardProps>`
   position: relative;
   max-width: 1400px;
   width: calc(100vw - 16px);
-  height: calc(100svh - 68px);
+  height: calc(100svh - 118px);
   /* transition: all 0.3s; */
   .card-text {
-    max-height: calc(82vh - 48px);
+    max-height: calc(82vh - 168px);
     overflow: auto;
   }
   .card-content {

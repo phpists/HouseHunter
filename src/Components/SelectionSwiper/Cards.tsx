@@ -98,7 +98,7 @@ interface StyledCardsProps {
 }
 
 const StyledCards = styled.div<StyledCardsProps>`
-  height: calc(100svh - 80px);
+  height: calc(100svh - 100px);
   width: 100%;
   margin-bottom: 15px;
   border-radius: 13px;

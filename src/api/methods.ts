@@ -207,12 +207,21 @@ export const getPhonesCodes = async () => {
     .catch((error) => console.log(error));
 };
 
+const handleGetIds = () => {
+  try {
+    return JSON.parse(atob(getParams("id") ?? ""));
+  } catch {
+    return [];
+  }
+};
+
 export const getObject = async () => {
+  console.log(handleGetIds());
   return axios
     .post(
       `${baseUrl}`,
       handleToFormData({
-        id: getParams("id"),
+        id: handleGetIds(),
         us: getParams("us"),
         mod: "fast_notepad",
         action: "show_fast_folder",

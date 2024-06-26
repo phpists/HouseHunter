@@ -9,7 +9,7 @@ interface Props {
   currency: string;
   onChangeCurrency: (value: string) => void;
   appendObjectToList: any;
-  object?: any;
+  objects?: any;
   phonesCodes: any;
 }
 
@@ -19,13 +19,27 @@ export const NewSelections = ({
   currency,
   onChangeCurrency,
   appendObjectToList,
-  object,
+  objects,
   phonesCodes,
 }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingMore, setLoadingMore] = useState<boolean>(false);
   const [rating, setRating] = useState<boolean>(false);
   const [removed, setRemoved] = useState<any[]>([]);
+  const [activeCard, setActiveCard] = useState(0);
+
+  const handleChangeActiveCard = (prev?: boolean) => {
+    const totalCards = objects?.length ?? 0;
+    const updatedActiveCard = prev
+      ? activeCard === 0
+        ? totalCards - 1
+        : activeCard - 1
+      : activeCard === totalCards - 1
+      ? 0
+      : activeCard + 1;
+    setActiveCard(updatedActiveCard);
+  };
+
   return (
     <>
       {loading ? (
@@ -33,7 +47,7 @@ export const NewSelections = ({
       ) : (
         <>
           <NewSelectionDesktop
-            cards={[object]}
+            cards={[objects?.[activeCard]]}
             onOpenInfo={onOpenInfo}
             onSendRealtor={onSendRealtor}
             onSwap={(index, direction, id, type) => null}
@@ -43,15 +57,17 @@ export const NewSelections = ({
             currency={currency}
             onChangeCurrency={onChangeCurrency}
             phonesCodes={phonesCodes}
+            onNavigate={handleChangeActiveCard}
           />
           <SelectionSwiper
-            cards={[object]}
+            cards={[objects?.[activeCard]]}
             onSwap={() => null}
             onSendRealtor={onSendRealtor}
             currency={currency}
             onChangeCurrency={onChangeCurrency}
             disabled={loading || rating}
             phonesCodes={phonesCodes}
+            onNavigate={handleChangeActiveCard}
           />
         </>
       )}

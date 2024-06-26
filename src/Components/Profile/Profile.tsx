@@ -29,6 +29,7 @@ interface StyledProfileProps {
 const StyledProfile = styled.div<StyledProfileProps>`
   color: #fff;
   justify-content: center;
+  margin-right: 10px;
   .profile-info {
     margin-left: ${({ small }) => (small ? 7 : 12)}px;
   }
