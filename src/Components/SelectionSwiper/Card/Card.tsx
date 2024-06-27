@@ -243,7 +243,6 @@ export const Card = ({
             </div>
             <SectionTitle title="Опис" />
             <Descrioption text={description} />
-            <Realtor data={data} phonesCodes={phonesCodes} />
           </div>
         </div>
       </StyledCard>
@@ -258,7 +257,7 @@ interface StyledCardProps {
 
 const StyledCard = styled.div<StyledCardProps>`
   position: absolute;
-  height: calc(100svh - 100px);
+  height: calc(100svh - 161px);
   /* overflow: auto; */
   font-size: 80px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);

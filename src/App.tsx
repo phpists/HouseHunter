@@ -157,7 +157,7 @@ const StyledApp = styled.div<StyledAppProps>`
       display: none !important;
     }
     .main-app-content {
-      padding-top: 20px;
+      padding-top: 57px;
     }
   }
 `;
