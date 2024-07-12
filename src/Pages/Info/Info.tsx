@@ -86,13 +86,13 @@ export const Info = ({
           <SelectionSwiper
             cards={infoOpen ? [infoOpen] : []}
             onSwap={handleSwap}
-            history
             onSendRealtor={onSendRealtor}
             currency={currency}
             onChangeCurrency={onChangeCurrency}
             onClose={onClose}
             rieltor={rieltor}
             disabled={loading}
+            view
           />
         </>
       ) : (

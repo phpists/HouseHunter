@@ -13,6 +13,7 @@ interface Props {
   disabled?: boolean;
   onClose?: () => void;
   rieltor: { name: string; photo: string | undefined; phone: any };
+  view?: boolean;
 }
 
 export const SelectionSwiper = ({
@@ -25,6 +26,7 @@ export const SelectionSwiper = ({
   disabled,
   onClose,
   rieltor,
+  view,
 }: Props) => {
   const [cardStatusChanged, setCardStatusChanged] = useState<null | string>(
     null
@@ -76,6 +78,7 @@ export const SelectionSwiper = ({
     <StyledSelectionSwiper
       className="flex flex-col justify-between"
       history={!!history}
+      view={view}
     >
       <Cards
         cards={cards}
@@ -88,6 +91,7 @@ export const SelectionSwiper = ({
         onClose={onClose}
         disabled={disabled}
         rieltor={rieltor}
+        view={view}
       />
       {!history && (
         <Footer
@@ -102,10 +106,11 @@ export const SelectionSwiper = ({
 
 interface StyledSelectionSwiperProps {
   history: boolean;
+  view?: boolean;
 }
 
 const StyledSelectionSwiper = styled.div<StyledSelectionSwiperProps>`
-  ${({ history }) => !history && "padding: 15px 0;"}
+  ${({ view }) => (view ? "padding: 140px 0 15px;" : "padding: 15px 0;")}
   @media (min-width: 1000px) {
     display: none;
   }

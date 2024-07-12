@@ -25,6 +25,7 @@ interface Props {
   onClose?: () => void;
   disabled?: boolean;
   rieltor: { name: string; photo: string | undefined; phone: any };
+  view?: boolean;
 }
 
 export const Cards = ({
@@ -38,6 +39,7 @@ export const Cards = ({
   onClose,
   disabled,
   rieltor,
+  view,
 }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>([]);

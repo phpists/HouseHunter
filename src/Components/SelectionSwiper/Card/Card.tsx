@@ -208,7 +208,6 @@ export const Card = ({
     }
   };
 
-
   return (
     <>
       {/* {false && (
@@ -284,29 +283,31 @@ export const Card = ({
           onPhotoView={() => null}
           onChangeSlide={(num: number) => setCurrentSlide(num)}
         />
-        <div className="more-info-wrapper">
-          <div className="content-info">
-            <Title title={title} />
-            <div className="info-items">
-              <Location location={location} />
+        {description?.length > 0 ? (
+          <div className="more-info-wrapper">
+            <div className="content-info">
+              <Title title={title} />
+              <div className="info-items">
+                <Location location={location} />
+              </div>
+              <div className="flex items-center info-items ">
+                <Doors doors={doors} />
+                <Divider />
+                <Expand area={area} />
+                {box?.toString()?.length > 0 ? (
+                  <>
+                    <Divider />
+                    <Box box={box} />
+                  </>
+                ) : null}
+                <Divider />
+                <Stairs stairs={stairs} />
+              </div>
+              <SectionTitle title="Опис" />
+              <Descrioption text={description} />
             </div>
-            <div className="flex items-center info-items ">
-              <Doors doors={doors} />
-              <Divider />
-              <Expand area={area} />
-              {box?.toString()?.length > 0 ? (
-                <>
-                  <Divider />
-                  <Box box={box} />
-                </>
-              ) : null}
-              <Divider />
-              <Stairs stairs={stairs} />
-            </div>
-            <SectionTitle title="Опис" />
-            <Descrioption text={description} />
           </div>
-        </div>
+        ) : null}
       </StyledCard>
     </>
   );
