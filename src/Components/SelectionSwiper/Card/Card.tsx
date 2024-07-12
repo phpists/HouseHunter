@@ -185,7 +185,7 @@ export const Card = ({
         onTouchEnd={handleDragEnd}
         totalCards={totalCards}
         draggable={false}
-        className={`swapper-card${index}`}
+        className={`swapper-card swapper-card${index}`}
         onScroll={handleScrollCard}
       >
         <Price

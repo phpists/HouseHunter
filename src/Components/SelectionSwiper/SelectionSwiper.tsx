@@ -72,6 +72,7 @@ export const SelectionSwiper = ({
         onClose={onClose}
         disabled={disabled}
         phonesCodes={phonesCodes}
+        onNavigate={!!onNavigate}
       />
       {onNavigate ? <Footer onNavigate={onNavigate} /> : null}
     </StyledSelectionSwiper>

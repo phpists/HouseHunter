@@ -58,6 +58,7 @@ export const NewSelections = ({
             onChangeCurrency={onChangeCurrency}
             phonesCodes={phonesCodes}
             onNavigate={handleChangeActiveCard}
+            cardsCount={objects?.length ?? 0}
           />
           <SelectionSwiper
             cards={[objects?.[activeCard]]}
@@ -67,7 +68,9 @@ export const NewSelections = ({
             onChangeCurrency={onChangeCurrency}
             disabled={loading || rating}
             phonesCodes={phonesCodes}
-            onNavigate={handleChangeActiveCard}
+            onNavigate={
+              objects?.length > 1 ? handleChangeActiveCard : undefined
+            }
           />
         </>
       )}

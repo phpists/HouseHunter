@@ -18,6 +18,7 @@ interface Props {
   onChangeCurrency: (value: string) => void;
   phonesCodes: any;
   onNavigate: (prev?: boolean) => void;
+  cardsCount: number;
 }
 
 export const NewSelectionDesktop = ({
@@ -31,7 +32,8 @@ export const NewSelectionDesktop = ({
   loadingMore,
   onChangeCurrency,
   phonesCodes,
-  onNavigate
+  onNavigate,
+  cardsCount,
 }: Props) => {
   const [swipeAnimation, setSwipeAnimation] = useState<string | null>(null);
   const [animationProgress, setAnimationProgress] = useState<any>(false);
@@ -59,7 +61,7 @@ export const NewSelectionDesktop = ({
             onChangeCurrency={onChangeCurrency}
             disabled={!!swipeAnimation}
             phonesCodes={phonesCodes}
-            onNavigate={onNavigate}
+            onNavigate={cardsCount > 1 ? onNavigate : undefined}
           />
         </div>
       ) : loadingMore ? (

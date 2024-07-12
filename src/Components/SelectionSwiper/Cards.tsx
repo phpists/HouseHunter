@@ -25,6 +25,7 @@ interface Props {
   onClose?: () => void;
   disabled?: boolean;
   phonesCodes?: any;
+  onNavigate?: boolean;
 }
 
 export const Cards = ({
@@ -38,6 +39,7 @@ export const Cards = ({
   onClose,
   disabled,
   phonesCodes,
+  onNavigate,
 }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>([]);
@@ -68,7 +70,9 @@ export const Cards = ({
         images={photosView}
       />
       <StyledCards
-        className={`flex items-center justify-center `}
+        className={`flex items-center justify-center ${
+          !onNavigate && "oneCard"
+        } `}
         isEmpty={cards.length === 0}
       >
         {cardStatusChanged && history && (
@@ -117,5 +121,11 @@ const StyledCards = styled.div<StyledCardsProps>`
   }
   &.loading-cards {
     opacity: 0;
+  }
+  &.oneCard {
+    height: calc(100svh - 103px);
+    .swapper-card {
+      height: calc(100svh - 103px);
+    }
   }
 `;
