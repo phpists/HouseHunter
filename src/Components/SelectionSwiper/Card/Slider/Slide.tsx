@@ -26,7 +26,7 @@ interface StyledSlideProps {
 const StyledSlide = styled.div<StyledSlideProps>`
   transition: all 0.3s;
   background: url(${({ image }) => image}) center/cover no-repeat;
-  height: calc(100svh - 100px);
+  height: calc(100svh - 155px);
   position: relative;
   .shadow {
     content: "";

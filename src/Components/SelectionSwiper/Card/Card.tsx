@@ -222,7 +222,7 @@ export const Card = ({
           onPhotoView={() => null}
           onChangeSlide={(num: number) => setCurrentSlide(num)}
         />
-        <div className="more-info-wrapper">
+        {/* <div className="more-info-wrapper">
           <div className="content-info">
             <Title title={title} />
             <div className="info-items">
@@ -244,7 +244,7 @@ export const Card = ({
             <SectionTitle title="Опис" />
             <Descrioption text={description} />
           </div>
-        </div>
+        </div> */}
       </StyledCard>
     </>
   );
@@ -257,7 +257,7 @@ interface StyledCardProps {
 
 const StyledCard = styled.div<StyledCardProps>`
   position: absolute;
-  height: calc(100svh - 161px);
+  height: calc(100svh - 151px);
   /* overflow: auto; */
   font-size: 80px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
