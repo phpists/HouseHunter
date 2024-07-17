@@ -41,7 +41,7 @@ export const SelectionSwiper = ({
     if (!cardStatusChanged) {
       setCardStatusChanged(value);
       if (value) {
-        if (history) {
+        if (view) {
           onSwap(index, value, id, type);
           setTimeout(() => {
             setCardStatusChanged(null);

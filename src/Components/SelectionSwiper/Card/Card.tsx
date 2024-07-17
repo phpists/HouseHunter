@@ -44,6 +44,7 @@ interface Props {
   rieltor: { name: string; photo: string | undefined; phone: any };
   recommended?: boolean;
   tags?: any;
+  view?: boolean;
 }
 
 export const Card = ({
@@ -73,6 +74,7 @@ export const Card = ({
   rieltor,
   recommended,
   tags,
+  view,
 }: Props) => {
   const [open, setOpen] = useState<boolean>(history);
   const cardRef = useRef(null);
@@ -194,7 +196,7 @@ export const Card = ({
   };
 
   useEffect(() => {
-    if (cardStatusChanged && totalCards === index) {
+    if (cardStatusChanged && totalCards === index && !view) {
       handleSwipeAnimation();
     }
   }, [cardStatusChanged]);
@@ -253,6 +255,7 @@ export const Card = ({
           currency={currency}
           onChangeCurrency={onChangeCurrency}
           price={price}
+          onClose={onClose}
         />
         <div className="tags">
           {tags?.label_recomendation ? (

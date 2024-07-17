@@ -115,7 +115,7 @@ export const Cards = ({
           className={`flex items-center justify-center `}
           isEmpty={cards.length === 0}
         >
-          {cardStatusChanged && history && (
+          {cardStatusChanged && view && (
             <Animation status={cardStatusChanged} />
           )}
           <CardList
@@ -131,6 +131,7 @@ export const Cards = ({
             onPhotoView={handleOpenPhotoView}
             disabled={disabled}
             rieltor={rieltor}
+            view={view}
           />
         </StyledCards>
       )}
