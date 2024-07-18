@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const Realtor = ({ data, phonesCodes }: Props) => (
-  <StyledRealtor className="flex items-center">
+  <StyledRealtor className="flex items-center  w-full">
     <Profile rieltor={data?.owner} />
     <div className="btns flex items-center">
       <div className="flex items-center">
@@ -66,7 +66,7 @@ const StyledRealtor = styled.div`
   }
 
   @media (max-width: 1000px) {
-    justify-content: start;
+    justify-content: space-between;
     .btns {
       flex-direction: row-reverse;
       button {
