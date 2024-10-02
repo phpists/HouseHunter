@@ -216,9 +216,15 @@ export const History = ({
               title={card?.title ?? ""}
               location={card?.location_name}
               doors={card?.rooms ?? "-"}
-              stairs={`${card?.address_storey ?? "-"} із ${
-                card?.storey_count ?? "-"
-              }`}
+              stairs={
+                card?.address_storey !== "0" || card?.storey_count !== "0"
+                  ? `${
+                      card?.address_storey === "0" ? "-" : card?.address_storey
+                    } із ${
+                      card?.storey_count === "0" ? "-" : card?.storey_count
+                    }`
+                  : ""
+              }
               description={card?.description ?? ""}
               images={
                 card?.img?.length > 0 ? card?.img?.map((i: any) => i?.name) : []

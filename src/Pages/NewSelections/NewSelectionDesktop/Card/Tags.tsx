@@ -24,11 +24,11 @@ export const Tags = ({ doors, stairs, areaTotal, areaKitchen }: Props) => (
         {areaTotal}
       </>
     ) : null}
-    {areaKitchen?.length > 0 ? (
+    {areaKitchen?.length > 0 && areaKitchen !== "0" ? (
       <>
         <div className="divider" />
         <img src={boxIcon} alt="" />
-        {areaKitchen}{" "}
+        {areaKitchen}
       </>
     ) : null}
     {stairs?.length > 0 ? (
