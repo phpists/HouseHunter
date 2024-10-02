@@ -110,12 +110,24 @@ export const Card = ({
           />
           <Location location={data?.location_name} />
           <Tags
-            doors={data?.rooms ? `${data?.rooms}к` : "-"}
-            stairs={`${data?.address_storey ?? "-"} із ${
-              data?.storey_count ?? "-"
-            }`}
-            areaTotal={data?.area_total ?? "-"}
-            areaKitchen={data?.area_kitchen ?? ""}
+            doors={data?.rooms && data?.rooms !== "0" ? `${data?.rooms}к` : ""}
+            stairs={
+              data?.address_storey !== "0" || data?.storey_count !== "0"
+                ? `${
+                    data?.address_storey === "0" ? "-" : data?.address_storey
+                  } із ${data?.storey_count === "0" ? "-" : data?.storey_count}`
+                : ""
+            }
+            areaTotal={
+              data?.area_total && data?.area_total !== "0"
+                ? data?.area_total
+                : ""
+            }
+            areaKitchen={
+              data?.area_kitchen && data?.rooms !== "0"
+                ? data?.area_kitchen
+                : ""
+            }
           />
           <Description description={data?.description ?? ""} />
         </div>
