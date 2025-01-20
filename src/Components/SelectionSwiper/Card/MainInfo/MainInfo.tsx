@@ -31,12 +31,12 @@ export const MainInfo = ({
     ) : null}
     <div className="flex items-center items justify-between">
       <Location location={location} />
-      <div className="main-tags flex items-center">
+      {/* <div className="main-tags flex items-center">
         <Divider />
         <Doors doors={doors} />
         <Divider />
         <Expand area={area} />
-      </div>
+      </div> */}
     </div>
     <Title title={title ?? ""} />
   </StyledMainInfo>

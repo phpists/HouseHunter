@@ -52,7 +52,7 @@ export const Info = ({
           {category ? <div className="my-2 ml-1">{category}</div> : null}
         </div>
         <div className="flex items-center" onClick={onOpen}>
-          {doors !== "0" && doors?.toString()?.length > 0 ? (
+          {/* {doors !== "0" && doors?.toString()?.length > 0 ? (
             <Doors doors={doors} />
           ) : null}
           {expand !== "0" && expand?.length > 0 ? (
@@ -67,7 +67,7 @@ export const Info = ({
               <Divider />
               <Stairs stairs={stairs} />
             </>
-          ) : null}
+          ) : null} */}
         </div>
         {isNew && <Descrioption description={description} />}
       </div>

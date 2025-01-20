@@ -99,18 +99,18 @@ export const App = () => {
       setLoading(false);
     });
   };
-  const handleClearCacheData = () => {
-    caches.keys().then((names: any) => {
-      names.forEach((name: any) => {
-        caches.delete(name);
-      });
-    });
-  };
+//   const handleClearCacheData = () => {
+//     caches.keys().then((names: any) => {
+//       names.forEach((name: any) => {
+//         caches.delete(name);
+//       });
+//     });
+//   };
 
   useEffect(() => {
     handleGetRieltor();
     checkIsBrowserSupportTouch();
-    handleClearCacheData();
+    // handleClearCacheData();
   }, []);
 
   const handleChangeOpenObjectStatus = (objectInfo: any, like: number) => {

@@ -36,11 +36,11 @@ export const Banner = ({
 }: Props) => {
   return (
     <StyledBanner status={!!like} isNew={!!isNew}>
-      {!isNew && tag ? (
+      {/* {!isNew && tag ? (
         <ShowBtn tag={tag} />
       ) : (
         <Area area={area} onOpen={onOpen} />
-      )}
+      )} */}
       <div className="tags">
         {tags?.label_recomendation ? (
           <Type type={"Рекомендовано"} className="maininfo" />

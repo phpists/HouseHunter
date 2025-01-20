@@ -293,7 +293,7 @@ export const Card = ({
               <div className="info-items">
                 <Location location={location} />
               </div>
-              <div className="flex items-center info-items ">
+              {/* <div className="flex items-center info-items ">
                 <Doors doors={doors} />
                 <Divider />
                 <Expand area={area} />
@@ -305,7 +305,7 @@ export const Card = ({
                 ) : null}
                 <Divider />
                 <Stairs stairs={stairs} />
-              </div>
+              </div> */}
               <SectionTitle title="Опис" />
               <Descrioption text={description} />
             </div>

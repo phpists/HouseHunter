@@ -13,7 +13,7 @@ interface Props {
 
 export const Tags = ({ doors, stairs, areaTotal, areaKitchen }: Props) => (
   <StyledTags className="flex items-center">
-    {doors?.length > 0 ? (
+    {/* {doors?.length > 0 ? (
       <>
         <img src={doorsIcon} alt="" /> {doors} <div className="divider" />{" "}
       </>
@@ -38,7 +38,7 @@ export const Tags = ({ doors, stairs, areaTotal, areaKitchen }: Props) => (
         <img src={stairsIcon} alt="" />
         {stairs}{" "}
       </>
-    ) : null}
+    ) : null} */}
   </StyledTags>
 );
 
