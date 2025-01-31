@@ -59,7 +59,9 @@ export const Slider = ({ isNew, onOpen, images }: Props) => {
           ))}
         </SlickSlider>
       </StyledSlider>
-      <SlideCount currentSlide={currentSlide} total={images.length ?? 0} />
+      {images.length > 1 ? (
+        <SlideCount currentSlide={currentSlide} total={images.length ?? 0} />
+      ) : null}
     </>
   );
 };
